@@ -141,7 +141,7 @@
 
 \title{Introduction to Theoretical Ecology}
 \author{Instructor: Po-Ju Ke \(~~~~~\) Teaching Assistant: Sun Yi}
-\date{2022 Fall at National Taiwan Univeristy \includegraphics{./bifurcation.gif}}
+\date{2023 Fall at National Taiwan Univeristy \includegraphics{./bifurcation.gif}}
 
 \begin{document}
 \maketitle
@@ -156,17 +156,17 @@
 
 \textbf{Description}
 
-The development of theory plays an important role in advancing ecology as a scientific field. This three-unit course is for students at the graduate or advanced undergraduate level. The course will cover classic theoretical topics in ecology, starting from single-species dynamics and gradually build up to multi-species models. The course will primarily focus on population and community ecology, but we will also briefly discuss models in epidemiology and ecosystem ecology. Emphasis will be on theoretical concepts and corresponding mathematical approaches.
+The development of theory plays an important role in advancing ecology as a scientific field. This three-unit course is for students at the graduate or advanced undergraduate level. The course will cover classic theoretical topics in population and community ecology, staring from single-species dynamics and gradually build up to multispecies models. Emphasis will be on theoretical concepts and corresponding mathematical approaches.
 
-This course is designed as a two-hour lecture followed by a one-hour hands-on practice module. In the lecture, we will analyze dynamical models and derive general theories in ecology. In the hands-on practice section, we will use a combination of analytical problem sets, interactive applications, and numerical simulations to gain a general understanding of the dynamics and behavior of different models.
+This course is designed as a two-hour lecture (written on black board) followed by a one-hour complementary hands-on practice module. In the lecture, we will analyze dynamical models and discuss their theoretical implications. In the practice section, we will use a combination interactive applications and numerical simulations to gain more intuition of the dynamics and behavior of different models.
 
 \textbf{Objective}
 
-By the end of the course, students are expected to be familiar with the basic building blocks of ecological models and would be able to formulate and analyze simple models of their own. The hands-on practice component should allow students to link their ecological intuition with the underlying mathematical model, helping them to better understand the primary literature of theoretical ecology.
+By the end of the course, students are expected to be familiar with the basic building blocks of ecological models, and would be able to formulate and analyze simple models of their own. The hands-on practice component should allow students to link their ecological intuition with the underlying mathematical model, helping them to better understand the primary literature of theoretical ecology.
 
 \textbf{Requirement}
 
-Students are expected to have a basic understanding of \textbf{Calculus} (e.g., freshman introductory course) and \textbf{Ecology}.
+Students are only expected to have a basic understanding of \textbf{Calculus} (e.g., freshman introductory course) and \textbf{Ecology}. It's OK if you're not familiar with calculus as we will provide relevant material for you to review during the first week.
 
 \textbf{Format}
 
@@ -191,7 +191,7 @@ The final grade consists of:
 
 \textbf{Course materials}
 
-We will be using a combination of textbooks and literature articles on theoretical ecology in this course. Textbook chapters and additional reading materials will be provided (see \href{https://chinglinhuang.github.io/2022_Fall_TheoEcol/syllabus.html}{\textbf{Syllabus}} for more details).
+We will use a combination of textbooks of theoretical ecology. Textbook chapters and additional reading materials (listed in the course outline) will be provided. (see \href{https://pojuke.github.io/TheoreticalEcologyPJK/syllabus.html}{\textbf{Syllabus}} for more details).
 
 Below are the textbook references:
 
@@ -199,13 +199,15 @@ Below are the textbook references:
 \def\labelenumi{(\arabic{enumi})}
 \tightlist
 \item
-  \emph{A Primer of Ecology 4\textsuperscript{th} edition. Nicholas Gotelli}, 2008.
+  \emph{A Primer of Ecology} (4\textsuperscript{th} edition). Nicholas Gotelli, 2008.
 \item
   \emph{An Illustrated Guide to Theoretical Ecology}. Ted Case, 2000.
 \item
   \emph{A Biologist's Guide to Mathematical Modeling in Ecology and Evolution}. Sarah Otto \& Troy Day, 2011.
 \item
   \emph{Mathematical Ecology of Populations and Ecosystems}. John Pastor, 2008.
+\item
+  \emph{Nonlinear Dynamics and Choas}. Steven Strogatz, 2000.
 \end{enumerate}
 
 \textbf{Contacts}
@@ -222,16 +224,16 @@ Below are the textbook references:
   Office hours: by appointment
 \end{itemize}
 
-\textbf{Teaching assistant}: Ching-Lin Huang (Andy)
+\textbf{Teaching assistant}: Sun Yi
 
 \begin{itemize}
 \tightlist
 \item
   Office: Life Science Building R635
 \item
-  Email: \href{mailto:r09b44010@ntu.edu.tw}{\nolinkurl{r09b44010@ntu.edu.tw}}
+  Email: \href{mailto:r11b44014@ntu.edu.tw}{\nolinkurl{r11b44014@ntu.edu.tw}}
 \item
-  Office hours: 14:00 \textasciitilde{} 15:00 on Thursday
+  Office hours: 14:00 \textasciitilde{} 15:00 on Thursday or by appointment
 \end{itemize}
 
 \hypertarget{syllabus}{%
@@ -245,52 +247,55 @@ Below are the textbook references:
 \begingroup\fontsize{20}{22}\selectfont \textcolor{black}{\textbf{Date}}\endgroup & \begingroup\fontsize{20}{22}\selectfont \textcolor{black}{\textbf{Lecture topic}}\endgroup & \begingroup\fontsize{20}{22}\selectfont \textcolor{black}{\textbf{Lab}}\endgroup & \begingroup\fontsize{20}{22}\selectfont \textcolor{black}{\textbf{Readings}}\endgroup\\
 \hline
 **Week 1** <span style='vertical-align:-30%'> </span>
-           <br> 9/6 & Introduction: what is theoretical ecology? & \- & Grainger et al., 2021\\
+           <br> 9/5 & Introduction: what is theoretical ecology? & \- & Grainger et al. (2021) An empiricist's guide to using ecological theroy. The American Naturalist, 199: 1-20\\
 \hline
 **Week 2** <span style='vertical-align:-30%'> </span>
-           <br> 9/13 & Exponential population growth & Solving exponential growth equation using "deSolve" & Visualization & \-\\
+           <br> 9/12 & Exponential population growth & Solving exponential growth equation using "deSolve" & Visualization & Gotelli [Ch.1], Case[Ch.1]\\
 \hline
 **Week 3** <span style='vertical-align:-30%'> </span>
-           <br> 9/20 & Logistic population growth and stability analysis & Shinny App for logistic population growth & \-\\
+           <br> 9/19 & Logistic population growth and stability analysis & Shinny App for logistic population growth & Gotelli [Ch.2], Case[Ch.5], Otto & Day[Ch.5]\\
 \hline
 **Week 4** <span style='vertical-align:-30%'> </span>
-           <br> 9/27 & Discrete population models & Discrete logistic population growth model and bifurcation & \-\\
+           <br> 9/26 & Harvesting and bifurcation & Alternative stable state diagram & Pastor [Ch. 7], Strogatz [Ch. 3]\\
 \hline
 **Week 5** <span style='vertical-align:-30%'> </span>
-           <br> 10/4 & Age-structured population models & Age-structured population model & \-\\
+           <br> 10/3 & Metapopulations and patch occupancy models & Metapopulations and patch occupancy models & Gotelli [Ch.4], Case[Ch.16]\\
 \hline
 **Week 6** <span style='vertical-align:-30%'> </span>
-           <br> 10/11 & Metapopulations and patch occupancy models & Metapopulations and patch occupancy models & \-\\
+           <br> 10/10 & No class (National holiday) & \- & \-\\
 \hline
 **Week 7** <span style='vertical-align:-30%'> </span>
-           <br> 10/18 & Lotka-Volterra model of competition: graphical analysis & Lotka-Volterra competition model - Population dynamics & \-\\
+           <br> 10/17 & Age-structured population models & Age-structured population model & Gotelli [Ch.3], Case[Ch.3]\\
 \hline
 **Week 8** <span style='vertical-align:-30%'> </span>
-           <br> 10/25 & Midterm exam & \- & \-\\
+           <br> 10/24 & Lotka-Volterra model of competition: graphical analysis & Lotka-Volterra competition model - Population dynamics & Gotelli [Ch.5], Case[Ch.14]\\
 \hline
 **Week 9** <span style='vertical-align:-30%'> </span>
-           <br> 11/1 & Lotka-Volterra model of competition: invasion analysis and linear stability analysis & Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues & \-\\
+           <br> 10/31 & Midterm exam & \- & \-\\
 \hline
 **Week 10** <span style='vertical-align:-30%'> </span>
-           <br> 11/8 & Predator-prey interactions (I) and time scale separation & Lotka-Volterra model of predator-prey interactions and time-scale separation & \-\\
+           <br> 11/7 & Lotka-Volterra model of competition: invasion analysis and linear stability analysis & Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues & Otto & Day [Ch.8] 
+Broekman et al. (2019) Signs of stabilization and stable coexistence. Ecology Letters, 22: 1957-1975\\
 \hline
 **Week 11** <span style='vertical-align:-30%'> </span>
-           <br> 11/15 & No class due to NTU anniversary & \- & \-\\
+           <br> 11/14 & Predator-prey interactions (I) & Lotka-Volterra model of predator-prey interactions and time-scale separation & Gotelli [Ch.6], Case[Ch.12, 13]\\
 \hline
 **Week 12** <span style='vertical-align:-30%'> </span>
-           <br> 11/22 & Predator-prey interactions (II) and complexity-stability relationship & Rosenzweig-MacArthur predator-prey model and May's complexity-stability relationship & \-\\
+           <br> 11/21 & Predator-prey interactions (II) + Discussion on May (1972) & Rosenzweig-MacArthur predator-prey model and May's complexity-stability relationship & Gotelli [Ch.6], Case[Ch.12, 13]
+May (1972). Will a large complex system be stable? Nature, 238: 413-414\\
 \hline
 **Week 13** <span style='vertical-align:-30%'> </span>
-           <br> 11/29 & Multispecies models of competition: consumer-resource dynamics & Parameter space for apparent competition model & \-\\
+           <br> 11/28 & Mechanistic models for consumer-resource dynamics & Parameter space for apparent competition model & Tilman (1980) Resources: A graphical-mechanistic approach to competition and predation. The American Naturalist, 116: 162-193
+Armstrong & McGehee (1980) Competitive exclusion. The American Naturalist, 115: 151-170.\\
 \hline
 **Week 14** <span style='vertical-align:-30%'> </span>
-           <br> 12/6 & Multispecies models of predation: apparent competition & Resource competition & \-\\
+           <br> 12/5 & Multispecies models of predation: apparent competition & Resource competition & Holt (1977) Predation, apparent competition, and the structure of prey communities. Theoretical Population Biology, 12:197-229\\
 \hline
 **Week 15** <span style='vertical-align:-30%'> </span>
-           <br> 12/13 & Research applcations: plant-soil feedback as an example & \- & \-\\
+           <br> 12/12 & Research applcations: plant-soil feedback as an example & \- & \-\\
 \hline
 **Week 16** <span style='vertical-align:-30%'> </span>
-           <br> 12/20 & Final exam & \- & \-\\
+           <br> 12/19 & Final exam & \- & \-\\
 \hline
 \end{tabu}
 \endgroup{}

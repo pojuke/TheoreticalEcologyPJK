@@ -154,10 +154,14 @@ syllabus <- tibble(
                "Otto & Day [Ch.8] 
 Broekman et al. (2019) Signs of stabilization and stable coexistence. Ecology Letters, 22: 1957-1975
 ",
-               " \\- ",
-               " \\- ",
-               " \\- ",
-               " \\- ",
+               "Gotelli [Ch.6], Case[Ch.12, 13]",
+               "Gotelli [Ch.6], Case[Ch.12, 13]
+May (1972). Will a large complex system be stable? Nature, 238: 413-414
+",
+               "Tilman (1980) Resources: A graphical-mechanistic approach to competition and predation. The American Naturalist, 116: 162-193
+Armstrong & McGehee (1980) Competitive exclusion. The American Naturalist, 115: 151-170.
+",
+               "Holt (1977) Predation, apparent competition, and the structure of prey communities. Theoretical Population Biology, 12:197-229",
                " \\- ",
                " \\- ")  
   
