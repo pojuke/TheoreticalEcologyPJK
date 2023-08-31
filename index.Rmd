@@ -142,7 +142,7 @@ syllabus <- tibble(
           " \\- "),
     
     
-  Readings = c("Grainger et al. (2021) An empiricist's guide to using ecological theroy. The American Naturalist, 199: 1-20",
+  Readings = c("[**Grainger et al., 2021**](https://doi.org/10.1086/717206)",
                "Gotelli [Ch.1], Case[Ch.1]",
                "Gotelli [Ch.2], Case[Ch.5], Otto & Day[Ch.5]",
                "Pastor [Ch. 7], Strogatz [Ch. 3]",
@@ -151,17 +151,14 @@ syllabus <- tibble(
                "Gotelli [Ch.3], Case[Ch.3]",
                "Gotelli [Ch.5], Case[Ch.14]",
                " \\- ",
-               "Otto & Day [Ch.8] 
-Broekman et al. (2019) Signs of stabilization and stable coexistence. Ecology Letters, 22: 1957-1975
-",
+               "Otto & Day [Ch.8], 
+               [**Broekman et al., 2019**]( https://doi.org/10.1111/ele.13349)",
                "Gotelli [Ch.6], Case[Ch.12, 13]",
-               "Gotelli [Ch.6], Case[Ch.12, 13]
-May (1972). Will a large complex system be stable? Nature, 238: 413-414
-",
-               "Tilman (1980) Resources: A graphical-mechanistic approach to competition and predation. The American Naturalist, 116: 162-193
-Armstrong & McGehee (1980) Competitive exclusion. The American Naturalist, 115: 151-170.
-",
-               "Holt (1977) Predation, apparent competition, and the structure of prey communities. Theoretical Population Biology, 12:197-229",
+               "Gotelli [Ch.6], Case[Ch.12, 13], 
+               [**May, 1972**](https://www.nature.com/articles/238413a0)",
+               "[**Tilman, 1980**](https://doi.org/10.1086/283633),
+               [**Armstrong & McGehee, 1980**](https://doi.org/10.1086/283553)",
+               "[**Holt, 1977**](https://doi.org/10.1016/0040-5809(77)90042-9)",
                " \\- ",
                " \\- ")  
   
