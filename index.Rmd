@@ -1,19 +1,19 @@
 --- 
 title: "Introduction to Theoretical Ecology"
 author: "Instructor: Po-Ju Ke $~~~~~$ Teaching Assistant: Sun Yi"
-date: "2022 Fall at National Taiwan Univeristy ![](./bifurcation.gif)"
-
-url: "https://ChingLinHuang.github.io/2023_Fall_TheoEcol/"
-github-repo: "ChingLinHuang/2022_Fall_TheoEcol"
-cover-image: "bifurcation.gif"
-
+date: "2023 Fall at National Taiwan Univeristy ![](./bifurcation.gif)"
+url: https://ChingLinHuang.github.io/2023_Fall_TheoEcol/
+github-repo: ChingLinHuang/2022_Fall_TheoEcol
+cover-image: bifurcation.gif
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [book.bib, packages.bib]
+bibliography:
+- book.bib
+- packages.bib
 biblio-style: apalike
 link-citations: yes
-
-description: "This is the course website for **_Introduction to Theoretical Ecology_** 2022 Fall at National Taiwan University."
+description: This is the course website for **_Introduction to Theoretical Ecology_**
+  2022 Fall at National Taiwan University.
 ---
 # Course information{-}
 <p style = "font-size: 24pt; margin-bottom: 5px; margin-top: 25px"> **Description** </p> The development of theory plays an important role in advancing ecology as a scientific field. This three-unit course is for students at the graduate or advanced undergraduate level. The course will cover classic theoretical topics in ecology, starting from single-species dynamics and gradually build up to multi-species models. The course will primarily focus on population and community ecology, but we will also briefly discuss models in epidemiology and ecosystem ecology. Emphasis will be on theoretical concepts and corresponding mathematical approaches.
