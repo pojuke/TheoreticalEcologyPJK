@@ -155,10 +155,10 @@ syllabus <- tibble(
                [**Broekman et al., 2019**]( https://doi.org/10.1111/ele.13349)",
                "Gotelli [Ch.6], Case[Ch.12, 13]",
                "Gotelli [Ch.6], Case[Ch.12, 13], 
-               [**May, 1972**](https://www.nature.com/articles/238413a0)",
-               "[**Tilman, 1980**](https://doi.org/10.1086/283633),
-               [**Armstrong & McGehee, 1980**](https://doi.org/10.1086/283553)",
-               "[**Holt, 1977**](https://doi.org/10.1016/0040-5809(77)90042-9)",
+               [**May., 1972**](https://www.nature.com/articles/238413a0)",
+               "[**Tilman., 1980**](https://doi.org/10.1086/283633),
+               [**Armstrong & McGehee., 1980**](https://doi.org/10.1086/283553)",
+               "[**Holt., 1977**](https://doi.org/10.1016/0040-5809(77)90042-9)",
                " \\- ",
                " \\- ")  
   
