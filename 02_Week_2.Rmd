@@ -54,8 +54,8 @@ library(deSolve)
 ### (1) Model specification
 exponential_model <- function(times, state, parms) {
   with(as.list(c(state, parms)), {
-    dN_dt = r*N  # exponential growth equation
-    return(list(c(dN_dt)))  # return the results
+    dN_dt = r*N  # Exponential growth equation
+    return(list(c(dN_dt)))  # Return the results
   })
 }
 ```
@@ -63,70 +63,82 @@ exponential_model <- function(times, state, parms) {
 Set the time steps, initial population size and model parameters.
 ```{r}
 ### (2) Model application
-times <- seq(0, 10, by = 0.1)  # time steps to integrate over
-state <- c(N = 10)  # initial population size
-parms <- c(r = 1.5)  # intrinsic growth rate
+times <- seq(0, 10, by = 0.1)  # Time steps to integrate over
+state <- c(N = 10)  # Initial population size
+parms <- c(r = 1.5)  # Intrinsic growth rate
 ```
 
 Solve the equation by `ode()` numerically.
 ```{r}
-# run the ode solver
+# Run the ode solver
 pop_size <- ode(func = exponential_model, times = times, y = state, parms = parms)
 
-# take a look at the results
+# Take a look at the results
 head(pop_size)
-
 ```
 
 Visualization
 ```{r}
 plot(N ~ time, data = pop_size)
-plot(N ~ time, data = pop_size, log = "y")
+```
+
+Compare simulation result with analytic solution, which is
+\[
+N(t) = N_0\exp\{rt\}
+\]
+```{r}
+par(mfrow = c(1,2))
+plot(N ~ time, data = pop_size) # Plot simulation data
+curve(state[1]*exp(parms[1]*x), col = "red", add = T) # Adding analytic solution
+plot(N ~ time, data = pop_size, log = "y") # Plot logged simulation data
+curve(state[1]*exp(parms[1]*x), col = "red", add = T) # Adding analytic solution
 ```
 
 
 <br>
 
-**Part 2 - Comparing different ode solvers**
+**Part 2 - Comparing different ode solvers and iteration time**
 <br>
 In default of `ode()`, the equations are solved by LSODA method. We can change the method by modifying the argument `method` in `ode()`. 
 
 ```{r}
 
 ###### part 2 ######
-# original setting
-times <- seq(0, 10, by = 0.1)  # time steps to integrate over
-state <- c(N = 10)  # initial population size
-parms <- c(r = 1.5)  # intrinsic growth rate
-# default: LSODA
+# Original setting
+times <- seq(0, 10, by = 0.1)  # Time steps to integrate over
+state <- c(N = 10)  # Initial population size
+parms <- c(r = 1.5)  # Intrinsic growth rate
+# Default: LSODA
 pop_size <- ode(func = exponential_model, times = times, y = state, parms = parms)
 
 # Euler's method
 pop_size_1 <- ode(func = exponential_model, times = times, y = state, parms = parms, method = "euler")
 
-# compare different method
+# Compare different method
 par(mfrow = c(1,2))
 plot(N ~ time, data = pop_size, main = "LSODA")
 curve(state[1]*exp(parms[1]*x), times[1], times[length(times)], col = "red", add = T) # correct curve
 plot(N ~ time, data = pop_size_1, main = "Euler")
 curve(state[1]*exp(parms[1]*x), times[1], times[length(times)], col = "red", add = T) # correct curve
 
-# minimize the time step
-times <- seq(0, 10, by = 0.01)  # time steps to integrate over
-state <- c(N = 10)  # initial population size
-parms <- c(r = 1.5)  # intrinsic growth rate
-# default: LSODA
-pop_size <- ode(func = exponential_model, times = times, y = state, parms = parms)
+# Different time step
+times_1 <- seq(0, 10, by = 1)  # time steps to integrate over
+times_2 <- seq(0, 10, by = 0.1)  # time steps to integrate over
+times_3 <- seq(0, 10, by = 0.01)  # time steps to integrate over
 
 # Euler's method
-pop_size_1 <- ode(func = exponential_model, times = times, y = state, parms = parms, method = "euler")
+pop_size_1 <- ode(func = exponential_model, times = times_1, y = state, parms = parms, method = "euler")
+pop_size_2 <- ode(func = exponential_model, times = times_2, y = state, parms = parms, method = "euler")
+pop_size_3 <- ode(func = exponential_model, times = times_3, y = state, parms = parms, method = "euler")
 
-# compare different method
-par(mfrow = c(1,2))
-plot(N ~ time, data = pop_size, main = "LSODA")
-curve(state[1]*exp(parms[1]*x), times[1], times[length(times)], col = "red", add = T) # correct curve
-plot(N ~ time, data = pop_size_1, main = "Euler")
-curve(state[1]*exp(parms[1]*x), times[1], times[length(times)], col = "red", add = T) # correct curve
+# Compare different iteration time
+par(mfrow = c(1,3))
+plot(N ~ time, data = pop_size_1, main = "Iteration time = 11")
+curve(state[1]*exp(parms[1]*x), col = "red", add = T) # correct curve
+plot(N ~ time, data = pop_size_2, main = "Iteration time = 101")
+curve(state[1]*exp(parms[1]*x), col = "red", add = T) # correct curve
+plot(N ~ time, data = pop_size_3, main = "Iteration time = 1001")
+curve(state[1]*exp(parms[1]*x), col = "red", add = T) # correct curve
 ```
 
 <br>
@@ -138,7 +150,7 @@ Consider the model
 \frac{dN}{dt} = r(t)N \ \text{, } r(t) = \overline{r} + \sigma\sin(\omega t)
 \]
 where $\overline{r}$ and $\omega$ are constants.
-The analytical solution of the ode model is 
+The analytic solution of the ode model is 
 \[
 N(t) = N_0\exp\{\overline{r}t - \frac{\sigma}{\omega}[\cos(\omega t) - 1]\}
 \]
