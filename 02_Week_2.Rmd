@@ -97,7 +97,7 @@ curve(state[1]*exp(parms[1]*x), col = "red", add = T) # Adding analytic solution
 
 <br>
 
-**Part 2 - Comparing different ode solvers and iteration time**
+**Part 2 - Comparing different ode solvers and different time intervals**
 <br>
 In default of `ode()`, the equations are solved by LSODA method. We can change the method by modifying the argument `method` in `ode()`. 
 
@@ -121,7 +121,7 @@ curve(state[1]*exp(parms[1]*x), times[1], times[length(times)], col = "red", add
 plot(N ~ time, data = pop_size_1, main = "Euler")
 curve(state[1]*exp(parms[1]*x), times[1], times[length(times)], col = "red", add = T) # correct curve
 
-# Different time step
+# Different time intervals
 times_1 <- seq(0, 10, by = 1)  # time steps to integrate over
 times_2 <- seq(0, 10, by = 0.1)  # time steps to integrate over
 times_3 <- seq(0, 10, by = 0.01)  # time steps to integrate over
@@ -131,13 +131,13 @@ pop_size_1 <- ode(func = exponential_model, times = times_1, y = state, parms = 
 pop_size_2 <- ode(func = exponential_model, times = times_2, y = state, parms = parms, method = "euler")
 pop_size_3 <- ode(func = exponential_model, times = times_3, y = state, parms = parms, method = "euler")
 
-# Compare different iteration time
+# Compare different time intervals
 par(mfrow = c(1,3))
-plot(N ~ time, data = pop_size_1, main = "Iteration time = 11")
+plot(N ~ time, data = pop_size_1, main = "Time intervals = 1")
 curve(state[1]*exp(parms[1]*x), col = "red", add = T) # correct curve
-plot(N ~ time, data = pop_size_2, main = "Iteration time = 101")
+plot(N ~ time, data = pop_size_2, main = "Time intervals = 0.1")
 curve(state[1]*exp(parms[1]*x), col = "red", add = T) # correct curve
-plot(N ~ time, data = pop_size_3, main = "Iteration time = 1001")
+plot(N ~ time, data = pop_size_3, main = "Time intervals = 0.01")
 curve(state[1]*exp(parms[1]*x), col = "red", add = T) # correct curve
 ```
 
