@@ -6,9 +6,14 @@ knitr::include_app("https://genchanghsu0115.shinyapps.io/Logistic_mod_shinyapp/"
 Credit to [Gen-Chang Hsu](https://genchanghsu.github.io/index.html)
 
 
-#  Week 3 - Discrete logistic models {-}
 
-**Part 1 - Model the discrete logistic population growth using for loops**
+<br>
+<br>
+<br>
+<br>
+<br>
+**Extra materials - Modeling discrete logistic models using for loops**
+
 
 Model:
 \[
