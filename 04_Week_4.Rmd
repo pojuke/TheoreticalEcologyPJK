@@ -15,7 +15,7 @@ At the landscape scale, $P_{ij}$ represents the proportion of sites belonging to
 
 Here, $P_{00}$ can be colonized by plant $A$ when propagules arrive (per capita rate $r_{A}$), transitioning the state from $P_{00}$ to $P_{A0}$. Plants may die, with rate $m_{A}$, before conditioning the soil (i.e., transition from $P_{A0}$ back to $P_{00}$), or may successfully condition the soil with rate $c_{A}$ (i.e., transition from $P_{A0}$ to $P_{AA}$). After plants within the state $P_{AA}$ die, a site with microbial legacy is left behind, denoted as $P_{0A}$. These empty sites can be recolonized (i.e., transition from $P_{0A}$ back to $P_{AA}$) with rates affected by the microbial legacy effect, $\alpha$. Finally, the microbial community within the soil may decay to unconditioned state with rate $d_{A}$, transitioning the state from $P_{0A}$ to $P_{00}$.
 
-<!-- In this lab, we are going to model the dynamics of this plant-soil system. We will start by converting the flow diagram into a set of differential equations and then solve them numerically using the package `deSolve`.  -->
+&nbsp;&nbsp;&nbsp;&nbsp;In this lab, we are going to model the dynamics of this plant-soil system. We will start by converting the flow diagram into a set of differential equations and then solve them numerically using the package `deSolve`.
 
 <!-- ```{r} -->
 <!-- library(deSolve) -->
