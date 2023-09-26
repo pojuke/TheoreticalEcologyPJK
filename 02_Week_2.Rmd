@@ -17,7 +17,7 @@ Two main phases:
 
 (1) Model specification: specify the structure of differential equation model
 
-(2) Model application: set the time steps, initial population size and model parameters (e.g., intrinsic population growth rate *r*), and then solve the equation model
+(2) Model application: set the time steps, initial population size and model parameters (e.g., intrinsic population growth rate $r$), and then solve the equation model
 
 <style>
 
