@@ -1,0 +1,195 @@
+# Week 5 - Harvesting and bifurcation {-}
+
+In this lab section, we're going to analyze the budworm population
+dynamic model from [**Ludwig et al.,
+1978**](https://doi.org/10.2307/3939).
+
+<br> **Part 1 - Stability of the budworm model**
+
+In part 1 we're going to visualize the stability of the budworm model,
+by plotting the differential equation. We will plot the the differential
+equation with different initial, which we will see that the number and stability of equilibrium changes when initial changes.
+
+\[
+\dfrac{dN}{dt} = rN(1 - \dfrac{N}{K}) - \dfrac{HN^2}{A^2 + N^2}
+\]
+
+```{r}
+#### Plotting the functional form for different parameters
+#### Parameter setting
+r <- 0.055; K <- 10; H <- 0.1; A <- 1
+
+#### Visualize the whole dN/dt with different H
+N.vec <- seq(from = 0, to = 10, length = 500)
+H.breaks <- c(0.05, 0.12, 0.20)
+dat <- outer(X = N.vec, Y = H.breaks,
+             function(N, H){r * N * (1 - N / K) - (H * N^2 / (A^2 + N^2))})
+matplot(x = N.vec, y = dat, type = "l", 
+        xlab = "N", ylab = "dN/dt", col = "blue", lwd = 2, las = 1)
+abline(h = 0)
+legend("bottomleft", legend = H.breaks, title = "H", col = "blue", lty=1:3, lwd = 2)
+```
+<br>
+
+Second, we're going to plot $harvest$ rate against $N$ with
+separate components of $dN/dt$, which the blue line is 
+\[
+\dfrac{HN}{A^2 + N^2}
+\]
+with different $H$ initials, the red line is, 
+\[
+r(1 - \dfrac{N}{K})
+\]
+and the points that blue line and red line crosses are the equilibrium points.
+
+```{r}
+#### Visualize separate components of dN/dt with different H
+N.vec <- seq(from = 0, to = 10, length = 500)
+H.breaks <- c(0.05, 0.12, 0.20)
+dat.growth <- outer(X = N.vec, Y = H.breaks,
+                    function(N, H){H * N / (A^2 + N^2)}) # Note notation change
+matplot(x = N.vec, y = dat.growth, type = "l", ylim = c(0, 0.10), las = 1, 
+        xlab = "N", ylab = "harvest rate", col = "blue", lwd = 2)
+curve(r * (1 - x/K), add = T, col = "red", lwd = 2) # Just curve since its the same line, and note variable notation change
+abline(h = 0)
+legend("topright", legend = H.breaks, title = "H", col = "blue", lty=1:3, lwd = 2)
+```
+<br>
+
+
+**Part 2 - Use `rootSolve` function `gradient` and `uniroot.all`, to solve stability of budworm model**
+
+```{r}
+#### Stability of the budworm model, as a function of its parameters
+#### Using "rootSolve" function "gradient" and "uniroot.all"
+#### Works best for simple models and those with known solutions
+########################################################################################################################
+library(rootSolve)
+#### Parameter setting
+r <- 0.055; K <- 10; H <- 0.1; A <- 1
+
+#### Spruce budworm model for rootSolve
+Budworm <- function(N, H = 0.1){
+  r * N * (1 - N / K) - (H * N^2 / (A^2 + N^2))
+}
+
+#### Function of root stability
+Stability <- function(H.value = 0.1){
+  equilibrium <- uniroot.all(f = Budworm, interval = c(0, K), H = H.value) # finds all roots
+  lambda <- vector(mode = "numeric", length = length(equilibrium))
+  for(i in 1:length(equilibrium)){
+    lambda[i] <- sign(gradient(f = Budworm, x = equilibrium[i], H = H.value))
+  }
+  return(list(Equilibrium = equilibrium,
+              Lambda = lambda))
+}
+
+#### Bifurcation diagram for H
+H.vec <- seq(0.001, 0.3, by = 0.0001)
+
+## Create plotting frame
+plot(0, xlim = range(H.vec), ylim = c(0, 10), type = "n", las = 1,
+     xlab = "H", ylab = "Equilibrium density, N*", main = "Budworm model bifurcation along H")
+legend("topright", pch = 15, pt.cex = 2, c("stable", "unstable"),
+       col = c("darkblue", "lightblue"))
+
+## Calculate number of roots and stability across range or H
+for(H in H.vec){
+  temp <- Stability(H.value = H)
+  points(x = rep(H, length(temp$Equilibrium)),
+         y = temp$Equilibrium,
+         pch = 15, col = ifelse(temp$Lambda == -1, "darkblue", "lightblue"))
+}
+```
+<br>
+
+Take a look a this
+[**website**](https://www.math.ksu.edu/~albin/teaching/math340_fall2018/slides/03_bifurcations.html) if you're interested in more details of bifurcation. 
+<br>
+<br>
+
+**Extra materials**
+<br>
+**Using `deSolve` function `ode` to brute-force stable solution**
+
+Here we're going to use `deSolve` to solve the budworm model,
+
+```{r}
+#### Budworm model for deSolve
+BudwormODE <- function(times, state, parms) {
+  with(as.list(c(state, parms)), {
+    dN_dt = r * N * (1 - N / K) - (H * N^2 / (A^2 + N^2))
+    return(list(c(dN_dt)))
+  })
+}
+
+### Parameters setting
+times <- seq(0, 5000, by = 100)
+state <- c(N = 10)
+
+#### Bifurcation diagram for H -- the forward branch
+### Set first forward simulation and saving space
+H.vec.forward <- seq(0.001, 0.3, by = 0.001)
+parms <- c(H = H.vec.forward[1], K = 10, r = 0.055, A = 1)
+temp <- deSolve::ode(func = BudwormODE, times = times, y = state, parms = parms)
+forward <- matrix(rep(unname(c(H.vec.forward[1], temp[length(times), 2])), length(H.vec.forward)), nrow = length(H.vec.forward), ncol = 2, byrow = T)
+
+## Run across forward vector, using previous step equilibrium as new initial state
+for(i in 2:length(H.vec.forward)){
+  state <- c(N = forward[i-1, 2])
+  parms <- c(H = H.vec.forward[i], K = 10, r = 0.055, A = 1)
+  temp <- deSolve::ode(func = BudwormODE, times = times, y = state, parms = parms)
+  forward[i, ] = unname(c(H.vec.forward[i], temp[length(times), 2]))
+}
+
+#### Bifurcation diagram for H -- the backward branch
+## Set first backward simulation and saving space
+H.vec.backward <- rev(H.vec.forward)
+parms <- c(H = H.vec.backward[1], K = 10, r = 0.055, A = 1)
+temp <- deSolve::ode(func = BudwormODE, times = times, y = state, parms = parms)
+backward <- matrix(rep(unname(c(H.vec.backward[1], temp[length(times), 2])), length(H.vec.backward)),
+                   nrow = length(H.vec.backward), ncol = 2, byrow = T)
+
+## Run across backward vector, using previous step equilibrium as new initial state
+for(i in 2:length(H.vec.backward)){
+  state <- c(N = backward[i-1, 2] + 0.001) #Remember to add a small perturbation on initial
+  parms <- c(H = H.vec.backward[i], K = 10, r = 0.055, A = 1)
+  temp <- deSolve::ode(func = BudwormODE, times = times, y = state, parms = parms)
+  backward[i, ] = unname(c(H.vec.backward[i], temp[length(times), 2]))
+}
+
+#### Plot both forward and backward branch
+plot(forward[, 1], forward[, 2],
+     xlim = range(H.vec.forward), ylim = c(0, 10), las = 1, pch = 1, col = "darkblue", cex = 1.6,
+     xlab = "H", ylab = "Equilibrium density, N*", main = "Budworm model bifurcation along H")
+points(backward[, 1], backward[, 2], pch = 16, col = "lightblue")
+legend("topright", pch = c(1, 16), pt.cex = 1.5, c("forward", "backward"),
+       col = c("darkblue", "lightblue"))
+```
+<br>
+
+<!-- **Part 2 - Non-dimensionalized model, a 2-D bifurcation diagram** -->
+<!-- <br> -->
+
+<!-- Third, we will plot a 2-D bifurcation diagram, with $r$ against $K$,  -->
+<!-- \[ -->
+<!-- \dfrac{dN}{dt} = rx(1 - \dfrac{x}{K}) - \dfrac{x^2}{1 + x^2}, -->
+<!-- \] -->
+
+<!-- \[ -->
+<!-- r = \dfrac{2x^3}{(1 + x^2)^2}, K = \dfrac{2x^3}{(x^2 - 1)} -->
+<!-- \] -->
+
+<!-- ```{r} -->
+<!-- #### 2-D bifurcation diagram following analytical solution from Strogatz -->
+<!-- #### For nondimensionalized model dx/du = rx(1-x/k) - x^2/(1+x^2) -->
+<!-- #### There exist parametric curves for bifurcation points r(x) and k(x) -->
+<!-- x.bifur = seq(1.001, 50, by = 0.001) -->
+<!-- bifur2D = data.frame(x.bifur = x.bifur,  -->
+<!--                      r.bifur = 2 * x.bifur^3 / ((1 + x.bifur^2)^2), -->
+<!--                      k.bifur = 2 * x.bifur^3 / (x.bifur^2 - 1)) -->
+<!-- plot(r.bifur ~ k.bifur, bifur2D, type = "l", lwd = 2, las = 1,  -->
+<!--      xlim = c(0, 60), ylim = c(0, max(bifur2D$r.bifur) * 1.1),  -->
+<!--      xlab = "K", ylab = "r", main = "Budworm model bifurcation along r-k space") -->
+<!-- ``` -->
+<!-- <br> -->

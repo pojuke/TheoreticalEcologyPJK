@@ -11,7 +11,7 @@ In part 1, we will solve the differential equation for exponential population gr
 
 <br>
 
-**Part 1 - Numerical solution using the package "deSolve"**
+**Part 1 - Numerical solution using the package `deSolve`**
 
 Two main phases:
 
