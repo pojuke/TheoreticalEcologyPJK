@@ -175,7 +175,7 @@ dynamic model from <a href="https://doi.org/10.2307/3939"><strong>Ludwig et al.,
 <p><br> <strong>Part 1 - Stability of the budworm model</strong></p>
 <p>In part 1 we’re going to visualize the stability of the budworm model,
 by plotting the differential equation. We will plot the the differential
-equation with different initial, which we will see that the number and stability of equilibrium changes when initial changes.</p>
+equation with different initial, which we will see that the number and stability of equilibrium changes when parameter changes.</p>
 <p><span class="math display">\[
 \dfrac{dN}{dt} = rN(1 - \dfrac{N}{K}) - \dfrac{HN^2}{A^2 + N^2}
 \]</span></p>
@@ -199,7 +199,7 @@ separate components of <span class="math inline">\(dN/dt\)</span>, which the blu
 <span class="math display">\[
 \dfrac{HN}{A^2 + N^2}
 \]</span>
-with different <span class="math inline">\(H\)</span> initials, the red line is,
+with different <span class="math inline">\(H\)</span>, the red line is,
 <span class="math display">\[
 r(1 - \dfrac{N}{K})
 \]</span>
@@ -250,7 +250,7 @@ and the points that blue line and red line crosses are the equilibrium points.</
 <span id="cb30-31"><a href="week-5---harvesting-and-bifurcation.html#cb30-31" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">pch =</span> <span class="dv">15</span>, <span class="at">pt.cex =</span> <span class="dv">2</span>, <span class="fu">c</span>(<span class="st">&quot;stable&quot;</span>, <span class="st">&quot;unstable&quot;</span>),</span>
 <span id="cb30-32"><a href="week-5---harvesting-and-bifurcation.html#cb30-32" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;darkblue&quot;</span>, <span class="st">&quot;lightblue&quot;</span>))</span>
 <span id="cb30-33"><a href="week-5---harvesting-and-bifurcation.html#cb30-33" tabindex="-1"></a></span>
-<span id="cb30-34"><a href="week-5---harvesting-and-bifurcation.html#cb30-34" tabindex="-1"></a><span class="do">## Calculate number of roots and stability across range or H</span></span>
+<span id="cb30-34"><a href="week-5---harvesting-and-bifurcation.html#cb30-34" tabindex="-1"></a><span class="do">## Calculate number of roots and stability across range of H</span></span>
 <span id="cb30-35"><a href="week-5---harvesting-and-bifurcation.html#cb30-35" tabindex="-1"></a><span class="cf">for</span>(H <span class="cf">in</span> H.vec){</span>
 <span id="cb30-36"><a href="week-5---harvesting-and-bifurcation.html#cb30-36" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> <span class="fu">Stability</span>(<span class="at">H.value =</span> H)</span>
 <span id="cb30-37"><a href="week-5---harvesting-and-bifurcation.html#cb30-37" tabindex="-1"></a>  <span class="fu">points</span>(<span class="at">x =</span> <span class="fu">rep</span>(H, <span class="fu">length</span>(temp<span class="sc">$</span>Equilibrium)),</span>

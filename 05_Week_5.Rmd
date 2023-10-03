@@ -8,7 +8,7 @@ dynamic model from [**Ludwig et al.,
 
 In part 1 we're going to visualize the stability of the budworm model,
 by plotting the differential equation. We will plot the the differential
-equation with different initial, which we will see that the number and stability of equilibrium changes when initial changes.
+equation with different initial, which we will see that the number and stability of equilibrium changes when parameter changes.
 
 \[
 \dfrac{dN}{dt} = rN(1 - \dfrac{N}{K}) - \dfrac{HN^2}{A^2 + N^2}
@@ -36,7 +36,7 @@ separate components of $dN/dt$, which the blue line is
 \[
 \dfrac{HN}{A^2 + N^2}
 \]
-with different $H$ initials, the red line is, 
+with different $H$, the red line is, 
 \[
 r(1 - \dfrac{N}{K})
 \]
@@ -93,7 +93,7 @@ plot(0, xlim = range(H.vec), ylim = c(0, 10), type = "n", las = 1,
 legend("topright", pch = 15, pt.cex = 2, c("stable", "unstable"),
        col = c("darkblue", "lightblue"))
 
-## Calculate number of roots and stability across range or H
+## Calculate number of roots and stability across range of H
 for(H in H.vec){
   temp <- Stability(H.value = H)
   points(x = rep(H, length(temp$Equilibrium)),
