@@ -1,41 +1,67 @@
 # Week 7 - Age-structure population model{-} 
 
-In this lab section, we will analyze a Leslie matrix using for loops and matrix algebra, compare the results with those obtained via eigen-analysis, and visualize the population dynamics and age distribution.
+In this lab section, we will analyze a Leslie matrix using `for` loops and matrix algebra, compare the results with those obtained via eigen-analysis, and visualize the population dynamics and age distribution.
 
 **Part 1 - Visualizing stable age distribution**
 
 For any diagonalizable n-by-n matrix $M$ with only one dominant eigenvalue, and for any n-by-1 vector $v$, $M^tv$ will shift to the same direction with the eigenvector of $M$ corresponding to the dominant eigenvalue when $t$ is large. Here, we visualize this fact numerically.
+
 ```{r}
 library(ggplot2)
-set.seed(1234)
-MAT <- matrix(rnorm(25), ncol = 5, nrow = 5)
-abs(eigen(MAT)$values) # check only one dominant eigenvalue
-eig_vec1 <- as.numeric(eigen(MAT)$vector[, 1])
-v <- rnorm(5)
-time <- 15
-
-dat_v <- data.frame(matrix(ncol = 5, nrow = time))
-dat_v[1, ] <- v
-for(i in 2:time){
-  dat_v[i, ] <- MAT %*% t(dat_v[i-1, ])
+Time = 6
+A = matrix(c(1, 1, 0.5, 0), 2, 2, byrow=T)
+N = matrix(0, Time, 2)
+N[1, ] = c(1, 1)
+for(i in 2:Time){
+  N[i, ] = A %*% N[i-1, ]
 }
+Data = as.data.frame(N)
+Data$Time = rep(1:Time)
+Data$V1.start = 0
+Data$V2.start = 0
 
-# Remake data for gganimate
-dat <- data.frame(X1 = 0, X2 = 0, Time = 1)
-for(i in 1:time){
-  dat <- rbind(dat, data.frame(dat_v[i,1:2] / sqrt(sum(dat_v[i,1:2]^2)) * i, Time = i))
-  dat <- rbind(dat, c(0,0, i+1))
-}
-dat <- dat[-nrow(dat), ]
+ggplot(Data, aes(x=V1, y=V2, col=as.factor(Time))) + 
+  geom_point() + 
+  geom_segment(aes(x=V1.start, y=V2.start, xend=V1, yend=V2), 
+               arrow=arrow(type="closed", length=unit(0.4,"cm"))) + 
+  geom_text(aes(x=V1+0.1, y=V2+0.1, label=Time)) + 
+  scale_color_brewer("Time", type="qual", palette=2) + 
+  labs(x="Age 1", y="Age 2") +  
+  theme_classic()
 
-
-ggplot(dat, aes(X1, X2, color = Time)) +
-  geom_path(arrow = arrow(length = unit(0.55, "cm"))) + 
-  geom_abline(intercept = 0, 
-              slope = eig_vec1[2]/eig_vec1[1], 
-              color = "red", 
-              linetype = "dashed") # red dashed eigenvector
 ```
+
+
+<!-- library(ggplot2) -->
+<!-- set.seed(1234) -->
+<!-- MAT <- matrix(rnorm(25), ncol = 5, nrow = 5) -->
+<!-- abs(eigen(MAT)$values) # check only one dominant eigenvalue -->
+<!-- eig_vec1 <- as.numeric(eigen(MAT)$vector[, 1]) -->
+<!-- v <- rnorm(5) -->
+<!-- time <- 15 -->
+
+<!-- dat_v <- data.frame(matrix(ncol = 5, nrow = time)) -->
+<!-- dat_v[1, ] <- v -->
+<!-- for(i in 2:time){ -->
+<!--   dat_v[i, ] <- MAT %*% t(dat_v[i-1, ]) -->
+<!-- } -->
+
+<!-- # Remake data for gganimate -->
+<!-- dat <- data.frame(X1 = 0, X2 = 0, Time = 1) -->
+<!-- for(i in 1:time){ -->
+<!--   dat <- rbind(dat, data.frame(dat_v[i,1:2] / sqrt(sum(dat_v[i,1:2]^2)) * i, Time = i)) -->
+<!--   dat <- rbind(dat, c(0,0, i+1)) -->
+<!-- } -->
+<!-- dat <- dat[-nrow(dat), ] -->
+
+
+<!-- ggplot(dat, aes(X1, X2, color = Time)) + -->
+<!--   geom_path(arrow = arrow(length = unit(0.55, "cm"))) +  -->
+<!--   geom_abline(intercept = 0,  -->
+<!--               slope = eig_vec1[2]/eig_vec1[1],  -->
+<!--               color = "red",  -->
+<!--               linetype = "dashed") # red dashed eigenvector -->
+
 
 
 <br>
