@@ -1,5 +1,5 @@
 
-# Week 7 - Lotka-Volterra competition model - Population dynamics{-} 
+# Week 8 - Lotka-Volterra competition model - Population dynamics{-} 
 
 
 In this lab, we are going to analyze the two-species Lotka-Volterra competition model numerically and visualize the population dynamics under different parameter settings.
@@ -33,8 +33,8 @@ LV_model <- function(r1 = 1.4, r2 = 1.2, a11 = 1/200, a21 = 1/400, a22 = 1/200, 
     as.data.frame() %>%
     gather(key = "Species", value = "pop_size", -time) %>%
     ggplot(aes(x = time, y = pop_size, color = Species)) +
-    geom_line(size = 1.5)
-
+    geom_line(size = 1.5) +
+    theme_bw()
 }
 
   ### Different parameter settings
@@ -112,8 +112,8 @@ phase_plane <- function(r1, r2, a11, a21, a22, a12, title, t){
       labs(title = title)
   }
 
-  phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/100, a21 = 1/200, a22 = 1/100, a12 = 1/300, t = 0.3, title = "Stable coexistence")
+  phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/100, a21 = 1/200, a22 = 1/100, a12 = 1/300, t = 0.2, title = "Stable coexistence")
 
-  phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/200, a21 = 1/100, a22 = 1/200, a12 = 1/100, t = 0.3, title = "Unstable coexistence (saddle)")
+  phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/200, a21 = 1/100, a22 = 1/200, a12 = 1/100, t = 0.2, title = "Unstable coexistence (saddle)")
 
 ```
