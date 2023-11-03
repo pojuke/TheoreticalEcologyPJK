@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Introduction to Theoretical Ecology</title>
+  <title>Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues | Introduction to Theoretical Ecology</title>
   <meta name="description" content="This is the course website for Introduction to Theoretical Ecology 2023 Fall at National Taiwan University." />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Introduction to Theoretical Ecology" />
+  <meta property="og:title" content="Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues | Introduction to Theoretical Ecology" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
   <meta property="og:description" content="This is the course website for Introduction to Theoretical Ecology 2023 Fall at National Taiwan University." />
   <meta name="github-repo" content="pojuke/TheoreticalEcologyPJK" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Introduction to Theoretical Ecology" />
+  <meta name="twitter:title" content="Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues | Introduction to Theoretical Ecology" />
   
   <meta name="twitter:description" content="This is the course website for Introduction to Theoretical Ecology 2023 Fall at National Taiwan University." />
   <meta name="twitter:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="week-9---midterm.html"/>
 
-<link rel="next" href="syllabus.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -172,75 +172,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Introduction to Theoretical Ecology</h1>
-<p class="author"><em>Instructor: Po-Ju Ke <span class="math inline">\(~~~~~\)</span> Teaching Assistant: Sun Yi</em></p>
-<p class="date"><em>2023 Fall at National Taiwan Univeristy <img src="bifurcation.gif" /></em></p>
-</div>
-<div id="course-information" class="section level1 unnumbered hasAnchor">
-<h1>Course information<a href="index.html#course-information" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Description</strong>
-</p>
-<p>The development of theory plays an important role in advancing ecology as a scientific field. This three-unit course is for students at the graduate or advanced undergraduate level. The course will cover classic theoretical topics in population and community ecology, staring from single-species dynamics and gradually build up to multispecies models. Emphasis will be on theoretical concepts and corresponding mathematical approaches.</p>
-<p>This course is designed as a two-hour lecture (written on black board) followed by a one-hour complementary hands-on practice module. In the lecture, we will analyze dynamical models and discuss their theoretical implications. In the practice section, we will use a combination interactive applications and numerical simulations to gain more intuition of the dynamics and behavior of different models.</p>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Objective</strong>
-</p>
-<p>By the end of the course, students are expected to be familiar with the basic building blocks of ecological models, and would be able to formulate and analyze simple models of their own. The hands-on practice component should allow students to link their ecological intuition with the underlying mathematical model, helping them to better understand the primary literature of theoretical ecology.</p>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Requirement</strong>
-</p>
-<p>Students are only expected to have a basic understanding of <strong>Calculus</strong> (e.g., freshman introductory course) and <strong>Ecology</strong>. It’s OK if you’re not familiar with calculus as we will provide relevant material for you to review during the first week.</p>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Format</strong>
-</p>
-<p>Tuesday 6,7,8 (1:20 pm ~ 4:20 pm) at 共207</p>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Grading</strong>
-</p>
-<p>The final grade consists of:</p>
-<ol style="list-style-type: decimal">
-<li>Assignment problem sets (60%)</li>
-<li>Midterm exam (15%)</li>
-<li>Final exam (15%)</li>
-<li>Course participation (10%)</li>
-</ol>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Course materials</strong>
-</p>
-<p>We will use a combination of textbooks of theoretical ecology. Textbook chapters and additional reading materials (listed in the course outline) will be provided. (see <a href="https://pojuke.github.io/TheoreticalEcologyPJK/syllabus.html"><strong>Syllabus</strong></a> for more details).</p>
-<p>Below are the textbook references:</p>
-<ol style="list-style-type: decimal">
-<li><em>A Primer of Ecology</em> (4<sup>th</sup> edition). Nicholas Gotelli, 2008.</li>
-<li><em>An Illustrated Guide to Theoretical Ecology</em>. Ted Case, 2000.</li>
-<li><em>A Biologist’s Guide to Mathematical Modeling in Ecology and Evolution</em>. Sarah Otto &amp; Troy Day, 2011.</li>
-<li><em>Mathematical Ecology of Populations and Ecosystems</em>. John Pastor, 2008.</li>
-<li><em>Nonlinear Dynamics and Choas</em>. Steven Strogatz, 2000.</li>
-</ol>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Contacts</strong>
-</p>
-<p><strong>Instructor</strong>: Po-Ju Ke</p>
-<ul>
-<li>Office: Life Science Building R635</li>
-<li>Email: <a href="mailto:pojuke@ntu.edu.tw" class="email">pojuke@ntu.edu.tw</a></li>
-<li>Office hours: by appointment</li>
-</ul>
-<p><strong>Teaching assistant</strong>: Sun Yi</p>
-<ul>
-<li>Office: Life Science Building R635</li>
-<li>Email: <a href="mailto:r11b44014@ntu.edu.tw" class="email">r11b44014@ntu.edu.tw</a></li>
-<li>Office hours: 14:00 ~ 15:00 on Thursday or by appointment</li>
-</ul>
+<div id="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues" class="section level1 unnumbered hasAnchor">
+<h1>Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues<a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In class, we learned that the stability of a nonlinear ODE can be characterized by studying the dynamics of the “displacement for the equilibrium” (<span class="math inline">\(\pmb\varepsilon\)</span>), which follows a much simpler linear ODE. If the linear ODE describing the dynamics of the displacement have a stable equilibrium at zero, then this indicates that the original equilibrium of the nonlinear ODE will also be stable. Consider the case where the dynamics of displacements <span class="math inline">\(\pmb\varepsilon\)</span> can be described by the following linear ODE:</p>
+<p>We can see that this ODE has an equilibrium at zero and the eigenvalues are as follows, which have negative real parts (indicating that it’ll be stable) with a non-zero imaginary part (indicating that it’ll rotate towards the equilibrium, as shown below).</p>
+<p><span class="math display">\[
+\dfrac{d \vec{\pmb\varepsilon}}{d t} = \mathcal{J}\vec{\pmb\varepsilon}
+\]</span>
+where <span class="math inline">\(\vec{\pmb\varepsilon} = (\varepsilon_1, \varepsilon_2)^T\)</span> and <span class="math inline">\(\mathcal{J} = \begin{pmatrix} -1 &amp; 1\\ -2 &amp; -1 \end{pmatrix}\)</span>.
+Or, we can write the linear system by two ODEs:
+<span class="math display">\[\begin{align*}
+  \dfrac{d \varepsilon_1}{d t} &amp;= (-1)\times \varepsilon_1 + (1)\times\varepsilon_2\\
+  \dfrac{d \varepsilon_2}{d t} &amp;= (-2)\times \varepsilon_1 + (-1)\times\varepsilon_2\\
+\end{align*}\]</span></p>
+<p>Note that the element in the first row and second column is positive.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb56-2"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb56-3"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-3" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb56-4"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-4" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
+<span id="cb56-5"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-5" tabindex="-1"></a><span class="fu">library</span>(gifski)</span>
+<span id="cb56-6"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-6" tabindex="-1"></a></span>
+<span id="cb56-7"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-7" tabindex="-1"></a>  <span class="do">### Model specification</span></span>
+<span id="cb56-8"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-8" tabindex="-1"></a>  ERROR <span class="ot">&lt;-</span> <span class="cf">function</span>(times, state, parms) {</span>
+<span id="cb56-9"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-9" tabindex="-1"></a>    <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parms)), {</span>
+<span id="cb56-10"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-10" tabindex="-1"></a>      de1_dt <span class="ot">=</span> c1 <span class="sc">*</span> e1 <span class="sc">+</span> c2 <span class="sc">*</span> e2</span>
+<span id="cb56-11"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-11" tabindex="-1"></a>      de2_dt <span class="ot">=</span> d1 <span class="sc">*</span> e1 <span class="sc">+</span> d2 <span class="sc">*</span> e2</span>
+<span id="cb56-12"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-12" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">list</span>(<span class="fu">c</span>(de1_dt, de2_dt)))</span>
+<span id="cb56-13"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-13" tabindex="-1"></a>    })</span>
+<span id="cb56-14"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-14" tabindex="-1"></a>  }</span>
+<span id="cb56-15"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-15" tabindex="-1"></a>  </span>
+<span id="cb56-16"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-16" tabindex="-1"></a>  <span class="do">### Model parameters</span></span>
+<span id="cb56-17"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-17" tabindex="-1"></a>  times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="fl">0.0001</span>)</span>
+<span id="cb56-18"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-18" tabindex="-1"></a>  state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">e1 =</span> <span class="dv">1</span>, <span class="at">e2 =</span> <span class="dv">1</span>)</span>
+<span id="cb56-19"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-19" tabindex="-1"></a>  parms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">c1 =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">c2 =</span> <span class="dv">1</span>, <span class="at">d1 =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">d2 =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb56-20"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-20" tabindex="-1"></a>  </span>
+<span id="cb56-21"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-21" tabindex="-1"></a>  <span class="do">### Model application</span></span>
+<span id="cb56-22"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-22" tabindex="-1"></a>  error <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> ERROR, <span class="at">times =</span> times, <span class="at">y =</span> state, <span class="at">parms =</span> parms)</span>
+<span id="cb56-23"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-23" tabindex="-1"></a>  <span class="fu">tail</span>(error)</span>
+<span id="cb56-24"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-24" tabindex="-1"></a>  <span class="fu">plot</span>(e1 <span class="sc">~</span> e2, error, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<pre><code>##              time           e1            e2
+##  [99996,]  9.9995 3.192479e-05 -6.443030e-05
+##  [99997,]  9.9996 3.191516e-05 -6.443024e-05
+##  [99998,]  9.9997 3.190552e-05 -6.443018e-05
+##  [99999,]  9.9998 3.189589e-05 -6.443011e-05
+## [100000,]  9.9999 3.188626e-05 -6.443005e-05
+## [100001,] 10.0000 3.187663e-05 -6.442998e-05</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb58-1" tabindex="-1"></a><span class="fu">eigen</span>(<span class="fu">matrix</span>(parms, <span class="dv">2</span>, <span class="dv">2</span>, T))<span class="sc">$</span>values <span class="co"># eigenvalues</span></span></code></pre></div>
+<pre><code>## [1] -1+1.414214i -1-1.414214i</code></pre>
+<p><img src="W9_dynamics_error.gif" /></p>
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
+<a href="week-9---midterm.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="syllabus.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -271,7 +260,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/index.Rmd",
+"link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/10_Week_10.Rmd",
 "text": "Edit"
 },
 "history": {

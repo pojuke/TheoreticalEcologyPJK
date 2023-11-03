@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Introduction to Theoretical Ecology</title>
+  <title>Week 9 - Midterm | Introduction to Theoretical Ecology</title>
   <meta name="description" content="This is the course website for Introduction to Theoretical Ecology 2023 Fall at National Taiwan University." />
   <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Introduction to Theoretical Ecology" />
+  <meta property="og:title" content="Week 9 - Midterm | Introduction to Theoretical Ecology" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
   <meta property="og:description" content="This is the course website for Introduction to Theoretical Ecology 2023 Fall at National Taiwan University." />
   <meta name="github-repo" content="pojuke/TheoreticalEcologyPJK" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Introduction to Theoretical Ecology" />
+  <meta name="twitter:title" content="Week 9 - Midterm | Introduction to Theoretical Ecology" />
   
   <meta name="twitter:description" content="This is the course website for Introduction to Theoretical Ecology 2023 Fall at National Taiwan University." />
   <meta name="twitter:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="syllabus.html"/>
+<link rel="prev" href="week-8---lotka-volterra-competition-model---population-dynamics.html"/>
+<link rel="next" href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -172,75 +172,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Introduction to Theoretical Ecology</h1>
-<p class="author"><em>Instructor: Po-Ju Ke <span class="math inline">\(~~~~~\)</span> Teaching Assistant: Sun Yi</em></p>
-<p class="date"><em>2023 Fall at National Taiwan Univeristy <img src="bifurcation.gif" /></em></p>
-</div>
-<div id="course-information" class="section level1 unnumbered hasAnchor">
-<h1>Course information<a href="index.html#course-information" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Description</strong>
-</p>
-<p>The development of theory plays an important role in advancing ecology as a scientific field. This three-unit course is for students at the graduate or advanced undergraduate level. The course will cover classic theoretical topics in population and community ecology, staring from single-species dynamics and gradually build up to multispecies models. Emphasis will be on theoretical concepts and corresponding mathematical approaches.</p>
-<p>This course is designed as a two-hour lecture (written on black board) followed by a one-hour complementary hands-on practice module. In the lecture, we will analyze dynamical models and discuss their theoretical implications. In the practice section, we will use a combination interactive applications and numerical simulations to gain more intuition of the dynamics and behavior of different models.</p>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Objective</strong>
-</p>
-<p>By the end of the course, students are expected to be familiar with the basic building blocks of ecological models, and would be able to formulate and analyze simple models of their own. The hands-on practice component should allow students to link their ecological intuition with the underlying mathematical model, helping them to better understand the primary literature of theoretical ecology.</p>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Requirement</strong>
-</p>
-<p>Students are only expected to have a basic understanding of <strong>Calculus</strong> (e.g., freshman introductory course) and <strong>Ecology</strong>. It’s OK if you’re not familiar with calculus as we will provide relevant material for you to review during the first week.</p>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Format</strong>
-</p>
-<p>Tuesday 6,7,8 (1:20 pm ~ 4:20 pm) at 共207</p>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Grading</strong>
-</p>
-<p>The final grade consists of:</p>
-<ol style="list-style-type: decimal">
-<li>Assignment problem sets (60%)</li>
-<li>Midterm exam (15%)</li>
-<li>Final exam (15%)</li>
-<li>Course participation (10%)</li>
-</ol>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Course materials</strong>
-</p>
-<p>We will use a combination of textbooks of theoretical ecology. Textbook chapters and additional reading materials (listed in the course outline) will be provided. (see <a href="https://pojuke.github.io/TheoreticalEcologyPJK/syllabus.html"><strong>Syllabus</strong></a> for more details).</p>
-<p>Below are the textbook references:</p>
-<ol style="list-style-type: decimal">
-<li><em>A Primer of Ecology</em> (4<sup>th</sup> edition). Nicholas Gotelli, 2008.</li>
-<li><em>An Illustrated Guide to Theoretical Ecology</em>. Ted Case, 2000.</li>
-<li><em>A Biologist’s Guide to Mathematical Modeling in Ecology and Evolution</em>. Sarah Otto &amp; Troy Day, 2011.</li>
-<li><em>Mathematical Ecology of Populations and Ecosystems</em>. John Pastor, 2008.</li>
-<li><em>Nonlinear Dynamics and Choas</em>. Steven Strogatz, 2000.</li>
-</ol>
-<p style="font-size: 24pt; margin-bottom: 5px; margin-top: 25px">
-<strong>Contacts</strong>
-</p>
-<p><strong>Instructor</strong>: Po-Ju Ke</p>
-<ul>
-<li>Office: Life Science Building R635</li>
-<li>Email: <a href="mailto:pojuke@ntu.edu.tw" class="email">pojuke@ntu.edu.tw</a></li>
-<li>Office hours: by appointment</li>
-</ul>
-<p><strong>Teaching assistant</strong>: Sun Yi</p>
-<ul>
-<li>Office: Life Science Building R635</li>
-<li>Email: <a href="mailto:r11b44014@ntu.edu.tw" class="email">r11b44014@ntu.edu.tw</a></li>
-<li>Office hours: 14:00 ~ 15:00 on Thursday or by appointment</li>
-</ul>
+<div id="week-9---midterm" class="section level1 unnumbered hasAnchor">
+<h1>Week 9 - Midterm<a href="week-9---midterm.html#week-9---midterm" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="syllabus.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="week-8---lotka-volterra-competition-model---population-dynamics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -271,7 +213,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/index.Rmd",
+"link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/09_week_09.Rmd",
 "text": "Edit"
 },
 "history": {

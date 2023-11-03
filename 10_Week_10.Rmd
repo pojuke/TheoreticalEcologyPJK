@@ -1,8 +1,11 @@
 
-# Week 9 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues {-} 
+# Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues {-} 
 
 
-Consider a linear system
+In class, we learned that the stability of a nonlinear ODE can be characterized by studying the dynamics of the "displacement for the equilibrium" ($\pmb\varepsilon$), which follows a much simpler linear ODE. If the linear ODE describing the dynamics of the displacement have a stable equilibrium at zero, then this indicates that the original equilibrium of the nonlinear ODE will also be stable. Consider the case where the dynamics of displacements $\pmb\varepsilon$ can be described by the following linear ODE:
+
+We can see that this ODE has an equilibrium at zero and the eigenvalues are as follows, which have negative real parts (indicating that it'll be stable) with a non-zero imaginary part (indicating that it'll rotate towards the equilibrium, as shown below).
+
 \[
 \dfrac{d \vec{\pmb\varepsilon}}{d t} = \mathcal{J}\vec{\pmb\varepsilon}
 \]
@@ -15,7 +18,7 @@ Or, we can write the linear system by two ODEs:
 
 Note that the element in the first row and second column is positive.
 
-```{r, echo = F, results = 'hold', message=FALSE}
+```{r, echo = T, results = 'hold', message=FALSE}
 library(ggplot2)
 library(tidyverse)
 library(deSolve)
@@ -41,6 +44,10 @@ library(gifski)
   tail(error)
   plot(e1 ~ e2, error, type = "l")
 ```
+```{r}
+eigen(matrix(parms, 2, 2, T))$values # eigenvalues
+```
+
 
 ![](W9_dynamics_error.gif)
 
