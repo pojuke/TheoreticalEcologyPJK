@@ -4,11 +4,16 @@
 
 In class, we learned that the stability of a nonlinear ODE can be characterized by studying the dynamics of the "displacement for the equilibrium" ($\pmb\varepsilon$), which follows a much simpler linear ODE. If the linear ODE describing the dynamics of the displacement have a stable equilibrium at zero, then this indicates that the original equilibrium of the nonlinear ODE will also be stable. Consider the case where the dynamics of displacements $\pmb\varepsilon$ can be described by the following linear ODE:
 
-We can see that this ODE has an equilibrium at zero and the eigenvalues are as follows, which have negative real parts (indicating that it'll be stable) with a non-zero imaginary part (indicating that it'll rotate towards the equilibrium, as shown below).
-
 \[
 \dfrac{d \vec{\pmb\varepsilon}}{d t} = \mathcal{J}\vec{\pmb\varepsilon}
 \]
+
+We can see that this ODE has an equilibrium at zero and the eigenvalues are as follows, which have negative real parts (indicating that it'll be stable) with a non-zero imaginary part (indicating that it'll rotate towards the equilibrium, as shown below).
+
+```{r}
+eigen(matrix(c( -1, 1, -2, -1), 2, 2, T))$values # eigenvalues
+```
+
 where $\vec{\pmb\varepsilon} = (\varepsilon_1, \varepsilon_2)^T$ and $\mathcal{J} = \begin{pmatrix} -1 & 1\\ -2 & -1 \end{pmatrix}$.
 Or, we can write the linear system by two ODEs:
 \begin{align*}
@@ -43,9 +48,6 @@ library(gifski)
   error <- ode(func = ERROR, times = times, y = state, parms = parms)
   tail(error)
   plot(e1 ~ e2, error, type = "l")
-```
-```{r}
-eigen(matrix(parms, 2, 2, T))$values # eigenvalues
 ```
 
 
