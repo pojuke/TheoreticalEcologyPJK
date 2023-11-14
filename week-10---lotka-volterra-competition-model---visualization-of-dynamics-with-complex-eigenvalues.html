@@ -179,16 +179,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><span class="math display">\[
 \dfrac{d \vec{\pmb\varepsilon}}{d t} = \mathcal{J}\vec{\pmb\varepsilon}
 \]</span></p>
-<p>We can see that this ODE has an equilibrium at zero and the eigenvalues are as follows, which have negative real parts (indicating that it’ll be stable) with a non-zero imaginary part (indicating that it’ll rotate towards the equilibrium, as shown below).</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-1" tabindex="-1"></a><span class="fu">eigen</span>(<span class="fu">matrix</span>(<span class="fu">c</span>( <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="dv">2</span>, <span class="dv">2</span>, T))<span class="sc">$</span>values <span class="co"># eigenvalues</span></span></code></pre></div>
-<pre><code>## [1] -1+1.414214i -1-1.414214i</code></pre>
 <p>where <span class="math inline">\(\vec{\pmb\varepsilon} = (\varepsilon_1, \varepsilon_2)^T\)</span> and <span class="math inline">\(\mathcal{J} = \begin{pmatrix} -1 &amp; 1\\ -2 &amp; -1 \end{pmatrix}\)</span>.
 Or, we can write the linear system by two ODEs:
 <span class="math display">\[\begin{align*}
   \dfrac{d \varepsilon_1}{d t} &amp;= (-1)\times \varepsilon_1 + (1)\times\varepsilon_2\\
   \dfrac{d \varepsilon_2}{d t} &amp;= (-2)\times \varepsilon_1 + (-1)\times\varepsilon_2\\
 \end{align*}\]</span></p>
-<p>Note that the element in the first row and second column is positive.</p>
+<p>We can see that this ODE has an equilibrium at zero and the eigenvalues are as follows, which have negative real parts (indicating that it’ll be stable) with a non-zero imaginary part (indicating that it’ll rotate towards the equilibrium, as shown below).</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb56-1" tabindex="-1"></a><span class="fu">eigen</span>(<span class="fu">matrix</span>(<span class="fu">c</span>( <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="dv">2</span>, <span class="dv">2</span>, T))<span class="sc">$</span>values <span class="co"># eigenvalues</span></span></code></pre></div>
+<pre><code>## [1] -1+1.414214i -1-1.414214i</code></pre>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb58-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb58-2"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb58-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb58-3"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb58-3" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>

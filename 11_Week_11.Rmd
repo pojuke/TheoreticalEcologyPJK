@@ -13,7 +13,7 @@ The non-trivial equilibrium of this system is $E_c = (N = \frac{d}{ea}, P = \fra
 
 We simulate the model using the following parameter set ($N_0$ = 10, $P_0$ = 2, $r$ = 1.0, $a$ = 0.1, $e$ = 0.8, $d$ = 0.5) and plot the population trajectories of predator and prey over time. We also show their population dynamics in the state-space diagram.
 
-What will happen if you add a perturbation to the system (i.e., change the initial conditions)? Try out different values of $N$ and $P$ and visualize the differences in the state-space diagram by yourselve.
+What will happen if you add a perturbation to the system (i.e., change the initial conditions)? Try out different values of $N_0$ and $P_0$ and visualize the differences in the state-space diagram by yourselve.
 
 
 ```{r}

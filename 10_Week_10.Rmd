@@ -8,12 +8,6 @@ In class, we learned that the stability of a nonlinear ODE can be characterized 
 \dfrac{d \vec{\pmb\varepsilon}}{d t} = \mathcal{J}\vec{\pmb\varepsilon}
 \]
 
-We can see that this ODE has an equilibrium at zero and the eigenvalues are as follows, which have negative real parts (indicating that it'll be stable) with a non-zero imaginary part (indicating that it'll rotate towards the equilibrium, as shown below).
-
-```{r}
-eigen(matrix(c( -1, 1, -2, -1), 2, 2, T))$values # eigenvalues
-```
-
 where $\vec{\pmb\varepsilon} = (\varepsilon_1, \varepsilon_2)^T$ and $\mathcal{J} = \begin{pmatrix} -1 & 1\\ -2 & -1 \end{pmatrix}$.
 Or, we can write the linear system by two ODEs:
 \begin{align*}
@@ -21,7 +15,11 @@ Or, we can write the linear system by two ODEs:
   \dfrac{d \varepsilon_2}{d t} &= (-2)\times \varepsilon_1 + (-1)\times\varepsilon_2\\
 \end{align*}
 
-Note that the element in the first row and second column is positive.
+We can see that this ODE has an equilibrium at zero and the eigenvalues are as follows, which have negative real parts (indicating that it'll be stable) with a non-zero imaginary part (indicating that it'll rotate towards the equilibrium, as shown below).
+
+```{r}
+eigen(matrix(c( -1, 1, -2, -1), 2, 2, T))$values # eigenvalues
+```
 
 ```{r, echo = T, results = 'hold', message=FALSE}
 library(ggplot2)
