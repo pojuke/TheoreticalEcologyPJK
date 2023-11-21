@@ -16,7 +16,10 @@ and the ZNGIs of $P$ are
 \[
 P = 0 \text{ and } N = \frac{d}{a(e-dh)}
 \]
-The coexistence equilibrium is $E_{np} = \left(N^* = \frac{d}{a(e-dh)}, P^* = \frac{r}{a}(1-\frac{N^*}{K})(1+ahN^*)\right)$.
+The coexistence equilibrium is 
+\[
+E_{np} = \left(N^* = \frac{d}{a(e-dh)}, P^* = \frac{r}{a}(1-\frac{N^*}{K})(1+ahN^*)\right).
+\]
 
 Please simulate the model using the parameter set ($N_0$ = 5, $P_0$ = 2, $r$ = 1.0, $K$ = 5.0, $a$ = 1.3, $h$ = 0.9, $e$ = 0.6, $d$ = 0.5) and plot the population trajectories of predator and prey as well as show their population dynamics in the state-space diagram.
 
