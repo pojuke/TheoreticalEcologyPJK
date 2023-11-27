@@ -25,7 +25,7 @@ Apparent_logistic_func <- function(r1, r2, other.parameters){
   }
 
   # model parameters
-  times <- seq(0, 3000, by = 10)
+  times <- seq(0, 3000, by = 100)
   state <- c(N1 = 0.1, N2 = 0.1, P = 1)
   parms <- c(r1 = r1, r2 = r2, other.parameters)
 
@@ -40,7 +40,7 @@ Apparent_logistic_func <- function(r1, r2, other.parameters){
 
 
 #### Set up parameter space of interest
-Parms <- c(r1 = 0.1, r2 = 0.1, a1 = 0.35, a2 = 0.35, e1 = 0.4, e2 = 0.5, d = 0.8, K1 = 15, K2 = 12)
+Parms <- c(a1 = 0.35, a2 = 0.35, e1 = 0.4, e2 = 0.5, d = 0.8, K1 = 15, K2 = 12)
 r_min <- 0.1
 r_max <- 0.7
 n <- 100
@@ -60,7 +60,7 @@ start_time <- Sys.time() # starting time
 for(i in 1:dim(comp_out)[1]){
   comp_out[i, 3:5] <- Apparent_logistic_func(r1 = comp_out$r1[i],
                                              r2 = comp_out$r2[i],
-                                             other.parameters = Parms[-c(1:2)])
+                                             other.parameters = Parms)
 }
 end_time <- Sys.time() # ending time
 end_time - start_time # total time spent
@@ -74,8 +74,8 @@ comp_out$Outcome <-
 
 ```{r, fig.height=6, fig.width=6}
 #### Visualize the competition outcomes in the grids -- base R
-x <- comp_out$r1 / Parms[3]
-y <- comp_out$r2 / Parms[4]
+x <- comp_out$r1 / Parms[1]
+y <- comp_out$r2 / Parms[2]
 z <- as.factor(comp_out$Outcome) # Levels: Coexist N1 win N2 win
 color <- c("red", "blue", "green")
 plot(x, y, type = "n", xlab = "r1/a1", ylab = "r2/a2")
@@ -83,8 +83,8 @@ size <- 0.008571429 #0.003/0.35
 for(i in 1:length(z)){
   rect(x[i] - size, y[i] - size, x[i] + size, y[i] + size, col = color[z[i]], border = color[z[i]])
 }
-abline(a = 0, b = (1 - Parms[7] / (Parms[5] * Parms[3] * Parms[8])), lwd = 4)
-abline(a = 0, b = (1 - Parms[7] / (Parms[6] * Parms[4] * Parms[9]))^-1,, lwd = 4)
+abline(a = 0, b = (1 - Parms[5] / (Parms[3] * Parms[1] * Parms[6])), lwd = 4)
+abline(a = 0, b = (1 - Parms[5] / (Parms[4] * Parms[2] * Parms[7]))^-1,, lwd = 4)
 text(0.5, 1.5, labels = "N2 wins")
 text(1.5, 0.5, labels = "N1 wins")
 text(1.5, 1.5, labels = "Coexist")
@@ -92,13 +92,13 @@ text(1.5, 1.5, labels = "Coexist")
 
 ```{r, fig.height=7, fig.width=7}
 #### Visualize the competition outcomes in the grids -- ggplot
-ggplot(comp_out, aes(x = r1/Parms[3], y = r2/Parms[4], z = Outcome, fill = Outcome)) +
+ggplot(comp_out, aes(x = r1/Parms[1], y = r2/Parms[2], z = Outcome, fill = Outcome)) +
   geom_tile() +
-  geom_abline(intercept = 0, slope = (1 - Parms[7] / (Parms[5] * Parms[3] * Parms[8])), size = 1.5) +
-  geom_abline(intercept = 0, slope = (1 - Parms[7] / (Parms[6] * Parms[4] * Parms[9]))^-1, size = 1.5) +
+  geom_abline(intercept = 0, slope = (1 - Parms[5] / (Parms[3] * Parms[1] * Parms[6])), size = 1.5) +
+  geom_abline(intercept = 0, slope = (1 - Parms[5] / (Parms[4] * Parms[2] * Parms[7]))^-1, size = 1.5) +
   labs(x = expression(r[1]/a[1]), y = expression(r[2]/a[2])) +
-  scale_x_continuous(limits = c(r_min/Parms[3], r_max/Parms[4]), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(r_min/Parms[3], r_max/Parms[4]), expand = c(0, 0)) +
+  scale_x_continuous(limits = c(r_min/Parms[1], r_max/Parms[2]), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(r_min/Parms[1], r_max/Parms[2]), expand = c(0, 0)) +
   scale_fill_brewer(palette = "Set1") +
   theme_bw(base_size = 14) +
   theme(panel.grid = element_blank()) +
