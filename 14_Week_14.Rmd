@@ -19,12 +19,7 @@ library(tidyverse)
 library(deSolve)
 
 ### Parameters
-a1 <- 0.4 
-a2 <- 0.6
-e1 <- 1
-e2 <- 1
-d <- 0.01 
-S0 <- 0.1
+a1 <- 0.4; a2 <- 0.6; e1 <- 1; e2 <- 1; d <- 0.01; S0 <- 0.1
 
 ### Resource level vs. consumers' per capita population growth
 data.frame(R = seq(0, 0.1, 0.001)) %>%
@@ -146,13 +141,7 @@ pop_size %>%
 The phase diagram also illustrates stable coexistence of the two consumers: 
 ```{r, fig.width = 5, fig.height = 3.5, out.width = "70%", fig.align = "center"}
 ### Parameters
-a1a <- 0.4
-a1b <- 0.8
-a2a <- 0.6
-a2b <- 0.5
-e1 <- 1
-e2 <- 1
-d <- 0.1
+a1a <- 0.4; a1b <- 0.8; a2a <- 0.6; a2b <- 0.5; e1 <- 1; e2 <- 1; d <- 0.1
 
 ### Slopes and intercepts of the ZNGI's
 ZNGI_slope_N1 <- -a1a/a1b
