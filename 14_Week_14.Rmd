@@ -209,8 +209,8 @@ CR_model_nonlinear <- function(times, state, parms){
 }
 
 ### Model parameters
-times <- seq(0, 5000, by = 0.1)  
-state <- c(N1 = 0.3, N2 = 19, R = 106) 
+times <- seq(0, 8000, by = 1)  
+state <- c(N1 = 0.3, N2 = 0.001, R = 106) 
 parms <- c(a1 = 0.003, a2 = 0.5, k2 = 50, e1 = 0.33, e2 = 0.3, d1 = 0.11, d2 = 0.1, r = 0.1, K = 300)
 
 ### Model application
