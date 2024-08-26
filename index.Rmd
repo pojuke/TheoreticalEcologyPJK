@@ -64,7 +64,7 @@ Below are the textbook references:
 
 - Office: Life Science Building R635
 - Email: r12b44009@ntu.edu.tw
-- Office hours: 
+- Office hours: by appointment
 
 
 # Syllabus {-}
@@ -109,11 +109,11 @@ syllabus <- tibble(
   
   `Lecture topic` = c("Introduction: what is theoretical ecology?",
                       "Exponential population growth",
+                      "No class (National holiday)",
                       "Logistic population growth and stability analysis",
+                      "Age-structured population models",
                       "Metapopulations and patch occupancy models",
                       "Harvesting and bifurcation",
-                      "No class (National holiday)",
-                      "Age-structured population models",
                       "Lotka-Volterra model of competition: graphical analysis",
                       "**Midterm exam**",
                       "Lotka-Volterra model of competition: invasion analysis and linear stability analysis",
@@ -126,11 +126,11 @@ syllabus <- tibble(
     
   Lab = c(" \\- ",
           'Solving exponential growth equation using "deSolve" & Visualization',
-          "Shinny App for logistic population growth",
-          "Alternative stable state diagram",
-          "Metapopulations and patch occupancy models",
           " \\-",
+          "Shinny App for logistic population growth",
           "Age-structured population model",
+          "Metapopulations and patch occupancy models",
+          "Alternative stable state diagram",
           "Lotka-Volterra competition model - Population dynamics",
           " \\-",
           "Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues",
@@ -144,11 +144,11 @@ syllabus <- tibble(
     
   Readings = c("[**Grainger et al., 2021**](https://doi.org/10.1086/717206)",
                "Gotelli [Ch.1], Case[Ch.1]",
+               " \\- ",
                "Gotelli [Ch.2], Case[Ch.5], Otto & Day[Ch.5]",
+               "Gotelli [Ch.3], Case[Ch.3]",
                "Gotelli [Ch.4], Case[Ch.16]",
                "Pastor [Ch. 7], Strogatz [Ch. 3]",
-               " \\- ",
-               "Gotelli [Ch.3], Case[Ch.3]",
                "Gotelli [Ch.5], Case[Ch.14]",
                " \\- ",
                "Otto & Day [Ch.8], 
