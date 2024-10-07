@@ -3,7 +3,7 @@ output:
   html_document: default
   pdf_document: default
 ---
-# Week 4 - Metapopulations and patch occupancy models {.unnumbered}
+# Week 5 - Metapopulations and patch occupancy models {.unnumbered}
 
     Plants can condition nearby soil microbial communities, which will in turn influence the performance of subsequent colonizing plants. The soil beneath plant communities are therefore a mosaic with different cultivation histories. Po-Ju wants to understand how plant demographic rates (i.e., colonization and mortality rate) and microbial dynamics (i.e., the conditioning and decay rate of microbial communities) affect the percentage of different soil types in natural forests. As a starting point, Po-Ju builds a one-species patch occupancy model to track the dynamics of different types of plant-soil combination.
 
