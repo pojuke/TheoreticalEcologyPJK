@@ -131,34 +131,32 @@ times <- seq(0, 5000, by = 100)
 state <- c(N = 10)
 
 #### Bifurcation diagram for H -- the forward branch
-### Set first forward simulation and saving space
-H.vec.forward <- seq(0.001, 0.3, by = 0.001)
-parms <- c(H = H.vec.forward[1], K = 10, r = 0.055, A = 1)
+## Set first forward simulation and saving space
+H.vec.forward <- seq(0.001, 0.25, by = 0.001)
+parms <- c(r = 0.055, K = 10, H = H.vec.forward[1], A = 1)
 temp <- ode(func = BudwormODE, times = times, y = state, parms = parms)
-forward <- matrix(rep(unname(c(H.vec.forward[1], temp[length(times), 2])), length(H.vec.forward)), nrow = length(H.vec.forward), ncol = 2, byrow = T)
-
+forward <- data.frame(H = H.vec.forward,
+                      N = rep(temp[length(times), 2], length(H.vec.forward)))
 ## Run across forward vector, using previous step equilibrium as new initial state
 for(i in 2:length(H.vec.forward)){
-  state <- c(N = forward[i-1, 2])
-  parms <- c(H = H.vec.forward[i], K = 10, r = 0.055, A = 1)
+  state <- c(N = forward[i-1, 2] + 0.001) ## Remember to add small perturbation
+  parms <- c(r = 0.055, K = 10, H = forward[i, 1], A = 1)
   temp <- ode(func = BudwormODE, times = times, y = state, parms = parms)
-  forward[i, ] = unname(c(H.vec.forward[i], temp[length(times), 2]))
+  forward[i, 2] = temp[length(times), 2]
 }
-
 #### Bifurcation diagram for H -- the backward branch
 ## Set first backward simulation and saving space
 H.vec.backward <- rev(H.vec.forward)
-parms <- c(H = H.vec.backward[1], K = 10, r = 0.055, A = 1)
+parms <- c(r = 0.055, K = 10, H = H.vec.backward[1], A = 1)
 temp <- ode(func = BudwormODE, times = times, y = state, parms = parms)
-backward <- matrix(rep(unname(c(H.vec.backward[1], temp[length(times), 2])), length(H.vec.backward)),
-                   nrow = length(H.vec.backward), ncol = 2, byrow = T)
-
+backward <- data.frame(H = H.vec.backward,
+                       N = rep(temp[length(times), 2], length(H.vec.backward)))
 ## Run across backward vector, using previous step equilibrium as new initial state
 for(i in 2:length(H.vec.backward)){
-  state <- c(N = backward[i-1, 2] + 0.001) #Remember to add a small perturbation on initial
-  parms <- c(H = H.vec.backward[i], K = 10, r = 0.055, A = 1)
+  state <- c(N = backward[i-1, 2] + 0.001)  ## Remember to add small perturbation
+  parms <- c(r = 0.055, K = 10, H = backward[i, 1], A = 1)
   temp <- ode(func = BudwormODE, times = times, y = state, parms = parms)
-  backward[i, ] = unname(c(H.vec.backward[i], temp[length(times), 2]))
+  backward[i, 2] = temp[length(times), 2]
 }
 
 #### Plot both forward and backward branch
