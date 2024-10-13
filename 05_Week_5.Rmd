@@ -49,7 +49,7 @@ H.breaks <- c(0.05, 0.12, 0.20)
 dat.growth <- outer(X = N.vec, Y = H.breaks,
                     function(N, H){H * N / (A^2 + N^2)}) # Note notation change
 matplot(x = N.vec, y = dat.growth, type = "l", ylim = c(0, 0.10), las = 1, 
-        xlab = "N", ylab = "harvest rate", col = "blue", lwd = 2)
+        xlab = "N", ylab = "growth/harvest rate", col = "blue", lwd = 2)
 curve(r * (1 - x/K), add = T, col = "red", lwd = 2) # Just curve since its the same line, and note variable notation change
 abline(h = 0)
 legend("topright", legend = H.breaks, title = "H", col = "blue", lty=1:3, lwd = 2)
