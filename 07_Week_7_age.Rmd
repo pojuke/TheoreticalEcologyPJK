@@ -148,7 +148,6 @@ Here is a transition diagram for the teasel. Please convert this diagram into a 
 
 <br>
 
-
 **Part 4 - COM(P)ADRE: A global database of population matrices**
 
 [COM(P)ADRE](https://compadre-db.org/ExploreDatabase) is an online repository containing matrix population models on hundreds of plants, animals, algae, fungi, bacteria, and viruses around the world, as well as their associated metadata. Take a look at the website: You will be exploring the population dynamics of a species (of your choice) in your assignment!
