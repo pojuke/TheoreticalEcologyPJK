@@ -86,9 +86,9 @@ N0 <- c(10, 0, 0)
 
 ### for loop and matrix algebra
 time <- 50
-pop_size <- data.frame(Age1 = 0,
-                       Age2 = 0,
-                       Age3 = 0)
+pop_size <- data.frame(Age1 = rep(0, time),
+                       Age2 = rep(0, time),
+                       Age3 = rep(0, time))
 pop_size[1, ] <- N0
 
 for (i in 2:time) {
@@ -109,7 +109,15 @@ legend("topleft",
        legend = c("Age1", "Age2", "Age3"),
        col = c("red", "blue", "green"),
        lty = 1)
+```
 
+Plot in log-scale:
+```{r}
+matplot(x = 1:time, y = log(pop_size[, 1:4]), type = "l", lty = 1,
+        col = c("red", "green", "blue", "black"),
+        xlab = "Time", ylab = "log(population size)")
+legend("bottomright", c("Age 1", "Age 2", "Age 3", "Total"), bty = "n",
+       lty = 1 , col = c("red", "green", "blue", "black"))
 ```
 
 By the derivation in the class, the asymptotic population sizes can be approximated by 

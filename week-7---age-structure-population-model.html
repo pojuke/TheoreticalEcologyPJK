@@ -239,9 +239,9 @@ where <span class="math inline">\(L\)</span> is a Leslie matrix and <span class=
 <span id="cb37-10"><a href="week-7---age-structure-population-model.html#cb37-10" tabindex="-1"></a></span>
 <span id="cb37-11"><a href="week-7---age-structure-population-model.html#cb37-11" tabindex="-1"></a><span class="do">### for loop and matrix algebra</span></span>
 <span id="cb37-12"><a href="week-7---age-structure-population-model.html#cb37-12" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="dv">50</span></span>
-<span id="cb37-13"><a href="week-7---age-structure-population-model.html#cb37-13" tabindex="-1"></a>pop_size <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Age1 =</span> <span class="dv">0</span>,</span>
-<span id="cb37-14"><a href="week-7---age-structure-population-model.html#cb37-14" tabindex="-1"></a>                       <span class="at">Age2 =</span> <span class="dv">0</span>,</span>
-<span id="cb37-15"><a href="week-7---age-structure-population-model.html#cb37-15" tabindex="-1"></a>                       <span class="at">Age3 =</span> <span class="dv">0</span>)</span>
+<span id="cb37-13"><a href="week-7---age-structure-population-model.html#cb37-13" tabindex="-1"></a>pop_size <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Age1 =</span> <span class="fu">rep</span>(<span class="dv">0</span>, time),</span>
+<span id="cb37-14"><a href="week-7---age-structure-population-model.html#cb37-14" tabindex="-1"></a>                       <span class="at">Age2 =</span> <span class="fu">rep</span>(<span class="dv">0</span>, time),</span>
+<span id="cb37-15"><a href="week-7---age-structure-population-model.html#cb37-15" tabindex="-1"></a>                       <span class="at">Age3 =</span> <span class="fu">rep</span>(<span class="dv">0</span>, time))</span>
 <span id="cb37-16"><a href="week-7---age-structure-population-model.html#cb37-16" tabindex="-1"></a>pop_size[<span class="dv">1</span>, ] <span class="ot">&lt;-</span> N0</span>
 <span id="cb37-17"><a href="week-7---age-structure-population-model.html#cb37-17" tabindex="-1"></a></span>
 <span id="cb37-18"><a href="week-7---age-structure-population-model.html#cb37-18" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>time) {</span>
@@ -269,23 +269,30 @@ where <span class="math inline">\(L\)</span> is a Leslie matrix and <span class=
 <span id="cb39-7"><a href="week-7---age-structure-population-model.html#cb39-7" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;green&quot;</span>),</span>
 <span id="cb39-8"><a href="week-7---age-structure-population-model.html#cb39-8" tabindex="-1"></a>       <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
+<p>Plot in log-scale:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="week-7---age-structure-population-model.html#cb40-1" tabindex="-1"></a><span class="fu">matplot</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span>time, <span class="at">y =</span> <span class="fu">log</span>(pop_size[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]), <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>,</span>
+<span id="cb40-2"><a href="week-7---age-structure-population-model.html#cb40-2" tabindex="-1"></a>        <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;black&quot;</span>),</span>
+<span id="cb40-3"><a href="week-7---age-structure-population-model.html#cb40-3" tabindex="-1"></a>        <span class="at">xlab =</span> <span class="st">&quot;Time&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;log(population size)&quot;</span>)</span>
+<span id="cb40-4"><a href="week-7---age-structure-population-model.html#cb40-4" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;bottomright&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Age 1&quot;</span>, <span class="st">&quot;Age 2&quot;</span>, <span class="st">&quot;Age 3&quot;</span>, <span class="st">&quot;Total&quot;</span>), <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb40-5"><a href="week-7---age-structure-population-model.html#cb40-5" tabindex="-1"></a>       <span class="at">lty =</span> <span class="dv">1</span> , <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;black&quot;</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <p>By the derivation in the class, the asymptotic population sizes can be approximated by
 <span class="math display">\[
 n_t \approx c\cdot \lambda_1^t\cdot u_1
 \]</span>
 where <span class="math inline">\(c\)</span> is a constant, <span class="math inline">\(\lambda_1\)</span> is the dominant eigenvalue and <span class="math inline">\(u_1\)</span> is the corresponding eigenvector. Hence, with the long-term dynamics, the population grows at a rate <span class="math inline">\(\lambda_1\)</span> and with the age distribution <span class="math inline">\(u_1\)</span>. Here, we check this fact numerically.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="week-7---age-structure-population-model.html#cb40-1" tabindex="-1"></a><span class="do">### Asymptotic growth rate and stable age distribution</span></span>
-<span id="cb40-2"><a href="week-7---age-structure-population-model.html#cb40-2" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="week-7---age-structure-population-model.html#cb40-3" tabindex="-1"></a>asymptotic_growth <span class="ot">&lt;-</span> pop_size<span class="sc">$</span>N[time]<span class="sc">/</span>pop_size<span class="sc">$</span>N[time<span class="dv">-1</span>]</span>
-<span id="cb40-4"><a href="week-7---age-structure-population-model.html#cb40-4" tabindex="-1"></a>asymptotic_growth</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="week-7---age-structure-population-model.html#cb41-1" tabindex="-1"></a><span class="do">### Asymptotic growth rate and stable age distribution</span></span>
+<span id="cb41-2"><a href="week-7---age-structure-population-model.html#cb41-2" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="week-7---age-structure-population-model.html#cb41-3" tabindex="-1"></a>asymptotic_growth <span class="ot">&lt;-</span> pop_size<span class="sc">$</span>N[time]<span class="sc">/</span>pop_size<span class="sc">$</span>N[time<span class="dv">-1</span>]</span>
+<span id="cb41-4"><a href="week-7---age-structure-population-model.html#cb41-4" tabindex="-1"></a>asymptotic_growth</span></code></pre></div>
 <pre><code>## [1] 1.089992</code></pre>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="week-7---age-structure-population-model.html#cb42-1" tabindex="-1"></a>age_distribution <span class="ot">&lt;-</span> pop_size[time, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]<span class="sc">/</span><span class="fu">sum</span>(pop_size[time, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
-<span id="cb42-2"><a href="week-7---age-structure-population-model.html#cb42-2" tabindex="-1"></a>age_distribution</span></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="week-7---age-structure-population-model.html#cb43-1" tabindex="-1"></a>age_distribution <span class="ot">&lt;-</span> pop_size[time, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]<span class="sc">/</span><span class="fu">sum</span>(pop_size[time, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
+<span id="cb43-2"><a href="week-7---age-structure-population-model.html#cb43-2" tabindex="-1"></a>age_distribution</span></code></pre></div>
 <pre><code>##         Age1      Age2       Age3
 ## 50 0.6309262 0.2894167 0.07965713</code></pre>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="week-7---age-structure-population-model.html#cb44-1" tabindex="-1"></a><span class="do">### Eigen-analysis of the Leslie matrix</span></span>
-<span id="cb44-2"><a href="week-7---age-structure-population-model.html#cb44-2" tabindex="-1"></a>EIGEN <span class="ot">&lt;-</span> <span class="fu">eigen</span>(leslie)</span>
-<span id="cb44-3"><a href="week-7---age-structure-population-model.html#cb44-3" tabindex="-1"></a>EIGEN</span></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="week-7---age-structure-population-model.html#cb45-1" tabindex="-1"></a><span class="do">### Eigen-analysis of the Leslie matrix</span></span>
+<span id="cb45-2"><a href="week-7---age-structure-population-model.html#cb45-2" tabindex="-1"></a>EIGEN <span class="ot">&lt;-</span> <span class="fu">eigen</span>(leslie)</span>
+<span id="cb45-3"><a href="week-7---age-structure-population-model.html#cb45-3" tabindex="-1"></a>EIGEN</span></code></pre></div>
 <pre><code>## eigen() decomposition
 ## $values
 ## [1]  1.0899905+0.0000000i -0.5449953+0.6253475i -0.5449953-0.6253475i
@@ -295,9 +302,9 @@ where <span class="math inline">\(c\)</span> is a constant, <span class="math in
 ## [1,] 0.9030054+0i -0.8418972+0.0000000i -0.8418972+0.0000000i
 ## [2,] 0.4142263+0i  0.3334136+0.3825709i  0.3334136-0.3825709i
 ## [3,] 0.1140082+0i  0.0250833-0.1818099i  0.0250833+0.1818099i</code></pre>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="week-7---age-structure-population-model.html#cb46-1" tabindex="-1"></a><span class="fu">abs</span>(EIGEN<span class="sc">$</span>values[<span class="dv">1</span>]) <span class="co"># dominant eigenvalue</span></span></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="week-7---age-structure-population-model.html#cb47-1" tabindex="-1"></a><span class="fu">abs</span>(EIGEN<span class="sc">$</span>values[<span class="dv">1</span>]) <span class="co"># dominant eigenvalue</span></span></code></pre></div>
 <pre><code>## [1] 1.089991</code></pre>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="week-7---age-structure-population-model.html#cb48-1" tabindex="-1"></a><span class="fu">as.numeric</span>(EIGEN<span class="sc">$</span>vectors[, <span class="dv">1</span>] <span class="sc">/</span> <span class="fu">sum</span>(EIGEN<span class="sc">$</span>vectors[, <span class="dv">1</span>])) <span class="co"># corresponding eigenvector</span></span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="week-7---age-structure-population-model.html#cb49-1" tabindex="-1"></a><span class="fu">as.numeric</span>(EIGEN<span class="sc">$</span>vectors[, <span class="dv">1</span>] <span class="sc">/</span> <span class="fu">sum</span>(EIGEN<span class="sc">$</span>vectors[, <span class="dv">1</span>])) <span class="co"># corresponding eigenvector</span></span></code></pre></div>
 <pre><code>## [1] 0.63092527 0.28941777 0.07965696</code></pre>
 <p>The asymptotic growth rate and stable age distribution obtained from for loops and eigen-analysis are similar.</p>
 <p><br></p>
