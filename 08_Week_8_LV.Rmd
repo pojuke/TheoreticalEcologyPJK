@@ -1,8 +1,8 @@
-
-# Week 8 - Lotka-Volterra competition model - Population dynamics{-} 
-
+# Week 8 - Lotka-Volterra competition model - Population dynamics {.unnumbered}
 
 In this lab, we are going to analyze the two-species Lotka-Volterra competition model numerically and visualize the population dynamics under different parameter settings.
+
+**Part 1 - Visualize the Population Dynamics with Time Series**
 
 ```{r}
 library(ggplot2)
@@ -36,33 +36,49 @@ LV_model <- function(r1 = 1.4, r2 = 1.2, a11 = 1/200, a21 = 1/400, a22 = 1/200, 
     geom_line(size = 1.5) +
     theme_bw()
 }
+```
 
+Plot the population dynamics under different parameter sets.
+
+```{R}
   ### Different parameter settings
   ## N1_0 = 200 and N2_0 = 5
-  LV_model(r1 = 1.2, r2 = 1.2, a11 = 1/200, a21 = 1/100, a22 = 1/100, a12 = 1/200, N1_0 = 200, N2_0 = 5)  # N1 wins
+  LV_model(r1 = 1.2, r2 = 1.2, 
+           a11 = 1/200, a21 = 1/100, a22 = 1/100, a12 = 1/200, 
+           N1_0 = 200, N2_0 = 5)  # N1 wins
   ## N1_0 = 5 and N2_0 = 200
-  LV_model(r1 = 1.2, r2 = 1.2, a11 = 1/200, a21 = 1/100, a22 = 1/100, a12 = 1/200, N1_0 = 10, N2_0 = 200)  # N1 wins
+  LV_model(r1 = 1.2, r2 = 1.2, 
+           a11 = 1/200, a21 = 1/100, a22 = 1/100, a12 = 1/200, 
+           N1_0 = 10, N2_0 = 200)  # N1 wins
   
   ## N1_0 = 200 and N2_0 = 5
-  LV_model(r1 = 1.2, r2 = 1.2, a11 = 1/100, a21 = 1/200, a22 = 1/200, a12 = 1/100, N1_0 = 200, N2_0 = 5)  # N2 wins
+  LV_model(r1 = 1.2, r2 = 1.2, 
+           a11 = 1/100, a21 = 1/200, a22 = 1/200, a12 = 1/100, 
+           N1_0 = 200, N2_0 = 5)  # N2 wins
   ## N1_0 = 5 and N2_0 = 200
-  LV_model(r1 = 1.2, r2 = 1.2, a11 = 1/100, a21 = 1/200, a22 = 1/200, a12 = 1/100, N1_0 = 5, N2_0 = 200)  # N2 wins
+  LV_model(r1 = 1.2, r2 = 1.2, 
+           a11 = 1/100, a21 = 1/200, a22 = 1/200, a12 = 1/100, 
+           N1_0 = 5, N2_0 = 200)  # N2 wins
   
   ## N1_0 = 200 and N2_0 = 5
-  LV_model(r1 = 1.2, r2 = 1.2, a11 = 1/100, a21 = 1/200, a22 = 1/100, a12 = 1/300, N1_0 = 200, N2_0 = 5)  # stable coexistence
+  LV_model(r1 = 1.2, r2 = 1.2, 
+           a11 = 1/100, a21 = 1/200, a22 = 1/100, a12 = 1/300, 
+           N1_0 = 200, N2_0 = 5)  # stable coexistence
   ## N1_0 = 5 and N2_0 = 200
   LV_model(r1 = 1.2, r2 = 1.2, a11 = 1/100, a21 = 1/200, a22 = 1/100, a12 = 1/300, N1_0 = 5, N2_0 = 200)  # stable coexistence
   
   ## N1_0 = 200 and N2_0 = 150
-  LV_model(r1 = 1.2, r2 = 1.2, a11 = 1/200, a21 = 1/100, a22 = 1/200, a12 = 1/100, N1_0 = 200, N2_0 = 150)  # priority effect (N1 wins)
+  LV_model(r1 = 1.2, r2 = 1.2, 
+           a11 = 1/200, a21 = 1/100, a22 = 1/200, a12 = 1/100, 
+           N1_0 = 200, N2_0 = 150)  # priority effect (N1 wins)
   ## N1_0 = 150 and N2_0 = 200
-  LV_model(r1 = 1.2, r2 = 1.2, a11 = 1/200, a21 = 1/100, a22 = 1/200, a12 = 1/100, N1_0 = 150, N2_0 = 200)  # priority effect (N2 wins)
-
-
+  LV_model(r1 = 1.2, r2 = 1.2, 
+           a11 = 1/200, a21 = 1/100, a22 = 1/200, a12 = 1/100, 
+           N1_0 = 150, N2_0 = 200)  # priority effect (N2 wins)
 
 ```
 
-
+**Part 2 - Visualize the Population Dynamics with State Space**
 
 ```{r}
 #### phase diagram
@@ -108,12 +124,17 @@ phase_plane <- function(r1, r2, a11, a21, a22, a12, title, t){
       scale_y_continuous(name = "N2", limits = c(0, y_inter), expand = c(0, 0)) +
       theme_bw(base_size = 13) +
       theme(panel.grid = element_blank(),
-            plot.title = element_text(hjust = 0.5)) +
+            plot.title = element_text(hjust = 0.5),
+            aspect.ratio = 1) +
       labs(title = title)
   }
 
-  phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/100, a21 = 1/200, a22 = 1/100, a12 = 1/300, t = 0.2, title = "Stable coexistence")
+  phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/100, a21 = 1/200, a22 = 1/100, a12 = 1/200, t = 0.2, title = "Stable coexistence")
 
   phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/200, a21 = 1/100, a22 = 1/200, a12 = 1/100, t = 0.2, title = "Unstable coexistence (saddle)")
+  
+  phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/200, a21 = 1/100, a22 = 1/100, a12 = 1/200, t = 0.2, title = "N1 wins")
+  
+  phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/100, a21 = 1/200, a22 = 1/200, a12 = 1/100, t = 0.2, title = "N2 wins")
 
 ```
