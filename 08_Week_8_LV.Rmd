@@ -140,7 +140,7 @@ Plot the population dynamics under different parameter sets.
   
 ```{R}
   phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/100, 
-              a21 = 1/200, a22 = 1/100, a12 = 1/300, 
+              a21 = 1/200, a22 = 1/100, a12 = 1/200, 
               t = 0.2, title = "Stable coexistence")
 
   phase_plane(r1 = 1.2, r2 = 1.2, 
