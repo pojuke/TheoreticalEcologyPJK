@@ -9,7 +9,9 @@ library(ggplot2)
 library(tidyverse)
 library(deSolve)
 
-LV_model <- function(r1 = 1.4, r2 = 1.2, a11 = 1/200, a21 = 1/400, a22 = 1/200, a12 = 1/300, N1_0 = 10, N2_0 = 10) {
+LV_model <- function(r1 = 1.4, r2 = 1.2, 
+                     a11 = 1/200, a21 = 1/400, a22 = 1/200, a12 = 1/300, 
+                     N1_0 = 10, N2_0 = 10) {
 
   ### Model specification
   LV <- function(times, state, parms) {
@@ -116,8 +118,10 @@ phase_plane <- function(r1, r2, a11, a21, a22, a12, title, t){
 
     ### Phase plane
     ggplot() +
-      geom_abline(slope = -a11/a12, intercept = r1/a12, color = "#E41A1C", size = 1.5) +
-      geom_abline(slope = -a21/a22, intercept = r2/a22, color = "#377EB8", size = 1.5) +
+      geom_abline(slope = -a11/a12, intercept = r1/a12, 
+                  color = "#E41A1C", size = 1.5) +
+      geom_abline(slope = -a21/a22, intercept = r2/a22, 
+                  color = "#377EB8", size = 1.5) +
       geom_segment(data = vector_data,
                    aes(x = x, y = y, xend = xend, yend = yend),
                    arrow = arrow(length = unit(0.1, "cm"))) +    
@@ -129,13 +133,26 @@ phase_plane <- function(r1, r2, a11, a21, a22, a12, title, t){
             aspect.ratio = 1) +
       labs(title = title)
   }
-
-  phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/100, a21 = 1/200, a22 = 1/100, a12 = 1/200, t = 0.2, title = "Stable coexistence")
-
-  phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/200, a21 = 1/100, a22 = 1/200, a12 = 1/100, t = 0.2, title = "Unstable coexistence (saddle)")
   
-  phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/200, a21 = 1/100, a22 = 1/100, a12 = 1/200, t = 0.2, title = "N1 wins")
+```
+
+Plot the population dynamics under different parameter sets.
   
-  phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/100, a21 = 1/200, a22 = 1/200, a12 = 1/100, t = 0.2, title = "N2 wins")
+```{R}
+  phase_plane(r1 = 1.2, r2 = 1.2, a11 = 1/100, 
+              a21 = 1/200, a22 = 1/100, a12 = 1/300, 
+              t = 0.2, title = "Stable coexistence")
+
+  phase_plane(r1 = 1.2, r2 = 1.2, 
+              a11 = 1/200, a21 = 1/100, a22 = 1/200, a12 = 1/100, 
+              t = 0.2, title = "Unstable coexistence (saddle)")
+  
+  phase_plane(r1 = 1.2, r2 = 1.2, 
+              a11 = 1/200, a21 = 1/100, a22 = 1/100, a12 = 1/200, 
+              t = 0.2, title = "N1 wins")
+  
+  phase_plane(r1 = 1.2, r2 = 1.2, 
+              a11 = 1/100, a21 = 1/200, a22 = 1/200, a12 = 1/100, 
+              t = 0.2, title = "N2 wins")
   
 ```
