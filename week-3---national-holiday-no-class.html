@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Week 4 - Logistic population growth and stability analysis | Introduction to Theoretical Ecology</title>
+  <title>Week 3 - National holiday (No class) | Introduction to Theoretical Ecology</title>
   <meta name="description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Week 4 - Logistic population growth and stability analysis | Introduction to Theoretical Ecology" />
+  <meta property="og:title" content="Week 3 - National holiday (No class) | Introduction to Theoretical Ecology" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
   <meta property="og:description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
   <meta name="github-repo" content="pojuke/TheoreticalEcologyPJK" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Week 4 - Logistic population growth and stability analysis | Introduction to Theoretical Ecology" />
+  <meta name="twitter:title" content="Week 3 - National holiday (No class) | Introduction to Theoretical Ecology" />
   
   <meta name="twitter:description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
   <meta name="twitter:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="week-3---national-holiday-no-class.html"/>
-<link rel="next" href="week-5---metapopulations-and-patch-occupancy-models.html"/>
+<link rel="prev" href="week-2---exponential-population-growth.html"/>
+<link rel="next" href="week-4---logistic-population-growth-and-stability-analysis.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -172,63 +172,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="week-4---logistic-population-growth-and-stability-analysis" class="section level1 unnumbered hasAnchor">
-<h1>Week 4 - Logistic population growth and stability analysis<a href="week-4---logistic-population-growth-and-stability-analysis.html#week-4---logistic-population-growth-and-stability-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<iframe src="https://genchanghsu0115.shinyapps.io/Logistic_mod_shinyapp/?showcase=0" width="800px" height="500px" data-external="1">
-</iframe>
-<p>Credit to <a href="https://genchanghsu.github.io/index.html">Gen-Chang Hsu</a></p>
-<p><br>
-<br>
-<br>
-<br>
-<br>
-<strong>Extra materials - Modeling discrete logistic models using for loops</strong></p>
-<p>Model:
-<span class="math display">\[
-N_{t+1} = N_t(1+r(1-\frac{N_t}{K}))
-\]</span></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb16-1" tabindex="-1"></a><span class="do">### (1) Define the discrete logistic growth equation</span></span>
-<span id="cb16-2"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb16-2" tabindex="-1"></a>log_fun <span class="ot">&lt;-</span> <span class="cf">function</span>(r, N, K){N <span class="sc">+</span> r<span class="sc">*</span>N<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>N<span class="sc">/</span>K)}</span></code></pre></div>
-<p>You may modify <span class="math inline">\(r\)</span> to see the change in stability of equilibrium <span class="math inline">\(K\)</span>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb17-1" tabindex="-1"></a><span class="do">### (2) Set the parameters</span></span>
-<span id="cb17-2"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb17-2" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fl">1.8</span></span>
-<span id="cb17-3"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb17-3" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">500</span></span>
-<span id="cb17-4"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb17-4" tabindex="-1"></a>N0 <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb17-5"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb17-5" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="dv">100</span></span>
-<span id="cb17-6"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb17-6" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb17-7" tabindex="-1"></a><span class="do">### (3) Use for loop to iterate over the time sequence</span></span>
-<span id="cb17-8"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb17-8" tabindex="-1"></a>pop_size <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">times =</span> <span class="dv">1</span><span class="sc">:</span>time)</span>
-<span id="cb17-9"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb17-9" tabindex="-1"></a>pop_size<span class="sc">$</span>N[<span class="dv">1</span>] <span class="ot">&lt;-</span> N0</span>
-<span id="cb17-10"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb17-10" tabindex="-1"></a><span class="fu">head</span>(pop_size)</span></code></pre></div>
-<pre><code>##   times  N
-## 1     1 10
-## 2     2 10
-## 3     3 10
-## 4     4 10
-## 5     5 10
-## 6     6 10</code></pre>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb19-1" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span>time){</span>
-<span id="cb19-2"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb19-2" tabindex="-1"></a>  pop_size<span class="sc">$</span>N[i] <span class="ot">&lt;-</span> <span class="fu">log_fun</span>(<span class="at">r =</span> r, <span class="at">N =</span> pop_size<span class="sc">$</span>N[i <span class="sc">-</span> <span class="dv">1</span>], <span class="at">K =</span> K)</span>
-<span id="cb19-3"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb19-3" tabindex="-1"></a>}</span>
-<span id="cb19-4"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb19-4" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb19-5" tabindex="-1"></a><span class="fu">head</span>(pop_size)</span></code></pre></div>
-<pre><code>##   times         N
-## 1     1  10.00000
-## 2     2  27.64000
-## 3     3  74.64171
-## 4     4 188.93980
-## 5     5 400.51775
-## 6     6 543.95762</code></pre>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb21-1" tabindex="-1"></a><span class="do">### (4) Population trajectory</span></span>
-<span id="cb21-2"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb21-2" tabindex="-1"></a><span class="fu">plot</span>(N <span class="sc">~</span> times, <span class="at">data =</span> pop_size, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
-<span id="cb21-3"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb21-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> K, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb21-4"><a href="week-4---logistic-population-growth-and-stability-analysis.html#cb21-4" tabindex="-1"></a><span class="fu">points</span>(N <span class="sc">~</span> times, <span class="at">data =</span> pop_size)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<p><br></p>
-<p>Here is a shiny app for the discrete logistic growth model.</p>
-<iframe src="https://genchanghsu0115.shinyapps.io/Discrete_logistic_mod_shinyapp/?showcase=0" width="800px" height="750px" data-external="1">
-</iframe>
-<p>Credit to <a href="https://genchanghsu.github.io/index.html">Gen-Chang Hsu</a></p>
+<div id="week-3---national-holiday-no-class" class="section level1 unnumbered hasAnchor">
+<h1>Week 3 - National holiday (No class)<a href="week-3---national-holiday-no-class.html#week-3---national-holiday-no-class" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 
 </div>
             </section>
@@ -236,8 +181,8 @@ N_{t+1} = N_t(1+r(1-\frac{N_t}{K}))
           </div>
         </div>
       </div>
-<a href="week-3---national-holiday-no-class.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="week-5---metapopulations-and-patch-occupancy-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="week-2---exponential-population-growth.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="week-4---logistic-population-growth-and-stability-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -268,7 +213,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/04_Week_4.Rmd",
+"link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/03_Week_Holiday.Rmd",
 "text": "Edit"
 },
 "history": {
