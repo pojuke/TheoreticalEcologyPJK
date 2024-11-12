@@ -200,6 +200,47 @@ $$
 
 Here, ***N*** is a vector of population densities with elements $N_i$ (length n), $D(N)$ is a diagonal matrix with $N_i$ on the main diagonal (dimension $n$ \* $n$), $r$ is a vector of species’ intrinsic growth rates $r_i$, and A is a matrix of interaction coefficients $\alpha_{ij}$ (dimension $n$ \* $n$). With this notation, we can efficiently code the GLV with the following R script.
 
+```{r}
+#### Lotka-Volterra model
+GLV = function(times, state, parms){
+  with(as.list(c(state, parms)),{
+    dNX = diag(state) %*% (r + A %*% state)
+    return(list(c(dNX)))
+  })
+}
+
+ 
+#### Parameter setting with a random interaction matrix
+n <- 100
+r <- rep(1, n)
+A <- matrix(rnorm(n * n, mean = 0, sd = 0.1), nrow = n, ncol = n)
+diag(A) <- -1
+parms = list(r = r, A = A)
+times = seq(0, 50, by = 0.1)
+ini= rep(0.01, n)
+
+#### Run the simulation
+out = as.data.frame(ode(func=GLV, y=ini, parms=parms, times=times))
+
+#### Gather data for ploting
+comp.gg = gather(out, key=state.var, value=count, -time)
+
+#### Plot
+ggplot(comp.gg,
+       aes(x=time, y=count, color=state.var)) +
+  geom_line() +
+  geom_hline(yintercept=0, linetype=1, color="black") +
+  scale_y_continuous(expand=c(0, 0)) +
+  ylab(expression(paste("Population size"))) +
+  xlab("Time") +
+  theme_bw() +
+  theme(legend.position="none",
+        plot.title=element_text(hjust=0.5),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        panel.background=element_rect(colour="black"))
+```
+
 **Part 3: May's complexity-stability relationship**
 
 May's insight was to skip the Jacobian calculation altogether and directly consider the Jacobian matrix as a large random matrix ($\mathbf{M}$, with elements $m_{ij}$) resting at a feasible equilibrium, and then the eigenvalues of the Jacobian matrix could be derived based on random matrix theory.
