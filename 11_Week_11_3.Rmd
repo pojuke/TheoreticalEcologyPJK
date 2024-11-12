@@ -123,3 +123,41 @@ knitr::include_app("https://genchanghsu0115.shinyapps.io/Time_scale_sep_shinyapp
 ```
 
 Shiny app is credit to [Gen-Chang Hsu](https://genchanghsu.github.io/index.html)
+
+
+**Part 3: Bifurcation diagram for the logistically-growing prey model**
+
+Here, we simulate the bifurcation diagram along the prey carrying capacity. Our analytical analyses told us that this model will not end up in a cycle (i.e., the final dynamics are stable equilibria that depend on the parameter value). Therefore, this bifurcation diagram is relatively straightforward: use a for-loop to change the parameter value and record the final state.
+
+```{r}
+# Create vector for K and saving space
+Parms.bifurcation <- c(r = 1.0, K = 60, a = 0.1, e = 0.1, d = 0.5)
+Times.bifurcation <- seq(0, 1500, by = 1)
+State.bifurcation <- c(N = 1, P = 1)
+K.vector <- seq(from = 30, to = 70, by = 0.1)
+N.sim <- length(K.vector)
+Data <- data.frame(K = K.vector,
+                   N.end = rep(0, N.sim),
+                   P.end = rep(0, N.sim))
+# Run the simulation for each K within the vector
+for(i in 1:N.sim){
+  # Run the simulation with updated K value
+  Parms.bifurcation["K"] <- Data$K[i]
+  Temp <- ode(func = Prey_logistic_model,
+              times = Times.bifurcation,
+              y = State.bifurcation,
+              parms = Parms.bifurcation)
+  # Since analytical analysis suggests no permanent cycles, simply take last point
+  Temp <- as.data.frame(Temp)
+  Data$N.end[i] <- tail(Temp, 1)$N
+  Data$P.end[i] <- tail(Temp, 1)$P
+}
+# Plot
+plot(c(min(K.vector), max(K.vector)), c(0, max(Data[, c("N.end", "P.end")]) * 1.2),
+     type = "n", xlab = "K", ylab = "Equilibrium value")
+abline(h = 0)
+abline(v = Parms.bifurcation[5]/(Parms.bifurcation[4]*Parms.bifurcation[3]), col="grey", lty = 2, lwd = 3)
+points(N.end ~ K, Data, type = "l", col = "blue",lty = 1, lwd = 3)
+points(P.end ~ K, Data, type = "l", col = "red", lty = 1, lwd = 3)
+legend("topleft", c("Prey", "Predator"), col = c("blue", "red"), lwd = 3, lty = 1, bty = "n")
+```
