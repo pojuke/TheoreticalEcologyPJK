@@ -257,6 +257,7 @@ Let's try to recreate May's random matrix. In particular, May considered the fol
 ```{r, fig.height=5, fig.width=5}
 # code for building May's random matrix
 
+
 ```
 
 <br>
