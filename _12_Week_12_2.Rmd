@@ -141,7 +141,209 @@ Shiny app is credit to [Gen-Chang Hsu](https://genchanghsu.github.io/index.html)
 
 <br>
 
-**Part 2: Simulating generalized Lotka-Volterra model**
+**Part 2: Bifurcation diagram**
+
+Here, we simulate the bifurcation diagram along the prey carrying capacity. Different from previous bifurcation plots, our analytical analyses told us that this model may end up in a cycle. Therefore, we need to (1) identify whether the final state is cycling (i.e., based on the variance of the time series) and, if so, (2) find the cycle and store the long-term average across multiple cycles.
+
+```{r}
+
+library(tidyverse)
+
+#### (1) Specify parameters 
+times <- seq(0, 1500, by = 1)  
+state <- c(N = 1, P = 1)  
+parms <- c(r = 1.0, K = 5.0, a = 1.3, h = 0.9, e = 0.6, d = 0.5) 
+r = as.numeric(parms["r"])   
+K = as.numeric(parms["K"])
+a = as.numeric(parms["a"])
+h = as.numeric(parms["h"])
+e = as.numeric(parms["e"])
+d = as.numeric(parms["d"])
+
+
+#### (2) Create vector for K and saving space
+K.vector <- seq(from = 0.1, to = 9.0, by = 0.05)
+N.sim <- length(K.vector)
+Data <- as.data.frame(matrix(0, 
+                             nrow = N.sim * 2, # one for N, one for P
+                             ncol = 7))
+names(Data) <- c("Variable", "MeanDensity", "MinDensity", "MaxDensity", 
+                 "Variation", "K", "Dynamic")
+
+
+#### (3) Run the simulation for each K within the vector 
+for(i in 1:N.sim){
+  
+  ## Run the simulation with updated K value
+  parms["K"] <- K.vector[i]
+  Temp <- ode(func = RM_predation_model, times = times, y = state, parms = parms)
+  
+  ## Only use the last 300 time steps of the simulation 
+  Temp <- as.data.frame(Temp[1200:1500, ])
+  
+  ## If there is no fluctuation, can freely use all final steps
+  if(var(Temp$N) < 1e-5){
+    Temp.use <- Temp 
+    Temp.use$K <- parms["K"]
+    Temp.use$Dynamic <- "Stable"
+  }  
+  
+  ## If there is fluctuation, need to get accurate cycle start-end point
+  if(var(Temp$N) > 1e-5){
+    peaks <- pracma::findpeaks(Temp[, "N"])[ ,2]
+    Temp.use <- Temp[(peaks[1] : peaks[length(peaks)]), ]
+    Temp.use$K <- parms["K"]
+    Temp.use$Dynamic <- "Cycle"
+  }
+  
+  ## Use tidyverse to wriggle data
+  Temp.tidy <- 
+    Temp.use %>% 
+    gather(key = Variable, value = Density, -c(time, K, Dynamic)) %>% 
+    group_by(Variable) %>% 
+    summarise(MeanDensity = mean(Density),
+              MinDensity = min(Density), 
+              MaxDensity = max(Density), 
+              Variation = var(Density), 
+              K = unique(K), 
+              Dynamic = unique(Dynamic)) 
+  
+  ## Save simulation summary into Data
+  Data[(i-1)*2 + c(1:2), ] <- Temp.tidy
+  
+}
+
+
+#### (4) Plot
+Data %>% 
+  ggplot(aes(x = K, color = Variable)) + 
+  geom_hline(yintercept = 0) + 
+  geom_vline(xintercept = d / (a * (e - h * d)), 
+             linetype = "longdash", col="grey") + 
+  geom_vline(xintercept = (e + d * h) / (a * h * (e - d * h)), 
+             linetype = "longdash", col="grey") + 
+  geom_line(data = Data[Data$Dynamic == "Stable", ], 
+            aes(y = MeanDensity)) +   
+  geom_line(data = Data[Data$Dynamic == "Cycle", ], 
+            aes(y = MeanDensity), 
+            linetype = "dotted", alpha = 0.5) +   
+  geom_line(data = Data[Data$Dynamic == "Cycle", ], 
+            aes(y = MinDensity), 
+            linetype = "dashed") +    
+  geom_line(data = Data[Data$Dynamic == "Cycle", ], 
+            aes(y = MaxDensity), 
+            linetype = "dashed") + 
+  labs(x = "K", y = "Equilibrium value") + 
+  scale_color_manual(values = c("N" = "blue", "P" = "red")) + 
+  theme_classic() + 
+  theme(legend.position = "bottom") 
+
+
+```
+
+**Part 3: May's complexity-stability relationship**
+
+May's insight was to skip the Jacobian calculation altogether and directly consider the Jacobian matrix as a large random matrix ($\mathbf{M}$, with elements $m_{ij}$) resting at a feasible equilibrium, and then the eigenvalues of the Jacobian matrix could be derived based on random matrix theory.
+
+Let's try to recreate May's random matrix. In particular, May considered the following algorithm to build the random Jacobian matrix for $S$ species (thereby a $S \times S$ matrix):
+
+\begin{itemize}
+    \item For all the elements $m_{ij}$ in $\mathbf{M}$, let $m_{ij} = 0$ with probability $1-C$ and with probability $C$ be drawn from a distribution (here, let's assume a normal distribution) with mean 0 and variance $\sigma^{2}$. All $m_{ij}$ are generated independently.
+    \item The diagonal elements $m_{ii}$ are then subtracted by $d$. 
+\end{itemize}
+
+\noindent Here, $C$ represents the connectedness of the system (chance of species interacting with each other), $\sigma^{2}$ can be considered as the realized interaction strengths, and $d$ is the strength of self-limitation.
+
+```{r, fig.height=5, fig.width=5}
+# code for building May's random matrix
+BuildMay = function(S, C, d, sigma){
+  # fill the whole matrix
+  entry <- rnorm(S * S, mean = 0, sd = sigma)
+  M <- matrix(entry, nrow = S, ncol = S)
+  # remove connections
+  remove <- matrix(runif(S * S) <= C, nrow = S, ncol = S)
+  M <- M * remove
+
+  sum(M != 0) / (S*S) # should equal to C
+
+  # substrate diagonal elements by d
+  diag(M) <- diag(M) - d
+  return(M)
+}
+
+May <- BuildMay(S = 500, C = 0.5, d = 10, sigma = 1)
+EVals <- eigen(May)$values
+Re.EVals <- Re(EVals)
+Im.EVals <- Im(EVals)
+
+plot(Re.EVals, Im.EVals, xlab = "Real part", ylab = "Imaginary part")
+abline(v = 0, col = "red", lty = 2)
+```
+
+<br>
+
+**Extra reading: Elliptic raw**
+
+In May's random matrix, the entries $m_{ij}$, which represents the effect of species $j$ on species $i$'s growth rate, are independently generated. However, in ecological networks, we usually model pairwise interaction such as consumer-resource, mutualism, and competition, in which cases, $m_{ij}$ is not independent of $m_{ji}$. For **consumer-resources interactions**, $m_{ij}$ and $m_{ji}$ are negatively correlated. For **mutualism or competition interaction**, $m_{ij}$ and $m_{ji}$ are positively correlated. Under the assumption that the pairwise interactions are correlated, we may show that the eigenvalues of the randomly generated Jacobian do not follow uniform distribution in a circle, but in an ellipse.
+
+We build a function `BuildElliptic` with argument $S$ is the number of species (i.e. the dimension of the Jacobian), $C$ is the connectance, $d$ is the strength of self-limitation, $\sigma$ is the variance (i.e. the realized interaction strength) and $\rho$ is the correlation of the pairwise interaction.
+
+```{r, fig.height=5, fig.width=5}
+library(ggplot2)
+#### The function to build Elliptic law
+BuildElliptic <- function(S, C, d, sigma, rho){
+  
+  # sample coefficients in pairs
+  pairs <- MASS::mvrnorm(n = S * (S-1) / 2,
+                         mu = c(0, 0),
+                         Sigma = sigma^2 * matrix(c(1, rho, rho, 1), 2, 2))
+  
+  # build a completely filled matrix
+  M <- matrix(0, S, S)
+  M[upper.tri(M)] <- pairs[,1]
+  M <- t(M)
+  M[upper.tri(M)] <- pairs[,2]
+  
+  # determine which connections to retain (in pairs)
+  Connections <- (matrix(runif(S * S), S, S) <= C) * 1 
+  Connections[lower.tri(Connections)] <- 0
+  diag(Connections) <- 0
+  Connections <- Connections + t(Connections)
+  M <- M * Connections
+  
+  # set diagonals
+  diag(M) <- diag(M) - d
+  return(M)
+}
+
+```
+
+```{r}
+# consumer-resources interactions
+M_CR <- BuildElliptic(S = 500, C = 0.3, d = 10, sigma = 1, rho = -0.5)
+EVals_CR <- eigen(M_CR)$values
+Re.EVals_CR <- Re(EVals_CR)
+Im.EVals_CR <- Im(EVals_CR)
+
+# mutualism or competition
+M_MC <- BuildElliptic(S = 500, C = 0.3, d = 10, sigma = 1, rho = 0.5)
+EVals_MC <- eigen(M_MC)$values
+Re.EVals_MC <- Re(EVals_MC)
+Im.EVals_MC <- Im(EVals_MC)
+
+# combine data
+Re.EVals <- c(Re.EVals_CR, Re.EVals_MC)
+Im.EVals <- c(Im.EVals_CR, Im.EVals_MC)
+
+# visualization
+plot(Re.EVals, Im.EVals, xlab = "Real part", ylab = "Imaginary part", type = "n")
+points(Re.EVals_CR, Im.EVals_CR, col = "green")
+points(Re.EVals_MC, Im.EVals_MC, col = "blue")
+abline(v = 0, col = "red", lty = 2)
+legend("topleft", legend = c("Resource-consumer", "Mutualism or Competition"), col = c("green", "blue"), pch = 1)
+```
+
+**Extra reading: Simulating generalized Lotka-Volterra model**
 
 Now that you’ve learned the two-species Lotka-Volterra model, you may want to expand it to three species or more. For the three-species case, the model is simply:
 
@@ -239,193 +441,4 @@ ggplot(comp.gg,
         panel.grid.major=element_blank(),
         panel.grid.minor=element_blank(),
         panel.background=element_rect(colour="black"))
-```
-
-**Part 3: May's complexity-stability relationship**
-
-May's insight was to skip the Jacobian calculation altogether and directly consider the Jacobian matrix as a large random matrix ($\mathbf{M}$, with elements $m_{ij}$) resting at a feasible equilibrium, and then the eigenvalues of the Jacobian matrix could be derived based on random matrix theory.
-
-Let's try to recreate May's random matrix. In particular, May considered the following algorithm to build the random Jacobian matrix for $S$ species (thereby a $S \times S$ matrix):
-
-\begin{itemize}
-    \item For all the elements $m_{ij}$ in $\mathbf{M}$, let $m_{ij} = 0$ with probability $1-C$ and with probability $C$ be drawn from a distribution (here, let's assume a normal distribution) with mean 0 and variance $\sigma^{2}$. All $m_{ij}$ are generated independently.
-    \item The diagonal elements $m_{ii}$ are then subtracted by $d$. 
-\end{itemize}
-
-\noindent Here, $C$ represents the connectedness of the system (chance of species interacting with each other), $\sigma^{2}$ can be considered as the realized interaction strengths, and $d$ is the strength of self-limitation.
-
-```{r, fig.height=5, fig.width=5}
-# code for building May's random matrix
-BuildMay = function(S, C, d, sigma){
-  # fill the whole matrix
-  entry <- rnorm(S * S, mean = 0, sd = sigma)
-  M <- matrix(entry, nrow = S, ncol = S)
-  # remove connections
-  remove <- matrix(runif(S * S) <= C, nrow = S, ncol = S)
-  M <- M * remove
-
-  sum(M != 0) / (S*S) # should equal to C
-
-  # substrate diagonal elements by d
-  diag(M) <- diag(M) - d
-  return(M)
-}
-
-May <- BuildMay(S = 500, C = 0.5, d = 10, sigma = 1)
-EVals <- eigen(May)$values
-Re.EVals <- Re(EVals)
-Im.EVals <- Im(EVals)
-
-plot(Re.EVals, Im.EVals, xlab = "Real part", ylab = "Imaginary part")
-abline(v = 0, col = "red", lty = 2)
-```
-
-<br>
-
-**Part 4: Bifurcation diagram for the Rosenzweig–MacArthur predator–prey model**
-
-Here, we simulate the bifurcation diagram along the prey carrying capacity. Different from previous bifurcation plots, our analytical analyses told us that this model may end up in a cycle. Therefore, we need to (1) identify whether the final state is cycling (i.e., based on the variance of the time series) and, if so, (2) find the cycle and store the long-term average across multiple cycles.
-
-```{r}
-
-#### (1) Specify parameters Model application
-Times <- seq(0, 1500, by = 1)  
-State <- c(N = 1, P = 1)  
-r.sim = 1.0   #ref=1.0
-K.sim = 5.0   #ref=5.0
-a.sim = 1.3   #ref=1.3
-h.sim = 0.9   #ref=0.9
-e.sim = 0.6   #ref=0.6
-d.sim = 0.5   #ref=0.5
-Parms <- c(r = r.sim, K = K.sim, a = a.sim, h = h.sim, e = e.sim, d = d.sim)  
-
-
-#### (2) Create vector for K and saving space
-K.vector <- seq(from = 0.1, to = 9.0, by = 0.05)
-N.sim <- length(K.vector)
-Data <- data.frame(K = K.vector, 
-                   N.min = rep(0, N.sim), 
-                   N.mean = rep(0, N.sim), 
-                   N.max = rep(0, N.sim), 
-                   P.min = rep(0, N.sim), 
-                   P.mean = rep(0, N.sim), 
-                   P.max = rep(0, N.sim), 
-                   Dynamic = rep(0, N.sim))
-
-
-#### (3) Run the simulation for each K within the vector 
-for(i in 1:N.sim){
-  
-  ## Run the simulation with updated K value
-  Parms["K"] <- Data$K[i]
-  Temp <- ode(func = RM_predation_model, times = Times, y = State, parms = Parms)
-  
-  ## Only use the last 3000 time steps of the simulation 
-  Temp <- as.data.frame(Temp[1200:1500, ])
-  
-  ## If there is no fluctuation, can freely take mean
-  if(var(Temp$N) < 1e-5){
-    Data$Dynamic[i] <- "Stable"
-    Data$N.min[i] <- min(Temp$N)
-    Data$N.mean[i] <- mean(Temp$N)
-    Data$N.max[i] <- max(Temp$N)
-    Data$P.min[i] <- min(Temp$P)
-    Data$P.mean[i] <- mean(Temp$P)
-    Data$P.max[i] <- max(Temp$P)
-  }  
-  
-  ## If there is fluctuation, need to get accurate cycle start-end point
-  if(var(Temp$N) > 1e-5){
-    peaks <- pracma::findpeaks(Temp[, "N"])[ ,2]
-    Temp <- Temp[(peaks[1] : peaks[length(peaks)]), ]
-    Data$Dynamic[i] <- "Cycle"
-    Data$N.min[i] <- min(Temp$N)
-    Data$N.mean[i] <- mean(Temp$N)
-    Data$N.max[i] <- max(Temp$N)
-    Data$P.min[i] <- min(Temp$P)
-    Data$P.mean[i] <- mean(Temp$P)
-    Data$P.max[i] <- max(Temp$P)
-  }
-  
-}
-
-#### (4) Plot
-
-library(scales)
-
-plot(c(0, max(K.vector)), c(0, max(Data[, c("N.max", "P.max")]) * 1.2), 
-     type = "n", xlab = "K", ylab = "Equilibrium value")
-abline(h = 0)
-abline(v = d.sim / (a.sim * (e.sim - h.sim * d.sim)), col="grey", lty = 2, lwd = 3)
-abline(v = (e.sim + d.sim * h.sim) / (a.sim * h.sim * (e.sim - d.sim * h.sim)), col="grey", lty = 2, lwd = 3)
-points(N.mean ~ K, Data[Data$Dynamic == "Stable", ], type = "l", col = "blue",lty = 1, lwd = 3)
-points(N.mean ~ K, Data[Data$Dynamic == "Cycle", ], type = "l", col = alpha("blue", 0.5), lty = 3, lwd = 2)
-points(N.min ~ K, Data[Data$Dynamic == "Cycle", ], type = "l", col = "blue", lty = 3, lwd = 3)
-points(N.max ~ K, Data[Data$Dynamic == "Cycle", ], type = "l", col = "blue", lty = 3, lwd = 3)
-points(P.mean ~ K, Data[Data$Dynamic == "Stable", ], type = "l", col = "red", lty = 1, lwd = 3)
-points(P.mean ~ K, Data[Data$Dynamic == "Cycle", ], type = "l", col = alpha("red", 0.5), lty = 3, lwd = 2)
-points(P.min ~ K, Data[Data$Dynamic == "Cycle", ], type = "l", col = "red", lty = 3, lwd = 3)
-points(P.max ~ K, Data[Data$Dynamic == "Cycle", ], type = "l", col = "red", lty = 3, lwd = 3)
-legend("topleft", c("Prey", "Predator"), col = c("blue", "red"), lwd = 3, lty = 1, bty = "n")
-```
-
-**Extra reading: Elliptic raw**
-
-In May's random matrix, the entries $m_{ij}$, which represents the effect of species $j$ on species $i$'s growth rate, are independently generated. However, in ecological networks, we usually model pairwise interaction such as consumer-resource, mutualism, and competition, in which cases, $m_{ij}$ is not independent of $m_{ji}$. For **consumer-resources interactions**, $m_{ij}$ and $m_{ji}$ are negatively correlated. For **mutualism or competition interaction**, $m_{ij}$ and $m_{ji}$ are positively correlated. Under the assumption that the pairwise interactions are correlated, we may show that the eigenvalues of the randomly generated Jacobian do not follow uniform distribution in a circle, but in an ellipse.
-
-We build a function `BuildElliptic` with argument $S$ is the number of species (i.e. the dimension of the Jacobian), $C$ is the connectance, $d$ is the strength of self-limitation, $\sigma$ is the variance (i.e. the realized interaction strength) and $\rho$ is the correlation of the pairwise interaction.
-
-```{r, fig.height=5, fig.width=5}
-library(ggplot2)
-#### The function to build Elliptic law
-BuildElliptic <- function(S, C, d, sigma, rho){
-  
-  # sample coefficients in pairs
-  pairs <- MASS::mvrnorm(n = S * (S-1) / 2,
-                         mu = c(0, 0),
-                         Sigma = sigma^2 * matrix(c(1, rho, rho, 1), 2, 2))
-  
-  # build a completely filled matrix
-  M <- matrix(0, S, S)
-  M[upper.tri(M)] <- pairs[,1]
-  M <- t(M)
-  M[upper.tri(M)] <- pairs[,2]
-  
-  # determine which connections to retain (in pairs)
-  Connections <- (matrix(runif(S * S), S, S) <= C) * 1 
-  Connections[lower.tri(Connections)] <- 0
-  diag(Connections) <- 0
-  Connections <- Connections + t(Connections)
-  M <- M * Connections
-  
-  # set diagonals
-  diag(M) <- diag(M) - d
-  return(M)
-}
-
-```
-
-```{r}
-# consumer-resources interactions
-M_CR <- BuildElliptic(S = 500, C = 0.3, d = 10, sigma = 1, rho = -0.5)
-EVals_CR <- eigen(M_CR)$values
-Re.EVals_CR <- Re(EVals_CR)
-Im.EVals_CR <- Im(EVals_CR)
-
-# mutualism or competition
-M_MC <- BuildElliptic(S = 500, C = 0.3, d = 10, sigma = 1, rho = 0.5)
-EVals_MC <- eigen(M_MC)$values
-Re.EVals_MC <- Re(EVals_MC)
-Im.EVals_MC <- Im(EVals_MC)
-
-# combine data
-Re.EVals <- c(Re.EVals_CR, Re.EVals_MC)
-Im.EVals <- c(Im.EVals_CR, Im.EVals_MC)
-
-# visualization
-plot(Re.EVals, Im.EVals, xlab = "Real part", ylab = "Imaginary part", type = "n")
-points(Re.EVals_CR, Im.EVals_CR, col = "green")
-points(Re.EVals_MC, Im.EVals_MC, col = "blue")
-abline(v = 0, col = "red", lty = 2)
-legend("topleft", legend = c("Resource-consumer", "Mutualism or Competition"), col = c("green", "blue"), pch = 1)
 ```
