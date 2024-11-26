@@ -1,4 +1,3 @@
-
 # Week 14 - Resource competition {-} 
 
 **Part 1 - R* rule**
