@@ -1,7 +1,7 @@
 --- 
 title: "Introduction to Theoretical Ecology"
 author: "Instructor: Po-Ju Ke $~~~~~$ Teaching Assistant: Hsiang-Chih Lo"
-date: "2024 Fall at National Taiwan Univeristy ![](./bifurcation.gif)"
+date: "2025 Fall at National Taiwan Univeristy ![](./bifurcation.gif)"
 output:
   html_document:
     df_print: paged
@@ -15,7 +15,7 @@ bibliography:
 biblio-style: apalike
 link-citations: yes
 description: This is the course website for **_Introduction to Theoretical Ecology_**
-  2024 Fall at National Taiwan University.
+  2025 Fall at National Taiwan University.
 url: https://pojuke.github.io/TheoreticalEcologyPJK/
 ---
 # Course information{-}
