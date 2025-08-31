@@ -1,6 +1,6 @@
 --- 
 title: "Introduction to Theoretical Ecology"
-author: "Instructor: Po-Ju Ke $~~~~~$ Teaching Assistant: Hsiang-Chih Lo"
+author: "Instructor: Po-Ju Ke $~~~~~$ Teaching Assistant: Guan-Yu Chen"
 date: "2025 Fall at National Taiwan Univeristy ![](./bifurcation.gif)"
 output:
   html_document:
@@ -30,7 +30,7 @@ By the end of the course, students are expected to be familiar with the basic bu
 Students are only expected to have a basic understanding of **Calculus** (e.g., freshman introductory course) and **Ecology**. It's OK if you're not familiar with calculus as we will provide relevant material for you to review during the first week.
 
 <p style = "font-size: 24pt; margin-bottom: 5px; margin-top: 25px"> **Format** </p>
-Tuesday 6,7,8 (1:20 pm ~ 4:20 pm) at 共207
+Thursday 6,7,8 (1:20 pm ~ 4:20 pm) at 共207
 
 
 <p style = "font-size: 24pt; margin-bottom: 5px; margin-top: 25px"> **Grading** </p>
@@ -60,10 +60,10 @@ Below are the textbook references:
 - Email: pojuke@ntu.edu.tw
 - Office hours: by appointment
 
-**Teaching assistant**: Hsiang-Chih Lo
+**Teaching assistant**: Guan-Yu Chen
 
 - Office: Life Science Building R635
-- Email: r12b44009@ntu.edu.tw
+- Email: r13b44005@ntu.edu.tw
 - Office hours: by appointment
 
 
@@ -75,37 +75,37 @@ library(kableExtra)
 
 syllabus <- tibble(
   Date = c("**Week 1** <span style='vertical-align:-30%'> </span>
-           <br> 9/3",
+           <br> 9/4",
            "**Week 2** <span style='vertical-align:-30%'> </span>
-           <br> 9/10",
+           <br> 9/11",
            "**Week 3** <span style='vertical-align:-30%'> </span>
-           <br> 9/17",
+           <br> 9/18",
            "**Week 4** <span style='vertical-align:-30%'> </span>
-           <br> 9/24",
+           <br> 9/25",
            "**Week 5** <span style='vertical-align:-30%'> </span>
-           <br> 10/1",
+           <br> 10/2",
            "**Week 6** <span style='vertical-align:-30%'> </span>
-           <br> 10/8",
+           <br> 10/9",
            "**Week 7** <span style='vertical-align:-30%'> </span>
-           <br> 10/15",
+           <br> 10/16",
            "**Week 8** <span style='vertical-align:-30%'> </span>
-           <br> 10/22",
+           <br> 10/23",
            "**Week 9** <span style='vertical-align:-30%'> </span>
-           <br> 10/29",
+           <br> 10/30",
            "**Week 10** <span style='vertical-align:-30%'> </span>
-           <br> 11/5",
+           <br> 11/6",
            "**Week 11** <span style='vertical-align:-30%'> </span>
-           <br> 11/12",
+           <br> 11/13",
            "**Week 12** <span style='vertical-align:-30%'> </span>
-           <br> 11/19",
+           <br> 11/20",
            "**Week 13** <span style='vertical-align:-30%'> </span>
-           <br> 11/26",
+           <br> 11/27",
            "**Week 14** <span style='vertical-align:-30%'> </span>
-           <br> 12/3",
+           <br> 12/4",
            "**Week 15** <span style='vertical-align:-30%'> </span>
-           <br> 12/10",
+           <br> 12/11",
            "**Week 16** <span style='vertical-align:-30%'> </span>
-           <br> 12/17"),
+           <br> 12/18"),
   
   `Lecture topic` = c("Introduction: what is theoretical ecology?",
                       "Exponential population growth",
