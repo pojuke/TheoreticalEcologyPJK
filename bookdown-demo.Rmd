@@ -107,58 +107,59 @@ syllabus <- tibble(
            "**Week 16** <span style='vertical-align:-30%'> </span>
            <br> 12/18"),
   
-  `Lecture topic` = c("Introduction: what is theoretical ecology?",
-                      "Exponential population growth",
-                      "No class (National holiday)",
-                      "Logistic population growth and stability analysis",
-                      "Age-structured population models",
-                      "Metapopulations and patch occupancy models",
-                      "Harvesting and bifurcation",
-                      "Lotka-Volterra model of competition: graphical analysis",
-                      "**Midterm exam**",
-                      "Lotka-Volterra model of competition: invasion analysis and linear stability analysis",
-                      "Predator-prey interactions (I)",
-                      "Predator-prey interactions (II) + Discussion on May (1972)",
-                      "Mechanistic models for consumer-resource dynamics",
-                      "Multispecies models of predation: apparent competition",
-                      "Research applcations: plant-soil feedback as an example",
-                      "**Final exam**"),
+  `Lecture topic` = c("Introduction: what is theoretical ecology?", #week1
+                      "Exponential population growth", #week2
+                      "Logistic population growth and stability analysis", #week3
+                      "Discrete population growth and stability analysis", #week4
+                      "Metapopulations and patch occupancy models", #week5
+                      "Harvesting and bifurcation", #week6
+                      "Age-structured population models", #week7
+                      "Lotka-Volterra model of competition: graphical analysis", #week8
+                      "**Midterm exam**", #week9
+                      "Lotka-Volterra model of competition: invasion analysis and linear stability analysis", #week10
+                      "Predator-prey interactions (I)", #week11
+                      "Predator-prey interactions (II)", #week12
+                      "Multispecies models of predation: apparent competition", #week13
+                      "Mechanistic models for consumer-resource dynamics", #week14
+                      "Research applcations: plant-soil feedback as an example", #week15
+                      "**Final exam**"), #week16
     
-  Lab = c(" \\- ",
-          'Solving exponential growth equation using "deSolve" & Visualization',
-          " \\-",
-          "Shinny App for logistic population growth",
-          "Age-structured population model",
-          "Metapopulations and patch occupancy models",
-          "Alternative stable state diagram",
-          "Lotka-Volterra competition model - Population dynamics",
-          " \\-",
-          "Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues",
-          "Lotka-Volterra model of predator-prey interactions and time-scale separation",
-          "Rosenzweig-MacArthur predator-prey model and May's complexity-stability relationship",
-          "Parameter space for apparent competition model",
-          "Resource competition",
-          " \\- ",
-          " \\- "),
+  Lab = c(" \\- ", #week1
+          'Solving exponential growth equation using "deSolve" & Visualization', #week2
+          "Shinny App for logistic population growth", #week3
+          "\\-", #week4
+          "Metapopulations and patch occupancy models", #week5
+          "Alternative stable state diagram", #week6
+          "Age-structured population model", #week7
+          "Lotka-Volterra competition model - Population dynamics", #week8
+          " \\-", #week9
+          "Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues", #week10
+          "Lotka-Volterra model of predator-prey interactions and time-scale separation", #week11
+          "Rosenzweig-MacArthur predator-prey model", #week12
+          "Resource competition", #week13
+          "Parameter space for apparent competition model", #week14
+          " \\- ", #week15
+          " \\- "), #week16
     
     
   Readings = c("[**Grainger et al., 2021**](https://doi.org/10.1086/717206)",
-               "Gotelli [Ch.1], Case[Ch.1]",
-               " \\- ",
-               "Gotelli [Ch.2], Case[Ch.5], Otto & Day[Ch.5]",
-               "Gotelli [Ch.3], Case[Ch.3]",
-               "Gotelli [Ch.4], Case[Ch.16]",
-               "Pastor [Ch. 7], Strogatz [Ch. 3]",
-               "Gotelli [Ch.5], Case[Ch.14]",
-               " \\- ",
-               "Otto & Day [Ch.8], 
-               [**Broekman et al., 2019**]( https://doi.org/10.1111/ele.13349)",
-               "Gotelli [Ch.6], Case[Ch.12, 13]",
-               "Gotelli [Ch.6], Case[Ch.12, 13], 
-               [**May., 1972**](https://www.nature.com/articles/238413a0)",
+               "Gotelli [Ch.1], Case[Ch.1]", #week2
+               " \\- ", #week3
+               "Gotelli [Ch.2], Case[Ch.5], Otto & Day[Ch.5],
+               [**May., 1976**](https://doi.org/10.1038/261459a0)", #week4
+               "Gotelli [Ch.4], Case[Ch.16]", #week5
+               "Pastor [Ch. 7], Strogatz [Ch. 3]", #week6
+               "Gotelli [Ch.3], Case[Ch.3]", #week7
+               "Gotelli [Ch.5], Case[Ch.14], 
+               [**Broekman et al., 2019**]( https://doi.org/10.1111/ele.13349)", #week8
+               " \\- ", #week9
+               "Otto & Day [Ch.8],
+               [**May., 1972**](https://www.nature.com/articles/238413a0)", #week10
+               "Gotelli [Ch.6], Case[Ch.12, 13]", #week11
+               "Gotelli [Ch.6], Case[Ch.12, 13]", #week12
                "[**Tilman., 1980**](https://doi.org/10.1086/283633),
-               [**Armstrong & McGehee., 1980**](https://doi.org/10.1086/283553)",
-               "[**Holt., 1977**](https://doi.org/10.1016/0040-5809(77)90042-9)",
+               [**Armstrong & McGehee., 1980**](https://doi.org/10.1086/283553)", #week13
+               "[**Holt., 1977**](https://doi.org/10.1016/0040-5809(77)90042-9)", #week14
                " \\- ",
                " \\- ")  
   
