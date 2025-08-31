@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Week 12 - Rosenzweig-MacArthur predator-prey model and May’s complexity-stability relationship | Introduction to Theoretical Ecology</title>
+  <meta name="description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Week 12 - Rosenzweig-MacArthur predator-prey model and May’s complexity-stability relationship | Introduction to Theoretical Ecology" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
+  <meta property="og:description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
+  <meta name="github-repo" content="pojuke/TheoreticalEcologyPJK" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Week 12 - Rosenzweig-MacArthur predator-prey model and May’s complexity-stability relationship | Introduction to Theoretical Ecology" />
+  
+  <meta name="twitter:description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
+  <meta name="twitter:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
+
+<meta name="author" content="Instructor: Po-Ju Ke ~~~~~ Teaching Assistant: Hsiang-Chih Lo" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"/>
+<link rel="next" href="week-13---parameter-space-for-apparent-competition-model.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Introduction to Theoretical Ecology</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course information</a></li>
+<li class="chapter" data-level="" data-path="syllabus.html"><a href="syllabus.html"><i class="fa fa-check"></i>Syllabus</a></li>
+<li class="chapter" data-level="" data-path="week-2---exponential-population-growth.html"><a href="week-2---exponential-population-growth.html"><i class="fa fa-check"></i>Week 2 - Exponential population growth</a></li>
+<li class="chapter" data-level="" data-path="week-3---national-holiday-no-class.html"><a href="week-3---national-holiday-no-class.html"><i class="fa fa-check"></i>Week 3 - National holiday (No class)</a></li>
+<li class="chapter" data-level="" data-path="week-4---logistic-population-growth-and-stability-analysis.html"><a href="week-4---logistic-population-growth-and-stability-analysis.html"><i class="fa fa-check"></i>Week 4 - Logistic population growth and stability analysis</a></li>
+<li class="chapter" data-level="" data-path="week-5---metapopulations-and-patch-occupancy-models.html"><a href="week-5---metapopulations-and-patch-occupancy-models.html"><i class="fa fa-check"></i>Week 5 - Metapopulations and patch occupancy models</a></li>
+<li class="chapter" data-level="" data-path="week-6---harvesting-and-bifurcation.html"><a href="week-6---harvesting-and-bifurcation.html"><i class="fa fa-check"></i>Week 6 - Harvesting and bifurcation</a></li>
+<li class="chapter" data-level="" data-path="week-7---age-structure-population-model.html"><a href="week-7---age-structure-population-model.html"><i class="fa fa-check"></i>Week 7 - Age-structure population model</a></li>
+<li class="chapter" data-level="" data-path="week-8---lotka-volterra-competition-model---population-dynamics.html"><a href="week-8---lotka-volterra-competition-model---population-dynamics.html"><i class="fa fa-check"></i>Week 8 - Lotka-Volterra competition model - Population dynamics</a></li>
+<li class="chapter" data-level="" data-path="week-9---midterm.html"><a href="week-9---midterm.html"><i class="fa fa-check"></i>Week 9 - Midterm</a></li>
+<li class="chapter" data-level="" data-path="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"><i class="fa fa-check"></i>Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues</a></li>
+<li class="chapter" data-level="" data-path="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"><i class="fa fa-check"></i>Week 11 - Lotka-Volterra model of predator-prey interactions and time-scale separation</a></li>
+<li class="chapter" data-level="" data-path="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html"><i class="fa fa-check"></i>Week 12 - Rosenzweig-MacArthur predator-prey model and May’s complexity-stability relationship</a></li>
+<li class="chapter" data-level="" data-path="week-13---parameter-space-for-apparent-competition-model.html"><a href="week-13---parameter-space-for-apparent-competition-model.html"><i class="fa fa-check"></i>Week 13 - Parameter space for apparent competition model</a></li>
+<li class="chapter" data-level="" data-path="week-14---resource-competition.html"><a href="week-14---resource-competition.html"><i class="fa fa-check"></i>Week 14 - Resource competition</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Theoretical Ecology</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship" class="section level1 unnumbered hasAnchor">
+<h1>Week 12 - Rosenzweig-MacArthur predator-prey model and May’s complexity-stability relationship<a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><strong>Part 1: Rosenzweig–MacArthur predator–prey model</strong></p>
+<p>In this lab we are going to analyze the Rosenzweig–MacArthur predator–prey model:</p>
+<p><span class="math display">\[\begin{align*}
+\frac {dN}{dt} &amp;= rN(1-\frac{N}{K})-a\frac{N}{1+ahN}P\\
+\frac {dP}{dt} &amp;= ea\frac{N}{1+ahN}P-dP,\\
+\end{align*}\]</span> where <span class="math inline">\(r\)</span> is the intrinsic growth rate of prey, <span class="math inline">\(K\)</span> is the carrying capacity of prey, <span class="math inline">\(a\)</span> is the rate of prey being consumed by predator, <span class="math inline">\(h\)</span> is the handling time of predator, <span class="math inline">\(e\)</span> is the assimilation rate of predation and <span class="math inline">\(d\)</span> is the mortality rate of predator. The ZNGIs of <span class="math inline">\(N\)</span> are <span class="math display">\[
+N = 0 \text{ and } P = \frac{r}{a}(1-\frac{N}{K})(1+ahN)
+\]</span> and the ZNGIs of <span class="math inline">\(P\)</span> are <span class="math display">\[
+P = 0 \text{ and } N = \frac{d}{a(e-dh)}
+\]</span> The coexistence equilibrium is <span class="math inline">\(E_{np} = \left(N^* = \frac{d}{a(e-dh)}, P^* = \frac{r}{a}(1-\frac{N^*}{K})(1+ahN^*)\right)\)</span>.</p>
+<p>Please simulate the model using the parameter set (<span class="math inline">\(N_0\)</span> = 5, <span class="math inline">\(P_0\)</span> = 2, <span class="math inline">\(r\)</span> = 1.0, <span class="math inline">\(K\)</span> = 5.0, <span class="math inline">\(a\)</span> = 1.3, <span class="math inline">\(h\)</span> = 0.9, <span class="math inline">\(e\)</span> = 0.6, <span class="math inline">\(d\)</span> = 0.5) and plot the population trajectories of predator and prey as well as show their population dynamics in the state-space diagram.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-1" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb86-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-2" tabindex="-1"></a></span>
+<span id="cb86-3"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-3" tabindex="-1"></a><span class="do">### Model specification</span></span>
+<span id="cb86-4"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-4" tabindex="-1"></a>RM_predation_model <span class="ot">&lt;-</span> <span class="cf">function</span>(times, state, parms) {</span>
+<span id="cb86-5"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-5" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parms)), {</span>
+<span id="cb86-6"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-6" tabindex="-1"></a>    dN_dt <span class="ot">=</span> r<span class="sc">*</span>N<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>(N<span class="sc">/</span>K))<span class="sc">-</span>(a<span class="sc">*</span>N<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>a<span class="sc">*</span>h<span class="sc">*</span>N))<span class="sc">*</span>P</span>
+<span id="cb86-7"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-7" tabindex="-1"></a>    dP_dt <span class="ot">=</span> e<span class="sc">*</span>(a<span class="sc">*</span>N<span class="sc">/</span>(<span class="dv">1</span><span class="sc">+</span>a<span class="sc">*</span>h<span class="sc">*</span>N))<span class="sc">*</span>P<span class="sc">-</span>d<span class="sc">*</span>P</span>
+<span id="cb86-8"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-8" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="fu">c</span>(dN_dt, dP_dt)))  </span>
+<span id="cb86-9"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-9" tabindex="-1"></a>  })</span>
+<span id="cb86-10"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-10" tabindex="-1"></a>}</span>
+<span id="cb86-11"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-11" tabindex="-1"></a></span>
+<span id="cb86-12"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-12" tabindex="-1"></a><span class="do">### Model parameters</span></span>
+<span id="cb86-13"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-13" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">200</span>, <span class="at">by =</span> <span class="fl">0.01</span>)  </span>
+<span id="cb86-14"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-14" tabindex="-1"></a>state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">N =</span> <span class="dv">5</span>, <span class="at">P =</span> <span class="dv">2</span>)  </span>
+<span id="cb86-15"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-15" tabindex="-1"></a>parms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">r =</span> <span class="fl">1.0</span>, <span class="at">K =</span> <span class="fl">5.0</span>, <span class="at">a =</span> <span class="fl">1.3</span>, <span class="at">h =</span> <span class="fl">0.9</span>, <span class="at">e =</span> <span class="fl">0.6</span>, <span class="at">d =</span> <span class="fl">0.5</span>) </span>
+<span id="cb86-16"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-16" tabindex="-1"></a></span>
+<span id="cb86-17"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-17" tabindex="-1"></a><span class="do">### Model application</span></span>
+<span id="cb86-18"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-18" tabindex="-1"></a>pop_size <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> RM_predation_model, <span class="at">times =</span> times, <span class="at">y =</span> state, <span class="at">parms =</span> parms)</span>
+<span id="cb86-19"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-19" tabindex="-1"></a></span>
+<span id="cb86-20"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-20" tabindex="-1"></a><span class="do">### equilibrium</span></span>
+<span id="cb86-21"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-21" tabindex="-1"></a>E_np <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="fu">as.list</span>(parms), </span>
+<span id="cb86-22"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-22" tabindex="-1"></a>             <span class="fu">c</span>(<span class="at">N =</span> d<span class="sc">/</span>(a<span class="sc">*</span>(e<span class="sc">-</span>d<span class="sc">*</span>h)),</span>
+<span id="cb86-23"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-23" tabindex="-1"></a>               <span class="at">P =</span> r<span class="sc">/</span>a<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>d<span class="sc">/</span>(a<span class="sc">*</span>(e<span class="sc">-</span>d<span class="sc">*</span>h))<span class="sc">/</span>K)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">+</span>a<span class="sc">*</span>h<span class="sc">*</span>d<span class="sc">/</span>(a<span class="sc">*</span>(e<span class="sc">-</span>d<span class="sc">*</span>h)))))</span>
+<span id="cb86-24"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-24" tabindex="-1"></a></span>
+<span id="cb86-25"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-25" tabindex="-1"></a></span>
+<span id="cb86-26"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-26" tabindex="-1"></a><span class="do">### Visualize the population dynamics</span></span>
+<span id="cb86-27"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-27" tabindex="-1"></a><span class="co"># population trajectories</span></span>
+<span id="cb86-28"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-28" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(times)), <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(pop_size[, <span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;P&quot;</span>)])), <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;time&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;population size&quot;</span>)</span>
+<span id="cb86-29"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-29" tabindex="-1"></a><span class="fu">lines</span>(N <span class="sc">~</span> time, <span class="at">data =</span> pop_size, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="co"># dynamics of N</span></span>
+<span id="cb86-30"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-30" tabindex="-1"></a><span class="fu">lines</span>(P <span class="sc">~</span> time, <span class="at">data =</span> pop_size, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># dynamics of P</span></span>
+<span id="cb86-31"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb86-31" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;P&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-1" tabindex="-1"></a><span class="co"># state-space diagram</span></span>
+<span id="cb87-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-2" tabindex="-1"></a>max_P <span class="ot">&lt;-</span> <span class="fu">max</span>(pop_size[ ,<span class="st">&quot;P&quot;</span>])</span>
+<span id="cb87-3"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-3" tabindex="-1"></a>max_N <span class="ot">&lt;-</span> <span class="fu">max</span>(pop_size[ ,<span class="st">&quot;N&quot;</span>])</span>
+<span id="cb87-4"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-4" tabindex="-1"></a><span class="fu">plot</span>(P <span class="sc">~</span> N, <span class="at">data =</span> pop_size, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, max_N<span class="sc">*</span><span class="fl">1.2</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, max_P<span class="sc">*</span><span class="fl">1.2</span>))</span>
+<span id="cb87-5"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-5" tabindex="-1"></a><span class="fu">points</span>(E_np[<span class="st">&quot;P&quot;</span>] <span class="sc">~</span> E_np[<span class="st">&quot;N&quot;</span>], <span class="at">pch =</span> <span class="dv">16</span>) <span class="co"># equilibrium </span></span>
+<span id="cb87-6"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-6" tabindex="-1"></a><span class="fu">with</span>(<span class="fu">as.list</span>(parms), {</span>
+<span id="cb87-7"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-7" tabindex="-1"></a>  <span class="co"># ZNGIs of N</span></span>
+<span id="cb87-8"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-8" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb87-9"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-9" tabindex="-1"></a>  <span class="fu">curve</span>(r<span class="sc">/</span>a<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>x<span class="sc">/</span>K)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">+</span>a<span class="sc">*</span>h<span class="sc">*</span>x), <span class="at">from =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">to =</span> K<span class="sc">+</span><span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> T)</span>
+<span id="cb87-10"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-10" tabindex="-1"></a>  <span class="co"># ZNGIs of P</span></span>
+<span id="cb87-11"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-11" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb87-12"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-12" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">v =</span> d<span class="sc">/</span>(a<span class="sc">*</span>(e<span class="sc">-</span>d<span class="sc">*</span>h)), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb87-13"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-13" tabindex="-1"></a>  }) </span>
+<span id="cb87-14"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb87-14" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;ZNGIs of N&quot;</span>, <span class="st">&quot;ZNGIs of P&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-48-2.png" width="672" /></p>
+<p><em>Remark: <code>with()</code> is a function that you can load the value in the object without subsetting.</em></p>
+<p>Now we increase the carry capacity <span class="math inline">\(K\)</span> to show the <strong>paradox of enrichment</strong>. Let’s consider <span class="math inline">\(K = 7\)</span> with other parameters fixed.</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb88-1" tabindex="-1"></a><span class="do">### Model parameters</span></span>
+<span id="cb88-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb88-2" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">200</span>, <span class="at">by =</span> <span class="fl">0.01</span>)  </span>
+<span id="cb88-3"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb88-3" tabindex="-1"></a>state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">N =</span> <span class="dv">5</span>, <span class="at">P =</span> <span class="dv">2</span>)  </span>
+<span id="cb88-4"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb88-4" tabindex="-1"></a>parms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">r =</span> <span class="fl">1.0</span>, <span class="at">K =</span> <span class="fl">7.0</span>, <span class="at">a =</span> <span class="fl">1.3</span>, <span class="at">h =</span> <span class="fl">0.9</span>, <span class="at">e =</span> <span class="fl">0.6</span>, <span class="at">d =</span> <span class="fl">0.5</span>) </span>
+<span id="cb88-5"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb88-5" tabindex="-1"></a></span>
+<span id="cb88-6"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb88-6" tabindex="-1"></a><span class="do">### Model application</span></span>
+<span id="cb88-7"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb88-7" tabindex="-1"></a>pop_size <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> RM_predation_model, <span class="at">times =</span> times, <span class="at">y =</span> state, <span class="at">parms =</span> parms)</span>
+<span id="cb88-8"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb88-8" tabindex="-1"></a></span>
+<span id="cb88-9"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb88-9" tabindex="-1"></a><span class="do">### equilibrium</span></span>
+<span id="cb88-10"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb88-10" tabindex="-1"></a>E_np <span class="ot">&lt;-</span> <span class="fu">with</span>(<span class="fu">as.list</span>(parms), </span>
+<span id="cb88-11"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb88-11" tabindex="-1"></a>             <span class="fu">c</span>(<span class="at">N =</span> d<span class="sc">/</span>(a<span class="sc">*</span>(e<span class="sc">-</span>d<span class="sc">*</span>h)),</span>
+<span id="cb88-12"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb88-12" tabindex="-1"></a>               <span class="at">P =</span> r<span class="sc">/</span>a<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>d<span class="sc">/</span>(a<span class="sc">*</span>(e<span class="sc">-</span>d<span class="sc">*</span>h))<span class="sc">/</span>K)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">+</span>a<span class="sc">*</span>h<span class="sc">*</span>d<span class="sc">/</span>(a<span class="sc">*</span>(e<span class="sc">-</span>d<span class="sc">*</span>h)))))</span></code></pre></div>
+<p>The population size of <span class="math inline">\(N\)</span> and <span class="math inline">\(P\)</span> do not stay at the equilibrium but cycle.</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb89-1" tabindex="-1"></a><span class="do">### Visualize the population dynamics</span></span>
+<span id="cb89-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb89-2" tabindex="-1"></a><span class="co"># population trajectories</span></span>
+<span id="cb89-3"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb89-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(times)), <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(pop_size[, <span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;P&quot;</span>)])<span class="sc">*</span><span class="fl">1.2</span>), <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;time&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;population size&quot;</span>)</span>
+<span id="cb89-4"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb89-4" tabindex="-1"></a><span class="fu">lines</span>(N <span class="sc">~</span> time, <span class="at">data =</span> pop_size, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="co"># dynamics of N</span></span>
+<span id="cb89-5"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb89-5" tabindex="-1"></a><span class="fu">lines</span>(P <span class="sc">~</span> time, <span class="at">data =</span> pop_size, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># dynamics of P</span></span>
+<span id="cb89-6"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb89-6" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;P&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-1" tabindex="-1"></a><span class="co"># state-space diagram</span></span>
+<span id="cb90-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-2" tabindex="-1"></a>max_P <span class="ot">&lt;-</span> <span class="fu">max</span>(pop_size[ ,<span class="st">&quot;P&quot;</span>])</span>
+<span id="cb90-3"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-3" tabindex="-1"></a>max_N <span class="ot">&lt;-</span> <span class="fu">max</span>(pop_size[ ,<span class="st">&quot;N&quot;</span>])</span>
+<span id="cb90-4"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-4" tabindex="-1"></a><span class="fu">plot</span>(P <span class="sc">~</span> N, <span class="at">data =</span> pop_size, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, max_N<span class="sc">*</span><span class="fl">1.2</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, max_P<span class="sc">*</span><span class="fl">1.2</span>))</span>
+<span id="cb90-5"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-5" tabindex="-1"></a><span class="fu">points</span>(E_np[<span class="st">&quot;P&quot;</span>] <span class="sc">~</span> E_np[<span class="st">&quot;N&quot;</span>], <span class="at">pch =</span> <span class="dv">16</span>) <span class="co"># equilibrium </span></span>
+<span id="cb90-6"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-6" tabindex="-1"></a><span class="fu">with</span>(<span class="fu">as.list</span>(parms), {</span>
+<span id="cb90-7"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-7" tabindex="-1"></a>  <span class="co"># ZNGIs of N</span></span>
+<span id="cb90-8"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-8" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb90-9"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-9" tabindex="-1"></a>  <span class="fu">curve</span>(r<span class="sc">/</span>a<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>x<span class="sc">/</span>K)<span class="sc">*</span>(<span class="dv">1</span><span class="sc">+</span>a<span class="sc">*</span>h<span class="sc">*</span>x), <span class="at">from =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">to =</span> K<span class="sc">+</span><span class="dv">2</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">add =</span> T)</span>
+<span id="cb90-10"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-10" tabindex="-1"></a>  <span class="co"># ZNGIs of P</span></span>
+<span id="cb90-11"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-11" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb90-12"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-12" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">v =</span> d<span class="sc">/</span>(a<span class="sc">*</span>(e<span class="sc">-</span>d<span class="sc">*</span>h)), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb90-13"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-13" tabindex="-1"></a>  }) </span>
+<span id="cb90-14"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb90-14" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;ZNGIs of N&quot;</span>, <span class="st">&quot;ZNGIs of P&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-50-2.png" width="672" /></p>
+<p>Do the <strong>long-term average</strong> of the population size equal to the equilibrium? Let’s calculate the long-term average of population size by function <code>pracma::findpeaks()</code>. It returns a matrix where each row represents one peak found. The first column gives the height, the second the position/index where the maximum is reached, the third and forth the indices of where the peak begins and ends — in the sense of where the pattern starts and ends.</p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb91-1" tabindex="-1"></a><span class="fu">library</span>(pracma)</span>
+<span id="cb91-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb91-2" tabindex="-1"></a><span class="co"># find time points when local peaks occur</span></span>
+<span id="cb91-3"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb91-3" tabindex="-1"></a>peaks <span class="ot">&lt;-</span> <span class="fu">findpeaks</span>(pop_size[, <span class="st">&quot;N&quot;</span>])[ ,<span class="dv">2</span>]</span>
+<span id="cb91-4"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb91-4" tabindex="-1"></a>peaks </span></code></pre></div>
+<pre><code>## [1]  2219  5694  8960 12225 15490 18755</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb93-1" tabindex="-1"></a><span class="co"># get period as time between peaks </span></span>
+<span id="cb93-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb93-2" tabindex="-1"></a>periods <span class="ot">&lt;-</span> peaks[<span class="fu">length</span>(peaks)] <span class="sc">-</span> peaks[<span class="fu">length</span>(peaks) <span class="sc">-</span> <span class="dv">1</span>]</span>
+<span id="cb93-3"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb93-3" tabindex="-1"></a><span class="co"># long-term average of N</span></span>
+<span id="cb93-4"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb93-4" tabindex="-1"></a>avg_N <span class="ot">&lt;-</span> <span class="fu">mean</span>(pop_size[(<span class="fu">length</span>(times) <span class="sc">-</span> periods <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span><span class="fu">length</span>(times), <span class="st">&quot;N&quot;</span>])</span>
+<span id="cb93-5"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb93-5" tabindex="-1"></a>avg_N</span></code></pre></div>
+<pre><code>## [1] 3.642661</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb95-1" tabindex="-1"></a><span class="co"># long-term average of P</span></span>
+<span id="cb95-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb95-2" tabindex="-1"></a>avg_P <span class="ot">&lt;-</span> <span class="fu">mean</span>(pop_size[(<span class="fu">length</span>(times) <span class="sc">-</span> periods <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span><span class="fu">length</span>(times), <span class="st">&quot;P&quot;</span>])</span>
+<span id="cb95-3"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb95-3" tabindex="-1"></a>avg_P</span></code></pre></div>
+<pre><code>## [1] 1.4757</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb97-1" tabindex="-1"></a><span class="co"># equilibrium of N and P</span></span>
+<span id="cb97-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb97-2" tabindex="-1"></a>E_np</span></code></pre></div>
+<pre><code>##        N        P 
+## 2.564103 1.949845</code></pre>
+<p>We show that the the long-term average of the population size of <span class="math inline">\(N\)</span> and <span class="math inline">\(P\)</span> are not identical to the equilibrium of <span class="math inline">\(N\)</span> and <span class="math inline">\(P\)</span>. In fact, the long-term average of the resource <span class="math inline">\(N\)</span> is larger than the original equilibrium due to the fact that the per capita growth rate of the <span class="math inline">\(P\)</span> is a concave-downward function.</p>
+<p>What will happen if you add a perturbation to the system (i.e., change the initial conditions)? Try out different values of <span class="math inline">\(N_0\)</span> and <span class="math inline">\(P_0\)</span> and visualize the differences in the state-space diagram.</p>
+<iframe src="https://genchanghsu0115.shinyapps.io/RM_predation_mod_shinyapp/?showcase=0" width="800px" height="700px" data-external="1">
+</iframe>
+<p>Shiny app is credit to <a href="https://genchanghsu.github.io/index.html">Gen-Chang Hsu</a></p>
+<p><br></p>
+<p><strong>Part 2: Bifurcation diagram</strong></p>
+<p>Here, we simulate the bifurcation diagram along the prey carrying capacity. Different from previous bifurcation plots, our analytical analyses told us that this model may end up in a cycle. Therefore, we need to (1) identify whether the final state is cycling (i.e., based on the variance of the time series) and, if so, (2) find the cycle and store the long-term average across multiple cycles.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb99-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-2" tabindex="-1"></a></span>
+<span id="cb99-3"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-3" tabindex="-1"></a><span class="do">#### (1) Specify parameters </span></span>
+<span id="cb99-4"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-4" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1500</span>, <span class="at">by =</span> <span class="dv">1</span>)  </span>
+<span id="cb99-5"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-5" tabindex="-1"></a>state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">N =</span> <span class="dv">1</span>, <span class="at">P =</span> <span class="dv">1</span>)  </span>
+<span id="cb99-6"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-6" tabindex="-1"></a>parms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">r =</span> <span class="fl">1.0</span>, <span class="at">K =</span> <span class="fl">5.0</span>, <span class="at">a =</span> <span class="fl">1.3</span>, <span class="at">h =</span> <span class="fl">0.9</span>, <span class="at">e =</span> <span class="fl">0.6</span>, <span class="at">d =</span> <span class="fl">0.5</span>) </span>
+<span id="cb99-7"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-7" tabindex="-1"></a>r <span class="ot">=</span> <span class="fu">as.numeric</span>(parms[<span class="st">&quot;r&quot;</span>])   </span>
+<span id="cb99-8"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-8" tabindex="-1"></a>K <span class="ot">=</span> <span class="fu">as.numeric</span>(parms[<span class="st">&quot;K&quot;</span>])</span>
+<span id="cb99-9"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-9" tabindex="-1"></a>a <span class="ot">=</span> <span class="fu">as.numeric</span>(parms[<span class="st">&quot;a&quot;</span>])</span>
+<span id="cb99-10"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-10" tabindex="-1"></a>h <span class="ot">=</span> <span class="fu">as.numeric</span>(parms[<span class="st">&quot;h&quot;</span>])</span>
+<span id="cb99-11"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-11" tabindex="-1"></a>e <span class="ot">=</span> <span class="fu">as.numeric</span>(parms[<span class="st">&quot;e&quot;</span>])</span>
+<span id="cb99-12"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-12" tabindex="-1"></a>d <span class="ot">=</span> <span class="fu">as.numeric</span>(parms[<span class="st">&quot;d&quot;</span>])</span>
+<span id="cb99-13"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-13" tabindex="-1"></a></span>
+<span id="cb99-14"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-14" tabindex="-1"></a></span>
+<span id="cb99-15"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-15" tabindex="-1"></a><span class="do">#### (2) Create vector for K and saving space</span></span>
+<span id="cb99-16"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-16" tabindex="-1"></a>K.vector <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="fl">0.1</span>, <span class="at">to =</span> <span class="fl">9.0</span>, <span class="at">by =</span> <span class="fl">0.05</span>)</span>
+<span id="cb99-17"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-17" tabindex="-1"></a>N.sim <span class="ot">&lt;-</span> <span class="fu">length</span>(K.vector)</span>
+<span id="cb99-18"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-18" tabindex="-1"></a>Data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">matrix</span>(<span class="dv">0</span>, </span>
+<span id="cb99-19"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-19" tabindex="-1"></a>                             <span class="at">nrow =</span> N.sim <span class="sc">*</span> <span class="dv">2</span>, <span class="co"># one for N, one for P</span></span>
+<span id="cb99-20"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-20" tabindex="-1"></a>                             <span class="at">ncol =</span> <span class="dv">7</span>))</span>
+<span id="cb99-21"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-21" tabindex="-1"></a><span class="fu">names</span>(Data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Variable&quot;</span>, <span class="st">&quot;MeanDensity&quot;</span>, <span class="st">&quot;MinDensity&quot;</span>, <span class="st">&quot;MaxDensity&quot;</span>, </span>
+<span id="cb99-22"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-22" tabindex="-1"></a>                 <span class="st">&quot;Variation&quot;</span>, <span class="st">&quot;K&quot;</span>, <span class="st">&quot;Dynamic&quot;</span>)</span>
+<span id="cb99-23"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-23" tabindex="-1"></a></span>
+<span id="cb99-24"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-24" tabindex="-1"></a></span>
+<span id="cb99-25"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-25" tabindex="-1"></a><span class="do">#### (3) Run the simulation for each K within the vector </span></span>
+<span id="cb99-26"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-26" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N.sim){</span>
+<span id="cb99-27"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-27" tabindex="-1"></a>  </span>
+<span id="cb99-28"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-28" tabindex="-1"></a>  <span class="do">## Run the simulation with updated K value</span></span>
+<span id="cb99-29"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-29" tabindex="-1"></a>  parms[<span class="st">&quot;K&quot;</span>] <span class="ot">&lt;-</span> K.vector[i]</span>
+<span id="cb99-30"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-30" tabindex="-1"></a>  Temp <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> RM_predation_model, <span class="at">times =</span> times, <span class="at">y =</span> state, <span class="at">parms =</span> parms)</span>
+<span id="cb99-31"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-31" tabindex="-1"></a>  </span>
+<span id="cb99-32"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-32" tabindex="-1"></a>  <span class="do">## Only use the last 300 time steps of the simulation </span></span>
+<span id="cb99-33"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-33" tabindex="-1"></a>  Temp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(Temp[<span class="dv">1200</span><span class="sc">:</span><span class="dv">1500</span>, ])</span>
+<span id="cb99-34"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-34" tabindex="-1"></a>  </span>
+<span id="cb99-35"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-35" tabindex="-1"></a>  <span class="do">## If there is no fluctuation, can freely use all final steps</span></span>
+<span id="cb99-36"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-36" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">var</span>(Temp<span class="sc">$</span>N) <span class="sc">&lt;</span> <span class="fl">1e-5</span>){</span>
+<span id="cb99-37"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-37" tabindex="-1"></a>    Temp.use <span class="ot">&lt;-</span> Temp </span>
+<span id="cb99-38"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-38" tabindex="-1"></a>    Temp.use<span class="sc">$</span>K <span class="ot">&lt;-</span> parms[<span class="st">&quot;K&quot;</span>]</span>
+<span id="cb99-39"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-39" tabindex="-1"></a>    Temp.use<span class="sc">$</span>Dynamic <span class="ot">&lt;-</span> <span class="st">&quot;Stable&quot;</span></span>
+<span id="cb99-40"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-40" tabindex="-1"></a>  }  </span>
+<span id="cb99-41"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-41" tabindex="-1"></a>  </span>
+<span id="cb99-42"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-42" tabindex="-1"></a>  <span class="do">## If there is fluctuation, need to get accurate cycle start-end point</span></span>
+<span id="cb99-43"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-43" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">var</span>(Temp<span class="sc">$</span>N) <span class="sc">&gt;</span> <span class="fl">1e-5</span>){</span>
+<span id="cb99-44"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-44" tabindex="-1"></a>    peaks <span class="ot">&lt;-</span> pracma<span class="sc">::</span><span class="fu">findpeaks</span>(Temp[, <span class="st">&quot;N&quot;</span>])[ ,<span class="dv">2</span>]</span>
+<span id="cb99-45"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-45" tabindex="-1"></a>    Temp.use <span class="ot">&lt;-</span> Temp[(peaks[<span class="dv">1</span>] <span class="sc">:</span> peaks[<span class="fu">length</span>(peaks)]), ]</span>
+<span id="cb99-46"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-46" tabindex="-1"></a>    Temp.use<span class="sc">$</span>K <span class="ot">&lt;-</span> parms[<span class="st">&quot;K&quot;</span>]</span>
+<span id="cb99-47"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-47" tabindex="-1"></a>    Temp.use<span class="sc">$</span>Dynamic <span class="ot">&lt;-</span> <span class="st">&quot;Cycle&quot;</span></span>
+<span id="cb99-48"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-48" tabindex="-1"></a>  }</span>
+<span id="cb99-49"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-49" tabindex="-1"></a>  </span>
+<span id="cb99-50"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-50" tabindex="-1"></a>  <span class="do">## Use tidyverse to wriggle data</span></span>
+<span id="cb99-51"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-51" tabindex="-1"></a>  Temp.tidy <span class="ot">&lt;-</span> </span>
+<span id="cb99-52"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-52" tabindex="-1"></a>    Temp.use <span class="sc">%&gt;%</span> </span>
+<span id="cb99-53"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-53" tabindex="-1"></a>    <span class="fu">gather</span>(<span class="at">key =</span> Variable, <span class="at">value =</span> Density, <span class="sc">-</span><span class="fu">c</span>(time, K, Dynamic)) <span class="sc">%&gt;%</span> </span>
+<span id="cb99-54"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-54" tabindex="-1"></a>    <span class="fu">group_by</span>(Variable) <span class="sc">%&gt;%</span> </span>
+<span id="cb99-55"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-55" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">MeanDensity =</span> <span class="fu">mean</span>(Density),</span>
+<span id="cb99-56"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-56" tabindex="-1"></a>              <span class="at">MinDensity =</span> <span class="fu">min</span>(Density), </span>
+<span id="cb99-57"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-57" tabindex="-1"></a>              <span class="at">MaxDensity =</span> <span class="fu">max</span>(Density), </span>
+<span id="cb99-58"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-58" tabindex="-1"></a>              <span class="at">Variation =</span> <span class="fu">var</span>(Density), </span>
+<span id="cb99-59"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-59" tabindex="-1"></a>              <span class="at">K =</span> <span class="fu">unique</span>(K), </span>
+<span id="cb99-60"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-60" tabindex="-1"></a>              <span class="at">Dynamic =</span> <span class="fu">unique</span>(Dynamic)) </span>
+<span id="cb99-61"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-61" tabindex="-1"></a>  </span>
+<span id="cb99-62"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-62" tabindex="-1"></a>  <span class="do">## Save simulation summary into Data</span></span>
+<span id="cb99-63"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-63" tabindex="-1"></a>  Data[(i<span class="dv">-1</span>)<span class="sc">*</span><span class="dv">2</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>), ] <span class="ot">&lt;-</span> Temp.tidy</span>
+<span id="cb99-64"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-64" tabindex="-1"></a>  </span>
+<span id="cb99-65"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-65" tabindex="-1"></a>}</span>
+<span id="cb99-66"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-66" tabindex="-1"></a></span>
+<span id="cb99-67"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-67" tabindex="-1"></a></span>
+<span id="cb99-68"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-68" tabindex="-1"></a><span class="do">#### (4) Plot</span></span>
+<span id="cb99-69"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-69" tabindex="-1"></a>Data <span class="sc">%&gt;%</span> </span>
+<span id="cb99-70"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-70" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> K, <span class="at">color =</span> Variable)) <span class="sc">+</span> </span>
+<span id="cb99-71"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-71" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>) <span class="sc">+</span> </span>
+<span id="cb99-72"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-72" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> d <span class="sc">/</span> (a <span class="sc">*</span> (e <span class="sc">-</span> h <span class="sc">*</span> d)), </span>
+<span id="cb99-73"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-73" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">&quot;longdash&quot;</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb99-74"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-74" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> (e <span class="sc">+</span> d <span class="sc">*</span> h) <span class="sc">/</span> (a <span class="sc">*</span> h <span class="sc">*</span> (e <span class="sc">-</span> d <span class="sc">*</span> h)), </span>
+<span id="cb99-75"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-75" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">&quot;longdash&quot;</span>, <span class="at">col=</span><span class="st">&quot;grey&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb99-76"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-76" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> Data[Data<span class="sc">$</span>Dynamic <span class="sc">==</span> <span class="st">&quot;Stable&quot;</span>, ], </span>
+<span id="cb99-77"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-77" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">y =</span> MeanDensity)) <span class="sc">+</span>   </span>
+<span id="cb99-78"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-78" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> Data[Data<span class="sc">$</span>Dynamic <span class="sc">==</span> <span class="st">&quot;Cycle&quot;</span>, ], </span>
+<span id="cb99-79"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-79" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">y =</span> MeanDensity), </span>
+<span id="cb99-80"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-80" tabindex="-1"></a>            <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span>   </span>
+<span id="cb99-81"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-81" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> Data[Data<span class="sc">$</span>Dynamic <span class="sc">==</span> <span class="st">&quot;Cycle&quot;</span>, ], </span>
+<span id="cb99-82"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-82" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">y =</span> MinDensity), </span>
+<span id="cb99-83"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-83" tabindex="-1"></a>            <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span>    </span>
+<span id="cb99-84"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-84" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> Data[Data<span class="sc">$</span>Dynamic <span class="sc">==</span> <span class="st">&quot;Cycle&quot;</span>, ], </span>
+<span id="cb99-85"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-85" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">y =</span> MaxDensity), </span>
+<span id="cb99-86"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-86" tabindex="-1"></a>            <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb99-87"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-87" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;K&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Equilibrium value&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb99-88"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-88" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;N&quot;</span> <span class="ot">=</span> <span class="st">&quot;blue&quot;</span>, <span class="st">&quot;P&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb99-89"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-89" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span> </span>
+<span id="cb99-90"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb99-90" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) </span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p><strong>Part 3: May’s complexity-stability relationship</strong></p>
+<p>May’s insight was to skip the Jacobian calculation altogether and directly consider the Jacobian matrix as a large random matrix (<span class="math inline">\(\mathbf{M}\)</span>, with elements <span class="math inline">\(m_{ij}\)</span>) resting at a feasible equilibrium, and then the eigenvalues of the Jacobian matrix could be derived based on random matrix theory.</p>
+<p>Let’s try to recreate May’s random matrix. In particular, May considered the following algorithm to build the random Jacobian matrix for <span class="math inline">\(S\)</span> species (thereby a <span class="math inline">\(S \times S\)</span> matrix):</p>
+<p>Here, <span class="math inline">\(C\)</span> represents the connectedness of the system (chance of species interacting with each other), <span class="math inline">\(\sigma^{2}\)</span> can be considered as the realized interaction strengths, and <span class="math inline">\(d\)</span> is the strength of self-limitation.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-1" tabindex="-1"></a><span class="co"># code for building May&#39;s random matrix</span></span>
+<span id="cb100-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-2" tabindex="-1"></a>BuildMay <span class="ot">=</span> <span class="cf">function</span>(S, C, d, sigma){</span>
+<span id="cb100-3"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-3" tabindex="-1"></a>  <span class="co"># fill the whole matrix</span></span>
+<span id="cb100-4"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-4" tabindex="-1"></a>  entry <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(S <span class="sc">*</span> S, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> sigma)</span>
+<span id="cb100-5"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-5" tabindex="-1"></a>  M <span class="ot">&lt;-</span> <span class="fu">matrix</span>(entry, <span class="at">nrow =</span> S, <span class="at">ncol =</span> S)</span>
+<span id="cb100-6"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-6" tabindex="-1"></a>  <span class="co"># remove connections</span></span>
+<span id="cb100-7"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-7" tabindex="-1"></a>  remove <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(S <span class="sc">*</span> S) <span class="sc">&lt;=</span> C, <span class="at">nrow =</span> S, <span class="at">ncol =</span> S)</span>
+<span id="cb100-8"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-8" tabindex="-1"></a>  M <span class="ot">&lt;-</span> M <span class="sc">*</span> remove</span>
+<span id="cb100-9"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-9" tabindex="-1"></a></span>
+<span id="cb100-10"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-10" tabindex="-1"></a>  <span class="fu">sum</span>(M <span class="sc">!=</span> <span class="dv">0</span>) <span class="sc">/</span> (S<span class="sc">*</span>S) <span class="co"># should equal to C</span></span>
+<span id="cb100-11"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-11" tabindex="-1"></a></span>
+<span id="cb100-12"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-12" tabindex="-1"></a>  <span class="co"># substrate diagonal elements by d</span></span>
+<span id="cb100-13"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-13" tabindex="-1"></a>  <span class="fu">diag</span>(M) <span class="ot">&lt;-</span> <span class="fu">diag</span>(M) <span class="sc">-</span> d</span>
+<span id="cb100-14"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-14" tabindex="-1"></a>  <span class="fu">return</span>(M)</span>
+<span id="cb100-15"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-15" tabindex="-1"></a>}</span>
+<span id="cb100-16"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-16" tabindex="-1"></a></span>
+<span id="cb100-17"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-17" tabindex="-1"></a>May <span class="ot">&lt;-</span> <span class="fu">BuildMay</span>(<span class="at">S =</span> <span class="dv">500</span>, <span class="at">C =</span> <span class="fl">0.5</span>, <span class="at">d =</span> <span class="dv">10</span>, <span class="at">sigma =</span> <span class="dv">1</span>)</span>
+<span id="cb100-18"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-18" tabindex="-1"></a>EVals <span class="ot">&lt;-</span> <span class="fu">eigen</span>(May)<span class="sc">$</span>values</span>
+<span id="cb100-19"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-19" tabindex="-1"></a>Re.EVals <span class="ot">&lt;-</span> <span class="fu">Re</span>(EVals)</span>
+<span id="cb100-20"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-20" tabindex="-1"></a>Im.EVals <span class="ot">&lt;-</span> <span class="fu">Im</span>(EVals)</span>
+<span id="cb100-21"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-21" tabindex="-1"></a></span>
+<span id="cb100-22"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-22" tabindex="-1"></a><span class="fu">plot</span>(Re.EVals, Im.EVals, <span class="at">xlab =</span> <span class="st">&quot;Real part&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Imaginary part&quot;</span>)</span>
+<span id="cb100-23"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb100-23" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-54-1.png" width="480" /></p>
+<p><br></p>
+<p><strong>Extra reading: Elliptic raw</strong></p>
+<p>In May’s random matrix, the entries <span class="math inline">\(m_{ij}\)</span>, which represents the effect of species <span class="math inline">\(j\)</span> on species <span class="math inline">\(i\)</span>’s growth rate, are independently generated. However, in ecological networks, we usually model pairwise interaction such as consumer-resource, mutualism, and competition, in which cases, <span class="math inline">\(m_{ij}\)</span> is not independent of <span class="math inline">\(m_{ji}\)</span>. For <strong>consumer-resources interactions</strong>, <span class="math inline">\(m_{ij}\)</span> and <span class="math inline">\(m_{ji}\)</span> are negatively correlated. For <strong>mutualism or competition interaction</strong>, <span class="math inline">\(m_{ij}\)</span> and <span class="math inline">\(m_{ji}\)</span> are positively correlated. Under the assumption that the pairwise interactions are correlated, we may show that the eigenvalues of the randomly generated Jacobian do not follow uniform distribution in a circle, but in an ellipse.</p>
+<p>We build a function <code>BuildElliptic</code> with argument <span class="math inline">\(S\)</span> is the number of species (i.e. the dimension of the Jacobian), <span class="math inline">\(C\)</span> is the connectance, <span class="math inline">\(d\)</span> is the strength of self-limitation, <span class="math inline">\(\sigma\)</span> is the variance (i.e. the realized interaction strength) and <span class="math inline">\(\rho\)</span> is the correlation of the pairwise interaction.</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb101-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-2" tabindex="-1"></a><span class="do">#### The function to build Elliptic law</span></span>
+<span id="cb101-3"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-3" tabindex="-1"></a>BuildElliptic <span class="ot">&lt;-</span> <span class="cf">function</span>(S, C, d, sigma, rho){</span>
+<span id="cb101-4"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-4" tabindex="-1"></a>  </span>
+<span id="cb101-5"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-5" tabindex="-1"></a>  <span class="co"># sample coefficients in pairs</span></span>
+<span id="cb101-6"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-6" tabindex="-1"></a>  pairs <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">mvrnorm</span>(<span class="at">n =</span> S <span class="sc">*</span> (S<span class="dv">-1</span>) <span class="sc">/</span> <span class="dv">2</span>,</span>
+<span id="cb101-7"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-7" tabindex="-1"></a>                         <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb101-8"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-8" tabindex="-1"></a>                         <span class="at">Sigma =</span> sigma<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, rho, rho, <span class="dv">1</span>), <span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb101-9"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-9" tabindex="-1"></a>  </span>
+<span id="cb101-10"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-10" tabindex="-1"></a>  <span class="co"># build a completely filled matrix</span></span>
+<span id="cb101-11"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-11" tabindex="-1"></a>  M <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, S, S)</span>
+<span id="cb101-12"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-12" tabindex="-1"></a>  M[<span class="fu">upper.tri</span>(M)] <span class="ot">&lt;-</span> pairs[,<span class="dv">1</span>]</span>
+<span id="cb101-13"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-13" tabindex="-1"></a>  M <span class="ot">&lt;-</span> <span class="fu">t</span>(M)</span>
+<span id="cb101-14"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-14" tabindex="-1"></a>  M[<span class="fu">upper.tri</span>(M)] <span class="ot">&lt;-</span> pairs[,<span class="dv">2</span>]</span>
+<span id="cb101-15"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-15" tabindex="-1"></a>  </span>
+<span id="cb101-16"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-16" tabindex="-1"></a>  <span class="co"># determine which connections to retain (in pairs)</span></span>
+<span id="cb101-17"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-17" tabindex="-1"></a>  Connections <span class="ot">&lt;-</span> (<span class="fu">matrix</span>(<span class="fu">runif</span>(S <span class="sc">*</span> S), S, S) <span class="sc">&lt;=</span> C) <span class="sc">*</span> <span class="dv">1</span> </span>
+<span id="cb101-18"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-18" tabindex="-1"></a>  Connections[<span class="fu">lower.tri</span>(Connections)] <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb101-19"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-19" tabindex="-1"></a>  <span class="fu">diag</span>(Connections) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb101-20"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-20" tabindex="-1"></a>  Connections <span class="ot">&lt;-</span> Connections <span class="sc">+</span> <span class="fu">t</span>(Connections)</span>
+<span id="cb101-21"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-21" tabindex="-1"></a>  M <span class="ot">&lt;-</span> M <span class="sc">*</span> Connections</span>
+<span id="cb101-22"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-22" tabindex="-1"></a>  </span>
+<span id="cb101-23"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-23" tabindex="-1"></a>  <span class="co"># set diagonals</span></span>
+<span id="cb101-24"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-24" tabindex="-1"></a>  <span class="fu">diag</span>(M) <span class="ot">&lt;-</span> <span class="fu">diag</span>(M) <span class="sc">-</span> d</span>
+<span id="cb101-25"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-25" tabindex="-1"></a>  <span class="fu">return</span>(M)</span>
+<span id="cb101-26"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb101-26" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-1" tabindex="-1"></a><span class="co"># consumer-resources interactions</span></span>
+<span id="cb102-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-2" tabindex="-1"></a>M_CR <span class="ot">&lt;-</span> <span class="fu">BuildElliptic</span>(<span class="at">S =</span> <span class="dv">500</span>, <span class="at">C =</span> <span class="fl">0.3</span>, <span class="at">d =</span> <span class="dv">10</span>, <span class="at">sigma =</span> <span class="dv">1</span>, <span class="at">rho =</span> <span class="sc">-</span><span class="fl">0.5</span>)</span>
+<span id="cb102-3"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-3" tabindex="-1"></a>EVals_CR <span class="ot">&lt;-</span> <span class="fu">eigen</span>(M_CR)<span class="sc">$</span>values</span>
+<span id="cb102-4"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-4" tabindex="-1"></a>Re.EVals_CR <span class="ot">&lt;-</span> <span class="fu">Re</span>(EVals_CR)</span>
+<span id="cb102-5"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-5" tabindex="-1"></a>Im.EVals_CR <span class="ot">&lt;-</span> <span class="fu">Im</span>(EVals_CR)</span>
+<span id="cb102-6"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-6" tabindex="-1"></a></span>
+<span id="cb102-7"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-7" tabindex="-1"></a><span class="co"># mutualism or competition</span></span>
+<span id="cb102-8"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-8" tabindex="-1"></a>M_MC <span class="ot">&lt;-</span> <span class="fu">BuildElliptic</span>(<span class="at">S =</span> <span class="dv">500</span>, <span class="at">C =</span> <span class="fl">0.3</span>, <span class="at">d =</span> <span class="dv">10</span>, <span class="at">sigma =</span> <span class="dv">1</span>, <span class="at">rho =</span> <span class="fl">0.5</span>)</span>
+<span id="cb102-9"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-9" tabindex="-1"></a>EVals_MC <span class="ot">&lt;-</span> <span class="fu">eigen</span>(M_MC)<span class="sc">$</span>values</span>
+<span id="cb102-10"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-10" tabindex="-1"></a>Re.EVals_MC <span class="ot">&lt;-</span> <span class="fu">Re</span>(EVals_MC)</span>
+<span id="cb102-11"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-11" tabindex="-1"></a>Im.EVals_MC <span class="ot">&lt;-</span> <span class="fu">Im</span>(EVals_MC)</span>
+<span id="cb102-12"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-12" tabindex="-1"></a></span>
+<span id="cb102-13"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-13" tabindex="-1"></a><span class="co"># combine data</span></span>
+<span id="cb102-14"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-14" tabindex="-1"></a>Re.EVals <span class="ot">&lt;-</span> <span class="fu">c</span>(Re.EVals_CR, Re.EVals_MC)</span>
+<span id="cb102-15"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-15" tabindex="-1"></a>Im.EVals <span class="ot">&lt;-</span> <span class="fu">c</span>(Im.EVals_CR, Im.EVals_MC)</span>
+<span id="cb102-16"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-16" tabindex="-1"></a></span>
+<span id="cb102-17"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-17" tabindex="-1"></a><span class="co"># visualization</span></span>
+<span id="cb102-18"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-18" tabindex="-1"></a><span class="fu">plot</span>(Re.EVals, Im.EVals, <span class="at">xlab =</span> <span class="st">&quot;Real part&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Imaginary part&quot;</span>, <span class="at">type =</span> <span class="st">&quot;n&quot;</span>)</span>
+<span id="cb102-19"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-19" tabindex="-1"></a><span class="fu">points</span>(Re.EVals_CR, Im.EVals_CR, <span class="at">col =</span> <span class="st">&quot;green&quot;</span>)</span>
+<span id="cb102-20"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-20" tabindex="-1"></a><span class="fu">points</span>(Re.EVals_MC, Im.EVals_MC, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>)</span>
+<span id="cb102-21"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-21" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb102-22"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb102-22" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;Resource-consumer&quot;</span>, <span class="st">&quot;Mutualism or Competition&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;green&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="at">pch =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-56-1.png" width="672" /></p>
+<p><strong>Extra reading: Simulating generalized Lotka-Volterra model</strong></p>
+<p>Now that you’ve learned the two-species Lotka-Volterra model, you may want to expand it to three species or more. For the three-species case, the model is simply:</p>
+<p><span class="math display">\[
+\dfrac{d N_1}{d t} = N_1(r_1 - \alpha_{11} N_1 - \alpha_{12} N_2 - \alpha_{13} N_3)
+\\
+\dfrac{d N_2}{d t} = N_2(r_2 - \alpha_{21} N_1 - \alpha_{22} N_2 - \alpha_{23} N_3)
+\\
+\dfrac{d N_3}{d t} = N_3(r_3 - \alpha_{31} N_1 - \alpha_{32} N_2 - \alpha_{33} N_3)
+\]</span></p>
+<p>Expanding it to multi-species should also be fairly straightforward, as the population growth rate of each species <span class="math inline">\(i\)</span> can be written as:</p>
+<p><span class="math display">\[
+\dfrac{d N_i}{d t} = N_i(r_i + \sum_{j=1}^{n} \alpha_{ij} N_j)
+\]</span></p>
+<p>The above equation is called the generalized Lotka-Volterra model (GLV). Note that the sign before <span class="math inline">\(\alpha_{ij}\)</span> is a plus sign, therefore, under this formulation, positive* <span class="math inline">\(\alpha_{ij}\)</span> represents mutualistic interactions and negative <span class="math inline">\(\alpha_{ij}\)</span> represents competitive interactions.</p>
+<p>However, when coding the simulation, there is no way that you will explicitly type out 100 equations for a system with 100 species, nor will you explicitly prepare <span class="math inline">\(100 \times 100\)</span> different <span class="math inline">\(\alpha_{ij}\)</span> parameters. To efficiently simulate the system, we will “vectorize” our code by using vectors and matrices to represent our dynamical system. In particular, for the three-species case, the three equations can be written in matrix form as follows:</p>
+<p><span class="math display">\[
+\begin{pmatrix}
+\dfrac{d N_1}{d t}\\
+\dfrac{d N_2}{d t}\\
+\dfrac{d N_3}{d t}\\
+\end{pmatrix}
+=
+\begin{pmatrix}
+N_1 &amp; 0 &amp; 0 \\
+0 &amp; N_2 &amp; 0 \\
+0 &amp; 0 &amp; N_3
+\end{pmatrix}
+\begin{bmatrix}
+\begin{pmatrix}
+r_1 \\ r_2 \\ r_3
+\end{pmatrix}
+-
+\begin{pmatrix}
+\alpha_{11} &amp; \alpha_{12} &amp; \alpha_{13} \\
+\alpha_{21} &amp; \alpha_{22} &amp; \alpha_{23} \\
+\alpha_{31} &amp; \alpha_{32} &amp; \alpha_{33} \\
+\end{pmatrix}
+\times
+\begin{pmatrix}
+N_1 \\ N_2 \\ N_3
+\end{pmatrix}
+\end{bmatrix}
+\]</span></p>
+<p>You can try out the matrix multiplication to see how the above expression is equivalent to the first one. In the similar spirit, the multi-species GLV model can be written in matrix form as follows:</p>
+<p><span class="math display">\[
+\dfrac{d N}{d t} = D(N)[r + AN]
+\]</span></p>
+<p>Here, <strong><em>N</em></strong> is a vector of population densities with elements <span class="math inline">\(N_i\)</span> (length n), <span class="math inline">\(D(N)\)</span> is a diagonal matrix with <span class="math inline">\(N_i\)</span> on the main diagonal (dimension <span class="math inline">\(n\)</span> * <span class="math inline">\(n\)</span>), <span class="math inline">\(r\)</span> is a vector of species’ intrinsic growth rates <span class="math inline">\(r_i\)</span>, and A is a matrix of interaction coefficients <span class="math inline">\(\alpha_{ij}\)</span> (dimension <span class="math inline">\(n\)</span> * <span class="math inline">\(n\)</span>). With this notation, we can efficiently code the GLV with the following R script.</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-1" tabindex="-1"></a><span class="do">#### Lotka-Volterra model</span></span>
+<span id="cb103-2"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-2" tabindex="-1"></a>GLV <span class="ot">=</span> <span class="cf">function</span>(times, state, parms){</span>
+<span id="cb103-3"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-3" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parms)),{</span>
+<span id="cb103-4"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-4" tabindex="-1"></a>    dNX <span class="ot">=</span> <span class="fu">diag</span>(state) <span class="sc">%*%</span> (r <span class="sc">+</span> A <span class="sc">%*%</span> state)</span>
+<span id="cb103-5"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-5" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="fu">c</span>(dNX)))</span>
+<span id="cb103-6"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-6" tabindex="-1"></a>  })</span>
+<span id="cb103-7"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-7" tabindex="-1"></a>}</span>
+<span id="cb103-8"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-8" tabindex="-1"></a></span>
+<span id="cb103-9"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-9" tabindex="-1"></a> </span>
+<span id="cb103-10"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-10" tabindex="-1"></a><span class="do">#### Parameter setting with a random interaction matrix</span></span>
+<span id="cb103-11"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-11" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb103-12"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-12" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, n)</span>
+<span id="cb103-13"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-13" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(n <span class="sc">*</span> n, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="fl">0.1</span>), <span class="at">nrow =</span> n, <span class="at">ncol =</span> n)</span>
+<span id="cb103-14"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-14" tabindex="-1"></a><span class="fu">diag</span>(A) <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb103-15"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-15" tabindex="-1"></a>parms <span class="ot">=</span> <span class="fu">list</span>(<span class="at">r =</span> r, <span class="at">A =</span> A)</span>
+<span id="cb103-16"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-16" tabindex="-1"></a>times <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb103-17"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-17" tabindex="-1"></a>ini<span class="ot">=</span> <span class="fu">rep</span>(<span class="fl">0.01</span>, n)</span>
+<span id="cb103-18"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-18" tabindex="-1"></a></span>
+<span id="cb103-19"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-19" tabindex="-1"></a><span class="do">#### Run the simulation</span></span>
+<span id="cb103-20"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-20" tabindex="-1"></a>out <span class="ot">=</span> <span class="fu">as.data.frame</span>(<span class="fu">ode</span>(<span class="at">func=</span>GLV, <span class="at">y=</span>ini, <span class="at">parms=</span>parms, <span class="at">times=</span>times))</span>
+<span id="cb103-21"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-21" tabindex="-1"></a></span>
+<span id="cb103-22"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-22" tabindex="-1"></a><span class="do">#### Gather data for ploting</span></span>
+<span id="cb103-23"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-23" tabindex="-1"></a>comp.gg <span class="ot">=</span> <span class="fu">gather</span>(out, <span class="at">key=</span>state.var, <span class="at">value=</span>count, <span class="sc">-</span>time)</span>
+<span id="cb103-24"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-24" tabindex="-1"></a></span>
+<span id="cb103-25"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-25" tabindex="-1"></a><span class="do">#### Plot</span></span>
+<span id="cb103-26"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-26" tabindex="-1"></a><span class="fu">ggplot</span>(comp.gg,</span>
+<span id="cb103-27"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-27" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x=</span>time, <span class="at">y=</span>count, <span class="at">color=</span>state.var)) <span class="sc">+</span></span>
+<span id="cb103-28"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-28" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb103-29"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-29" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">linetype=</span><span class="dv">1</span>, <span class="at">color=</span><span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb103-30"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-30" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb103-31"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-31" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="fu">expression</span>(<span class="fu">paste</span>(<span class="st">&quot;Population size&quot;</span>))) <span class="sc">+</span></span>
+<span id="cb103-32"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-32" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Time&quot;</span>) <span class="sc">+</span></span>
+<span id="cb103-33"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-33" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb103-34"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-34" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>,</span>
+<span id="cb103-35"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-35" tabindex="-1"></a>        <span class="at">plot.title=</span><span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>),</span>
+<span id="cb103-36"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-36" tabindex="-1"></a>        <span class="at">panel.grid.major=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb103-37"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-37" tabindex="-1"></a>        <span class="at">panel.grid.minor=</span><span class="fu">element_blank</span>(),</span>
+<span id="cb103-38"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html#cb103-38" tabindex="-1"></a>        <span class="at">panel.background=</span><span class="fu">element_rect</span>(<span class="at">colour=</span><span class="st">&quot;black&quot;</span>))</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="week-13---parameter-space-for-apparent-competition-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/12_Week_12_2.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

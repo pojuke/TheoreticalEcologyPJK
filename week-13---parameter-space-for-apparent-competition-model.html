@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Week 13 - Parameter space for apparent competition model | Introduction to Theoretical Ecology</title>
+  <meta name="description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Week 13 - Parameter space for apparent competition model | Introduction to Theoretical Ecology" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
+  <meta property="og:description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
+  <meta name="github-repo" content="pojuke/TheoreticalEcologyPJK" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Week 13 - Parameter space for apparent competition model | Introduction to Theoretical Ecology" />
+  
+  <meta name="twitter:description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
+  <meta name="twitter:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
+
+<meta name="author" content="Instructor: Po-Ju Ke ~~~~~ Teaching Assistant: Hsiang-Chih Lo" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html"/>
+<link rel="next" href="week-14---resource-competition.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Introduction to Theoretical Ecology</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course information</a></li>
+<li class="chapter" data-level="" data-path="syllabus.html"><a href="syllabus.html"><i class="fa fa-check"></i>Syllabus</a></li>
+<li class="chapter" data-level="" data-path="week-2---exponential-population-growth.html"><a href="week-2---exponential-population-growth.html"><i class="fa fa-check"></i>Week 2 - Exponential population growth</a></li>
+<li class="chapter" data-level="" data-path="week-3---national-holiday-no-class.html"><a href="week-3---national-holiday-no-class.html"><i class="fa fa-check"></i>Week 3 - National holiday (No class)</a></li>
+<li class="chapter" data-level="" data-path="week-4---logistic-population-growth-and-stability-analysis.html"><a href="week-4---logistic-population-growth-and-stability-analysis.html"><i class="fa fa-check"></i>Week 4 - Logistic population growth and stability analysis</a></li>
+<li class="chapter" data-level="" data-path="week-5---metapopulations-and-patch-occupancy-models.html"><a href="week-5---metapopulations-and-patch-occupancy-models.html"><i class="fa fa-check"></i>Week 5 - Metapopulations and patch occupancy models</a></li>
+<li class="chapter" data-level="" data-path="week-6---harvesting-and-bifurcation.html"><a href="week-6---harvesting-and-bifurcation.html"><i class="fa fa-check"></i>Week 6 - Harvesting and bifurcation</a></li>
+<li class="chapter" data-level="" data-path="week-7---age-structure-population-model.html"><a href="week-7---age-structure-population-model.html"><i class="fa fa-check"></i>Week 7 - Age-structure population model</a></li>
+<li class="chapter" data-level="" data-path="week-8---lotka-volterra-competition-model---population-dynamics.html"><a href="week-8---lotka-volterra-competition-model---population-dynamics.html"><i class="fa fa-check"></i>Week 8 - Lotka-Volterra competition model - Population dynamics</a></li>
+<li class="chapter" data-level="" data-path="week-9---midterm.html"><a href="week-9---midterm.html"><i class="fa fa-check"></i>Week 9 - Midterm</a></li>
+<li class="chapter" data-level="" data-path="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"><i class="fa fa-check"></i>Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues</a></li>
+<li class="chapter" data-level="" data-path="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"><i class="fa fa-check"></i>Week 11 - Lotka-Volterra model of predator-prey interactions and time-scale separation</a></li>
+<li class="chapter" data-level="" data-path="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html"><i class="fa fa-check"></i>Week 12 - Rosenzweig-MacArthur predator-prey model and May’s complexity-stability relationship</a></li>
+<li class="chapter" data-level="" data-path="week-13---parameter-space-for-apparent-competition-model.html"><a href="week-13---parameter-space-for-apparent-competition-model.html"><i class="fa fa-check"></i>Week 13 - Parameter space for apparent competition model</a></li>
+<li class="chapter" data-level="" data-path="week-14---resource-competition.html"><a href="week-14---resource-competition.html"><i class="fa fa-check"></i>Week 14 - Resource competition</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Introduction to Theoretical Ecology</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="week-13---parameter-space-for-apparent-competition-model" class="section level1 unnumbered hasAnchor">
+<h1>Week 13 - Parameter space for apparent competition model<a href="week-13---parameter-space-for-apparent-competition-model.html#week-13---parameter-space-for-apparent-competition-model" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Here, we are going to visualize the outcomes of apparent competition in the <span class="math inline">\(r_1/a_1\)</span> – <span class="math inline">\(r_2/a_2\)</span> space:
+<span class="math display">\[\begin{align*}
+\frac{dN_1}{dt} &amp;= r_1N_1(1-\frac{N_1}{K_1}) - a_1N_1P\\
+\frac{dN_2}{dt} &amp;= r_2N_2(1-\frac{N_2}{K_2}) - a_2N_2P\\
+\frac{dP}{dt} &amp;= e_1a_1N_1P + e_2a_2N_2P - mP.
+\end{align*}\]</span>
+Two prey <span class="math inline">\(N_1\)</span> and <span class="math inline">\(N_2\)</span> grow logistically with intrinsic growth rate <span class="math inline">\(r_1\)</span> and <span class="math inline">\(r_2\)</span> and carrying capacity <span class="math inline">\(K_1\)</span> and <span class="math inline">\(K_2\)</span>. Predator <span class="math inline">\(P\)</span> consumes two prey following Holling type I functional response, with <span class="math inline">\(a_1\)</span> and <span class="math inline">\(a_2\)</span> representing the consumption rate of <span class="math inline">\(N_1\)</span> and <span class="math inline">\(N_2\)</span> by predator respectively. After consumption, the assimilation rate are <span class="math inline">\(e_1\)</span> and <span class="math inline">\(e_2\)</span>. The death rate of predator is represented by <span class="math inline">\(m\)</span>.</p>
+<p><strong>Part 1: Directly simulate dynamical system</strong></p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-1" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb104-2"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb104-3"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-3" tabindex="-1"></a></span>
+<span id="cb104-4"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-4" tabindex="-1"></a><span class="do">#### ODE setup</span></span>
+<span id="cb104-5"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-5" tabindex="-1"></a>ApparentCompetition <span class="ot">&lt;-</span> <span class="cf">function</span>(times, state, parms) {</span>
+<span id="cb104-6"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-6" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parms)), {</span>
+<span id="cb104-7"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-7" tabindex="-1"></a>    dN1_dt <span class="ot">=</span> r1 <span class="sc">*</span> N1 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> N1 <span class="sc">/</span> K1) <span class="sc">-</span> a1 <span class="sc">*</span> N1 <span class="sc">*</span> P</span>
+<span id="cb104-8"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-8" tabindex="-1"></a>    dN2_dt <span class="ot">=</span> r2 <span class="sc">*</span> N2 <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> N2 <span class="sc">/</span> K2) <span class="sc">-</span> a2 <span class="sc">*</span> N2 <span class="sc">*</span> P</span>
+<span id="cb104-9"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-9" tabindex="-1"></a>    dP_dt <span class="ot">=</span> e1 <span class="sc">*</span> a1 <span class="sc">*</span> N1 <span class="sc">*</span> P <span class="sc">+</span> e2 <span class="sc">*</span> a2 <span class="sc">*</span> N2 <span class="sc">*</span> P <span class="sc">-</span> d <span class="sc">*</span> P</span>
+<span id="cb104-10"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-10" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="fu">c</span>(dN1_dt, dN2_dt, dP_dt)))</span>
+<span id="cb104-11"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-11" tabindex="-1"></a>  })</span>
+<span id="cb104-12"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-12" tabindex="-1"></a>}</span>
+<span id="cb104-13"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-13" tabindex="-1"></a></span>
+<span id="cb104-14"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-14" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">3000</span>, <span class="at">by =</span> <span class="dv">10</span>)</span>
+<span id="cb104-15"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-15" tabindex="-1"></a>state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">N1 =</span> <span class="fl">0.1</span>, <span class="at">N2 =</span> <span class="fl">0.1</span>, <span class="at">P =</span> <span class="dv">1</span>)</span>
+<span id="cb104-16"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-16" tabindex="-1"></a>parms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">r1 =</span> <span class="fl">0.1</span>, <span class="at">r2 =</span> <span class="fl">0.1</span>, <span class="at">a1 =</span> <span class="fl">0.35</span>, <span class="at">a2 =</span> <span class="fl">0.35</span>, <span class="at">e1 =</span> <span class="fl">0.4</span>, <span class="at">e2 =</span> <span class="fl">0.5</span>, <span class="at">d =</span> <span class="fl">0.8</span>, <span class="at">K1 =</span> <span class="dv">15</span>, <span class="at">K2 =</span> <span class="dv">12</span>) <span class="co"># Omitting r1 and r2</span></span>
+<span id="cb104-17"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-17" tabindex="-1"></a> </span>
+<span id="cb104-18"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-18" tabindex="-1"></a></span>
+<span id="cb104-19"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-19" tabindex="-1"></a><span class="do">#### Set up parameter space of interest</span></span>
+<span id="cb104-20"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-20" tabindex="-1"></a>r_min <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb104-21"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-21" tabindex="-1"></a>r_max <span class="ot">&lt;-</span> <span class="fl">0.7</span></span>
+<span id="cb104-22"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-22" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb104-23"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-23" tabindex="-1"></a>r1_vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(r_min, r_max, <span class="at">length.out =</span> n)</span>
+<span id="cb104-24"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-24" tabindex="-1"></a>r2_vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(r_min, r_max, <span class="at">length.out =</span> n)</span>
+<span id="cb104-25"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-25" tabindex="-1"></a>comp_out <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">r1 =</span> r1_vec, <span class="at">r2 =</span> r2_vec)</span>
+<span id="cb104-26"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-26" tabindex="-1"></a></span>
+<span id="cb104-27"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-27" tabindex="-1"></a></span>
+<span id="cb104-28"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-28" tabindex="-1"></a><span class="do">#### Create saving space for simulation output</span></span>
+<span id="cb104-29"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-29" tabindex="-1"></a>comp_out <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(comp_out,</span>
+<span id="cb104-30"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-30" tabindex="-1"></a>                                <span class="fu">matrix</span>(<span class="dv">0</span>, </span>
+<span id="cb104-31"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-31" tabindex="-1"></a>                                       <span class="at">nrow =</span> <span class="fu">dim</span>(comp_out)[<span class="dv">1</span>], </span>
+<span id="cb104-32"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-32" tabindex="-1"></a>                                       <span class="at">ncol =</span> <span class="fu">length</span>(state))))</span>
+<span id="cb104-33"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-33" tabindex="-1"></a><span class="fu">names</span>(comp_out) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;r1&quot;</span>, <span class="st">&quot;r2&quot;</span>, <span class="st">&quot;N1&quot;</span>, <span class="st">&quot;N2&quot;</span>, <span class="st">&quot;P&quot;</span>)</span>
+<span id="cb104-34"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-34" tabindex="-1"></a></span>
+<span id="cb104-35"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-35" tabindex="-1"></a></span>
+<span id="cb104-36"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-36" tabindex="-1"></a><span class="do">#### Simulate the ODE across the parameter space</span></span>
+<span id="cb104-37"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-37" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb104-38"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-38" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(comp_out)[<span class="dv">1</span>]){</span>
+<span id="cb104-39"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-39" tabindex="-1"></a>  </span>
+<span id="cb104-40"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-40" tabindex="-1"></a>  temp_parms <span class="ot">&lt;-</span> parms</span>
+<span id="cb104-41"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-41" tabindex="-1"></a>  temp_parms[<span class="st">&quot;r1&quot;</span>] <span class="ot">&lt;-</span> comp_out[i, ]<span class="sc">$</span>r1</span>
+<span id="cb104-42"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-42" tabindex="-1"></a>  temp_parms[<span class="st">&quot;r2&quot;</span>] <span class="ot">&lt;-</span> comp_out[i, ]<span class="sc">$</span>r2</span>
+<span id="cb104-43"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-43" tabindex="-1"></a>  </span>
+<span id="cb104-44"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-44" tabindex="-1"></a>  temp_out <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> ApparentCompetition, </span>
+<span id="cb104-45"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-45" tabindex="-1"></a>                  <span class="at">times =</span> times, </span>
+<span id="cb104-46"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-46" tabindex="-1"></a>                  <span class="at">y =</span> state, </span>
+<span id="cb104-47"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-47" tabindex="-1"></a>                  <span class="at">parms =</span> temp_parms)</span>
+<span id="cb104-48"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-48" tabindex="-1"></a>  </span>
+<span id="cb104-49"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-49" tabindex="-1"></a>  N_final <span class="ot">&lt;-</span> <span class="fu">nrow</span>(<span class="fu">na.omit</span>(temp_out)) </span>
+<span id="cb104-50"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-50" tabindex="-1"></a>  comp_out[i, <span class="dv">3</span><span class="sc">:</span><span class="dv">5</span>] <span class="ot">&lt;-</span> temp_out[N_final, <span class="sc">-</span><span class="dv">1</span>]</span>
+<span id="cb104-51"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-51" tabindex="-1"></a>  </span>
+<span id="cb104-52"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-52" tabindex="-1"></a>}</span>
+<span id="cb104-53"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-53" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb104-54"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-54" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code></pre></div>
+<pre><code>## Time difference of 5.609919 mins</code></pre>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-1" tabindex="-1"></a><span class="do">#### Determine outcome status</span></span>
+<span id="cb106-2"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-2" tabindex="-1"></a>extinct_thres <span class="ot">&lt;-</span> <span class="fl">1e-7</span></span>
+<span id="cb106-3"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-3" tabindex="-1"></a>comp_out<span class="sc">$</span>Outcome <span class="ot">&lt;-</span> </span>
+<span id="cb106-4"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-4" tabindex="-1"></a>  <span class="fu">ifelse</span>(comp_out[, <span class="dv">3</span>] <span class="sc">&lt;</span> extinct_thres, <span class="st">&quot;N2 win&quot;</span>, </span>
+<span id="cb106-5"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-5" tabindex="-1"></a>         <span class="fu">ifelse</span>(comp_out[, <span class="dv">4</span>] <span class="sc">&lt;</span> extinct_thres, <span class="st">&quot;N1 win&quot;</span>, <span class="st">&quot;Coexist&quot;</span>))</span>
+<span id="cb106-6"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-6" tabindex="-1"></a></span>
+<span id="cb106-7"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-7" tabindex="-1"></a></span>
+<span id="cb106-8"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-8" tabindex="-1"></a><span class="do">#### Visualize the competition outcomes in the grids</span></span>
+<span id="cb106-9"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-9" tabindex="-1"></a><span class="fu">ggplot</span>(comp_out, <span class="fu">aes</span>(<span class="at">x =</span> r1<span class="sc">/</span>parms[<span class="dv">3</span>], <span class="at">y =</span> r2<span class="sc">/</span>parms[<span class="dv">4</span>], <span class="at">z =</span> Outcome, <span class="at">fill =</span> Outcome)) <span class="sc">+</span></span>
+<span id="cb106-10"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-10" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb106-11"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-11" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> (<span class="dv">1</span> <span class="sc">-</span> parms[<span class="dv">7</span>] <span class="sc">/</span> (parms[<span class="dv">5</span>] <span class="sc">*</span> parms[<span class="dv">3</span>] <span class="sc">*</span> parms[<span class="dv">8</span>])), <span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb106-12"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-12" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> (<span class="dv">1</span> <span class="sc">-</span> parms[<span class="dv">7</span>] <span class="sc">/</span> (parms[<span class="dv">6</span>] <span class="sc">*</span> parms[<span class="dv">4</span>] <span class="sc">*</span> parms[<span class="dv">9</span>]))<span class="sc">^-</span><span class="dv">1</span>, <span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb106-13"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-13" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(r[<span class="dv">1</span>]<span class="sc">/</span>a[<span class="dv">1</span>]), <span class="at">y =</span> <span class="fu">expression</span>(r[<span class="dv">2</span>]<span class="sc">/</span>a[<span class="dv">2</span>])) <span class="sc">+</span></span>
+<span id="cb106-14"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-14" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb106-15"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-15" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb106-16"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-16" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb106-17"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-17" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb106-18"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-18" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb106-19"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-19" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">ratio =</span> <span class="dv">1</span>) </span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
+<p><strong>Part 2: Use analytical calculations</strong></p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-1" tabindex="-1"></a><span class="do">#### Create saving space for simulation output</span></span>
+<span id="cb107-2"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-2" tabindex="-1"></a>r_min <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="co"># also try 0.01</span></span>
+<span id="cb107-3"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-3" tabindex="-1"></a>r_max <span class="ot">&lt;-</span> <span class="fl">0.7</span> <span class="co"># also try 1.75</span></span>
+<span id="cb107-4"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-4" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># also try 200</span></span>
+<span id="cb107-5"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-5" tabindex="-1"></a>r1_vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(r_min, r_max, <span class="at">length.out =</span> n)</span>
+<span id="cb107-6"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-6" tabindex="-1"></a>r2_vec <span class="ot">&lt;-</span> <span class="fu">seq</span>(r_min, r_max, <span class="at">length.out =</span> n)</span>
+<span id="cb107-7"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-7" tabindex="-1"></a>comp_out_igr <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">r1 =</span> r1_vec, <span class="at">r2 =</span> r2_vec)</span>
+<span id="cb107-8"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-8" tabindex="-1"></a>comp_out_igr <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">cbind</span>(comp_out_igr,</span>
+<span id="cb107-9"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-9" tabindex="-1"></a>                                    <span class="fu">matrix</span>(<span class="dv">0</span>,</span>
+<span id="cb107-10"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-10" tabindex="-1"></a>                                           <span class="at">nrow =</span> <span class="fu">dim</span>(comp_out_igr)[<span class="dv">1</span>], </span>
+<span id="cb107-11"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-11" tabindex="-1"></a>                                           <span class="at">ncol =</span> <span class="dv">2</span>)))</span>
+<span id="cb107-12"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-12" tabindex="-1"></a><span class="fu">names</span>(comp_out_igr) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;r1&quot;</span>, <span class="st">&quot;r2&quot;</span>, <span class="st">&quot;IGR1&quot;</span>, <span class="st">&quot;IGR2&quot;</span>)</span>
+<span id="cb107-13"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-13" tabindex="-1"></a></span>
+<span id="cb107-14"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-14" tabindex="-1"></a></span>
+<span id="cb107-15"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-15" tabindex="-1"></a><span class="do">#### Calculate the IGR across the parameter space</span></span>
+<span id="cb107-16"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-16" tabindex="-1"></a>start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb107-17"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-17" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">dim</span>(comp_out_igr)[<span class="dv">1</span>]){</span>
+<span id="cb107-18"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-18" tabindex="-1"></a>  </span>
+<span id="cb107-19"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-19" tabindex="-1"></a>  temp_parms <span class="ot">&lt;-</span> parms</span>
+<span id="cb107-20"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-20" tabindex="-1"></a>  temp_parms[<span class="st">&quot;r1&quot;</span>] <span class="ot">&lt;-</span> comp_out_igr[i, ]<span class="sc">$</span>r1</span>
+<span id="cb107-21"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-21" tabindex="-1"></a>  temp_parms[<span class="st">&quot;r2&quot;</span>] <span class="ot">&lt;-</span> comp_out_igr[i, ]<span class="sc">$</span>r2</span>
+<span id="cb107-22"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-22" tabindex="-1"></a>  </span>
+<span id="cb107-23"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-23" tabindex="-1"></a>  comp_out_igr[i, <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>] <span class="ot">&lt;-</span> </span>
+<span id="cb107-24"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-24" tabindex="-1"></a>    <span class="fu">with</span>(<span class="fu">as.list</span>(temp_parms), {</span>
+<span id="cb107-25"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-25" tabindex="-1"></a>      igr_1 <span class="ot">&lt;-</span> r1 <span class="sc">-</span> a1 <span class="sc">*</span> ((r2<span class="sc">/</span>a2) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> (d<span class="sc">/</span>(e2<span class="sc">*</span>a2<span class="sc">*</span>K2))))</span>
+<span id="cb107-26"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-26" tabindex="-1"></a>      igr_2 <span class="ot">&lt;-</span> r2 <span class="sc">-</span> a2 <span class="sc">*</span> ((r1<span class="sc">/</span>a1) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> (d<span class="sc">/</span>(e1<span class="sc">*</span>a1<span class="sc">*</span>K1))))</span>
+<span id="cb107-27"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-27" tabindex="-1"></a>      <span class="fu">c</span>(igr_1, igr_2) </span>
+<span id="cb107-28"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-28" tabindex="-1"></a>    })</span>
+<span id="cb107-29"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-29" tabindex="-1"></a></span>
+<span id="cb107-30"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-30" tabindex="-1"></a>}</span>
+<span id="cb107-31"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-31" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb107-32"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-32" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code></pre></div>
+<pre><code>## Time difference of 4.269266 secs</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-1" tabindex="-1"></a><span class="do">#### Determine outcome status</span></span>
+<span id="cb109-2"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-2" tabindex="-1"></a>comp_out_igr<span class="sc">$</span>Outcome <span class="ot">&lt;-</span> </span>
+<span id="cb109-3"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-3" tabindex="-1"></a>  <span class="fu">ifelse</span>(comp_out_igr[, <span class="dv">3</span>] <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;N2 win&quot;</span>, </span>
+<span id="cb109-4"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-4" tabindex="-1"></a>          <span class="fu">ifelse</span>(comp_out_igr[, <span class="dv">4</span>] <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;N1 win&quot;</span>, <span class="st">&quot;Coexist&quot;</span>))</span>
+<span id="cb109-5"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-5" tabindex="-1"></a></span>
+<span id="cb109-6"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-6" tabindex="-1"></a></span>
+<span id="cb109-7"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-7" tabindex="-1"></a><span class="do">#### Visualize the competition outcomes in the grids</span></span>
+<span id="cb109-8"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-8" tabindex="-1"></a><span class="fu">ggplot</span>(comp_out_igr, <span class="fu">aes</span>(<span class="at">x =</span> r1<span class="sc">/</span>parms[<span class="dv">3</span>], <span class="at">y =</span> r2<span class="sc">/</span>parms[<span class="dv">4</span>], <span class="at">z =</span> Outcome, <span class="at">fill =</span> Outcome)) <span class="sc">+</span></span>
+<span id="cb109-9"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-9" tabindex="-1"></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span></span>
+<span id="cb109-10"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-10" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> (<span class="dv">1</span> <span class="sc">-</span> parms[<span class="dv">7</span>] <span class="sc">/</span> (parms[<span class="dv">5</span>] <span class="sc">*</span> parms[<span class="dv">3</span>] <span class="sc">*</span> parms[<span class="dv">8</span>])), <span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb109-11"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-11" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> (<span class="dv">1</span> <span class="sc">-</span> parms[<span class="dv">7</span>] <span class="sc">/</span> (parms[<span class="dv">6</span>] <span class="sc">*</span> parms[<span class="dv">4</span>] <span class="sc">*</span> parms[<span class="dv">9</span>]))<span class="sc">^-</span><span class="dv">1</span>, <span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
+<span id="cb109-12"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(r[<span class="dv">1</span>]<span class="sc">/</span>a[<span class="dv">1</span>]), <span class="at">y =</span> <span class="fu">expression</span>(r[<span class="dv">2</span>]<span class="sc">/</span>a[<span class="dv">2</span>])) <span class="sc">+</span></span>
+<span id="cb109-13"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-13" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb109-14"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-14" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb109-15"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-15" tabindex="-1"></a>  <span class="fu">scale_fill_brewer</span>(<span class="at">palette =</span> <span class="st">&quot;Set1&quot;</span>) <span class="sc">+</span></span>
+<span id="cb109-16"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-16" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb109-17"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-17" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb109-18"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-18" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">ratio =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="week-14---resource-competition.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/13_Week_13_2.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
