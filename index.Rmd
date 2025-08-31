@@ -126,17 +126,17 @@ syllabus <- tibble(
     
   Lab = c(" \\- ", #week1
           'Solving exponential growth equation using "deSolve" & Visualization', #week2
-          "Shinny App for logistic population growth", #week3
-          "\\-", #week4
+          "Simulating logistic growth", #week3
+          "Logistic map and Ricker diagram", #week4
           "Metapopulations and patch occupancy models", #week5
-          "Alternative stable state diagram", #week6
+          "Bifurcation diagram", #week6
           "Age-structured population model", #week7
-          "Lotka-Volterra competition model - Population dynamics", #week8
+          "Simulating competitive dynamics and invasion growth", #week8
           " \\-", #week9
-          "Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues", #week10
+          "Visualization of dynamics with complex eigenvalues", #week10
           "Lotka-Volterra model of predator-prey interactions and time-scale separation", #week11
           "Rosenzweig-MacArthur predator-prey model", #week12
-          "Resource competition", #week13
+          "Consumer-resource dynamics", #week13
           "Parameter space for apparent competition model", #week14
           " \\- ", #week15
           " \\- "), #week16
