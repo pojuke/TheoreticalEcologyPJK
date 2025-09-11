@@ -1,0 +1,463 @@
+--- 
+title: "Introduction to Theoretical Ecology"
+author: "Instructor: Po-Ju Ke $~~~~~$ Teaching Assistant: Guan-Yu Chen"
+date: "2025 Fall at National Taiwan Univeristy ![](./bifurcation.gif)"
+output:
+  html_document:
+    df_print: paged
+github-repo: pojuke/TheoreticalEcologyPJK
+cover-image: bifurcation.gif
+site: bookdown::bookdown_site
+documentclass: book
+bibliography:
+- book.bib
+- packages.bib
+biblio-style: apalike
+link-citations: yes
+description: This is the course website for **_Introduction to Theoretical Ecology_**
+  2025 Fall at National Taiwan University.
+url: https://pojuke.github.io/TheoreticalEcologyPJK/
+---
+# Course information{-}
+<p style = "font-size: 24pt; margin-bottom: 5px; margin-top: 25px"> **Description** </p> The development of theory plays an important role in advancing ecology as a scientific field. This three-unit course is for students at the graduate or advanced undergraduate level. The course will cover classic theoretical topics in population and community ecology, staring from single-species dynamics and gradually build up to multispecies models. Emphasis will be on theoretical concepts and corresponding mathematical approaches.
+
+This course is designed as a two-hour lecture (written on black board) followed by a one-hour complementary hands-on practice module. In the lecture, we will analyze dynamical models and discuss their theoretical implications. In the practice section, we will use a combination interactive applications and numerical simulations to gain more intuition of the dynamics and behavior of different models. 
+
+<p style = "font-size: 24pt; margin-bottom: 5px; margin-top: 25px"> **Objective** </p>
+By the end of the course, students are expected to be familiar with the basic building blocks of ecological models, and would be able to formulate and analyze simple models of their own. The hands-on practice component should allow students to link their ecological intuition with the underlying mathematical model, helping them to better understand the primary literature of theoretical ecology. 
+
+<p style = "font-size: 24pt; margin-bottom: 5px; margin-top: 25px"> **Requirement** </p>
+Students are only expected to have a basic understanding of **Calculus** (e.g., freshman introductory course) and **Ecology**. It's OK if you're not familiar with calculus as we will provide relevant material for you to review during the first week.
+
+<p style = "font-size: 24pt; margin-bottom: 5px; margin-top: 25px"> **Format** </p>
+Thursday 6,7,8 (1:20 pm ~ 4:20 pm) at Gongtong 207
+
+
+<p style = "font-size: 24pt; margin-bottom: 5px; margin-top: 25px"> **Grading** </p>
+The final grade consists of:
+
+(1) Assignment problem sets (60%)
+(2) Midterm exam (15%)
+(3) Final exam (15%)
+(4) Course participation (10%)
+
+<p style = "font-size: 24pt; margin-bottom: 5px; margin-top: 25px"> **Course materials** </p>
+We will use a combination of textbooks of theoretical ecology. Textbook chapters and additional reading materials (listed in the course outline) will be provided. (see [**Syllabus**](https://pojuke.github.io/TheoreticalEcologyPJK/syllabus.html) for more details).
+
+Below are the textbook references:
+
+(1) *A Primer of Ecology* (4^th^ edition). Nicholas Gotelli, 2008. 
+(2) *An Illustrated Guide to Theoretical Ecology*. Ted Case, 2000. 
+(3) *A Biologist's Guide to Mathematical Modeling in Ecology and Evolution*. Sarah Otto & Troy Day, 2011. 
+(4) *Mathematical Ecology of Populations and Ecosystems*. John Pastor, 2008. 
+(5) *Nonlinear Dynamics and Choas*. Steven Strogatz, 2000.
+
+
+<p style = "font-size: 24pt; margin-bottom: 5px; margin-top: 25px"> **Contacts** </p>
+**Instructor**: Po-Ju Ke
+
+- Office: Life Science Building R635
+- Email: pojuke@ntu.edu.tw
+- Office hours: by appointment
+
+**Teaching assistant**: Guan-Yu Chen
+
+- Office: Life Science Building R635
+- Email: r13b44005@ntu.edu.tw
+- Office hours: by appointment
+
+
+# Syllabus {-}
+```{r, echo = FALSE, message = F, warning = F, error = F}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+syllabus <- tibble(
+  Date = c("**Week 1** <span style='vertical-align:-30%'> </span>
+           <br> 9/4",
+           "**Week 2** <span style='vertical-align:-30%'> </span>
+           <br> 9/11",
+           "**Week 3** <span style='vertical-align:-30%'> </span>
+           <br> 9/18",
+           "**Week 4** <span style='vertical-align:-30%'> </span>
+           <br> 9/25",
+           "**Week 5** <span style='vertical-align:-30%'> </span>
+           <br> 10/2",
+           "**Week 6** <span style='vertical-align:-30%'> </span>
+           <br> 10/9",
+           "**Week 7** <span style='vertical-align:-30%'> </span>
+           <br> 10/16",
+           "**Week 8** <span style='vertical-align:-30%'> </span>
+           <br> 10/23",
+           "**Week 9** <span style='vertical-align:-30%'> </span>
+           <br> 10/30",
+           "**Week 10** <span style='vertical-align:-30%'> </span>
+           <br> 11/6",
+           "**Week 11** <span style='vertical-align:-30%'> </span>
+           <br> 11/13",
+           "**Week 12** <span style='vertical-align:-30%'> </span>
+           <br> 11/20",
+           "**Week 13** <span style='vertical-align:-30%'> </span>
+           <br> 11/27",
+           "**Week 14** <span style='vertical-align:-30%'> </span>
+           <br> 12/4",
+           "**Week 15** <span style='vertical-align:-30%'> </span>
+           <br> 12/11",
+           "**Week 16** <span style='vertical-align:-30%'> </span>
+           <br> 12/18"),
+  
+  `Lecture topic` = c("Introduction: what is theoretical ecology?", #week1
+                      "Exponential population growth", #week2
+                      "Logistic population growth and stability analysis", #week3
+                      "Discrete population growth and stability analysis", #week4
+                      "Metapopulations and patch occupancy models", #week5
+                      "Harvesting and bifurcation", #week6
+                      "Age-structured population models", #week7
+                      "Lotka-Volterra model of competition: graphical analysis", #week8
+                      "**Midterm exam**", #week9
+                      "Lotka-Volterra model of competition: invasion analysis and linear stability analysis", #week10
+                      "Predator-prey interactions (I)", #week11
+                      "Predator-prey interactions (II)", #week12
+                      "Multispecies models of predation: apparent competition", #week13
+                      "Mechanistic models for consumer-resource dynamics", #week14
+                      "Research applcations: plant-soil feedback as an example", #week15
+                      "**Final exam**"), #week16
+    
+  Lab = c(" \\- ", #week1
+          'Solving exponential growth equation using "deSolve" & Visualization', #week2
+          "Simulating logistic growth", #week3
+          "Logistic map and Ricker diagram", #week4
+          "Metapopulations and patch occupancy models", #week5
+          "Bifurcation diagram", #week6
+          "Age-structured population model", #week7
+          "Simulating competitive dynamics and invasion growth", #week8
+          " \\-", #week9
+          "Visualization of dynamics with complex eigenvalues", #week10
+          "Lotka-Volterra model of predator-prey interactions and time-scale separation", #week11
+          "Rosenzweig-MacArthur predator-prey model", #week12
+          "Consumer-resource dynamics", #week13
+          "Parameter space for apparent competition model", #week14
+          " \\- ", #week15
+          " \\- "), #week16
+    
+    
+  Readings = c("[**Grainger et al., 2021**](https://doi.org/10.1086/717206)",
+               "Gotelli [Ch.1], Case[Ch.1]", #week2
+               " \\- ", #week3
+               "Gotelli [Ch.2], Case[Ch.5], Otto & Day[Ch.5],
+               [**May., 1976**](https://doi.org/10.1038/261459a0)", #week4
+               "Gotelli [Ch.4], Case[Ch.16]", #week5
+               "Pastor [Ch. 7], Strogatz [Ch. 3]", #week6
+               "Gotelli [Ch.3], Case[Ch.3]", #week7
+               "Gotelli [Ch.5], Case[Ch.14], 
+               [**Broekman et al., 2019**]( https://doi.org/10.1111/ele.13349)", #week8
+               " \\- ", #week9
+               "Otto & Day [Ch.8],
+               [**May., 1972**](https://www.nature.com/articles/238413a0)", #week10
+               "Gotelli [Ch.6], Case[Ch.12, 13]", #week11
+               "Gotelli [Ch.6], Case[Ch.12, 13]", #week12
+               "[**Tilman., 1980**](https://doi.org/10.1086/283633),
+               [**Armstrong & McGehee., 1980**](https://doi.org/10.1086/283553)", #week13
+               "[**Holt., 1977**](https://doi.org/10.1016/0040-5809(77)90042-9)", #week14
+               " \\- ",
+               " \\- ")  
+  
+)
+
+kbl(syllabus, align = "cccl", escape = F) %>%  
+  kable_paper(full_width = T, 
+              html_font = "Arial",
+              font_size = 17) %>%
+  kable_styling(bootstrap_options = c("bordered")) %>%
+  row_spec(0, bold = T, color = "black", font_size = 20) %>%
+  column_spec(1, width = "10em", border_right = T) %>%
+  column_spec(2, width = "17em") %>%
+  column_spec(3, width = "17em") %>%
+  column_spec(4, width = "13em")
+
+```
+
+
+
+<!--chapter:end:index.Rmd-->
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(message = F, 
+                      error = F, 
+                      warning = F)
+
+```
+
+# Week 2 - Exponential population growth {-} 
+
+In part 1, we will solve the differential equation for exponential population growth and visualize how the population sizes change over time. 
+
+<br>
+
+**Part 1 - Numerical solution using the package `deSolve`**
+
+Two main phases:
+
+(1) Model specification: specify the structure of differential equation model
+
+(2) Model application: set the time steps, initial population size and model parameters (e.g., intrinsic population growth rate $r$), and then solve the equation model
+
+<style>
+
+p span#aaa:before { 
+  content: "(1) "; 
+  display: inline-block;
+  margin-left: -1.5em;
+  margin-right: 0.3em;
+}
+
+p span#bbb:before { 
+  content: "(2) "; 
+  display: inline-block;
+  margin-left: -1.5em;
+  margin-right: 0.3em;
+}
+
+d-article table.lightable-paper {
+  margin-bottom: 0px; 
+}
+
+</style>
+
+Consider the model
+\[
+\frac{dN}{dt} = rN
+\]
+where $N$ is population size and $r$ is the intrinsic growth rate.
+```{r}
+###### part 1 ######
+# install.packages("deSolve")
+library(deSolve)
+
+### (1) Model specification
+exponential_model <- function(times, state, parms) {
+  with(as.list(c(state, parms)), {
+    dN_dt = r*N  # Exponential growth equation
+    return(list(c(dN_dt)))  # Return the results
+  })
+}
+```
+
+Set the time steps, initial population size and model parameters.
+```{r}
+### (2) Model application
+times <- seq(0, 10, by = 0.1)  # Time steps to integrate over
+state <- c(N = 10)  # Initial population size
+parms <- c(r = 1.5)  # Intrinsic growth rate
+```
+
+Solve the equation by `ode()` numerically.
+```{r}
+# Run the ode solver
+pop_size <- ode(func = exponential_model, times = times, y = state, parms = parms)
+
+# Take a look at the results
+head(pop_size)
+```
+
+Visualization
+```{r}
+plot(N ~ time, data = pop_size)
+```
+
+Compare simulation result with analytic solution, which is
+\[
+N(t) = N_0\exp\{rt\}
+\]
+```{r}
+par(mfrow = c(1,2))
+plot(N ~ time, data = pop_size) # Plot simulation data
+curve(state[1]*exp(parms[1]*x), col = "red", add = T) # Adding analytic solution
+plot(N ~ time, data = pop_size, log = "y") # Plot logged simulation data
+curve(state[1]*exp(parms[1]*x), col = "red", add = T) # Adding analytic solution
+```
+
+
+<br>
+
+**Part 2 - Comparing different ode solvers and different time intervals**
+<br>
+In default of `ode()`, the equations are solved by LSODA method. We can change the method by modifying the argument `method` in `ode()`. 
+
+```{r}
+
+###### part 2 ######
+# Original setting
+times <- seq(0, 10, by = 0.1)  # Time steps to integrate over
+state <- c(N = 10)  # Initial population size
+parms <- c(r = 1.5)  # Intrinsic growth rate
+# Default: LSODA
+pop_size <- ode(func = exponential_model, times = times, y = state, parms = parms)
+
+# Euler's method
+pop_size_1 <- ode(func = exponential_model, times = times, y = state, parms = parms, method = "euler")
+
+# Compare different method
+par(mfrow = c(1,2))
+plot(N ~ time, data = pop_size, main = "LSODA")
+curve(state[1]*exp(parms[1]*x), times[1], times[length(times)], col = "red", add = T) # correct curve
+plot(N ~ time, data = pop_size_1, main = "Euler")
+curve(state[1]*exp(parms[1]*x), times[1], times[length(times)], col = "red", add = T) # correct curve
+
+# Different time intervals
+times_1 <- seq(0, 10, by = 1)  # time steps to integrate over
+times_2 <- seq(0, 10, by = 0.1)  # time steps to integrate over
+times_3 <- seq(0, 10, by = 0.01)  # time steps to integrate over
+
+# Euler's method
+pop_size_1 <- ode(func = exponential_model, times = times_1, y = state, parms = parms, method = "euler")
+pop_size_2 <- ode(func = exponential_model, times = times_2, y = state, parms = parms, method = "euler")
+pop_size_3 <- ode(func = exponential_model, times = times_3, y = state, parms = parms, method = "euler")
+
+# Compare different time intervals
+par(mfrow = c(1,3))
+plot(N ~ time, data = pop_size_1, main = "Time intervals = 1")
+curve(state[1]*exp(parms[1]*x), col = "red", add = T) # correct curve
+plot(N ~ time, data = pop_size_2, main = "Time intervals = 0.1")
+curve(state[1]*exp(parms[1]*x), col = "red", add = T) # correct curve
+plot(N ~ time, data = pop_size_3, main = "Time intervals = 0.01")
+curve(state[1]*exp(parms[1]*x), col = "red", add = T) # correct curve
+```
+
+<br>
+
+**Part 3 - Solving exponential growth model with fluctuating growth rate**
+<br>
+Consider the model
+\[
+\frac{dN}{dt} = r(t)N \ \text{, } r(t) = \overline{r} + \sigma\sin(\omega t)
+\]
+where $\overline{r}$ and $\omega$ are constants.
+The analytic solution of the ode model is 
+\[
+N(t) = N_0\exp\{\overline{r}t - \frac{\sigma}{\omega}[\cos(\omega t) - 1]\}
+\]
+
+```{r}
+###### part 3 ######
+### Model specification
+exponential_model_fluc <- function(times, state, parms) {
+  with(as.list(c(state, parms)), {
+    dN_dt = (r_bar + sigma*sin(omega*times))*N  # exponential growth equation
+    return(list(c(dN_dt)))  # return the results
+  })
+}
+```
+
+
+```{r}
+### Parameters
+times <- seq(0, 10, by = 0.1)  # time steps to integrate over
+state <- c(N = 10)  # initial population size
+parms <- c(r_bar = 1.5, sigma = 5, omega = 2*pi)  # intrinsic growth rate
+```
+
+Plot $r(t)$
+```{r}
+### Fluctuating growth rate
+r = parms[1] + parms[2]*sin(parms[3]*times)
+plot(r ~ times, type = "l")
+```
+
+```{r}
+### Solving model
+pop_size <- ode(func = exponential_model_fluc, times = times, y = state, parms = parms)
+
+### Plotting
+plot(N ~ times, data = pop_size)
+curve(state[1]*exp(parms[1]*x - parms[2]/parms[3]*(cos(parms[3]*x) - 1)), add = T, col = "red") # correct curve
+plot(N ~ times, data = pop_size, log = "y")
+curve(state[1]*exp(parms[1]*x - parms[2]/parms[3]*(cos(parms[3]*x) - 1)), add = T, col = "red") # correct curve
+```
+
+Adjust $\overline{r}$
+```{r}
+### Parameters
+times <- seq(0, 10, by = 0.1)  # time steps to integrate over
+state <- c(N = 10)  # initial population size
+parms <- c(r_bar = 0.1, sigma = 5, omega = 2*pi)  # intrinsic growth rate
+
+### Fluctuating growth rate
+r = parms[1] + parms[2]*sin(parms[3]*times)
+plot(r ~ times, type = "l")
+
+### Solving model
+pop_size <- ode(func = exponential_model_fluc, times = times, y = state, parms = parms)
+
+### Plotting
+plot(N ~ times, data = pop_size)
+curve(state[1]*exp(parms[1]*x - parms[2]/parms[3]*(cos(parms[3]*x) - 1)), add = T, col = "red") # correct curve
+```
+
+<!--chapter:end:02_Week_2.Rmd-->
+
+# Week 3 - Logistic population growth and stability analysis  {-} 
+
+```{r, out.width="800px", echo = F}
+knitr::include_app("https://genchanghsu0115.shinyapps.io/Logistic_mod_shinyapp/", height = "500px")
+```
+Credit to [Gen-Chang Hsu](https://genchanghsu.github.io/index.html)
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+**Extra materials - Modeling discrete logistic models using for loops**
+
+
+Model:
+\[
+N_{t+1} = N_t(1+r(1-\frac{N_t}{K}))
+\]
+
+```{r}
+### (1) Define the discrete logistic growth equation
+log_fun <- function(r, N, K){N + r*N*(1-N/K)}
+```
+
+You may modify $r$ to see the change in stability of equilibrium $K$.
+```{r}
+### (2) Set the parameters
+r <- 1.8
+K <- 500
+N0 <- 10
+time <- 100
+
+### (3) Use for loop to iterate over the time sequence
+pop_size <- data.frame(times = 1:time)
+pop_size$N[1] <- N0
+head(pop_size)
+
+for(i in 2:time){
+  pop_size$N[i] <- log_fun(r = r, N = pop_size$N[i - 1], K = K)
+}
+
+head(pop_size)
+
+### (4) Population trajectory
+plot(N ~ times, data = pop_size, type = "l")
+abline(h = K, col = "red")
+points(N ~ times, data = pop_size)
+```
+
+<br>
+
+
+Here is a shiny app for the discrete logistic growth model. 
+
+```{r, out.width="800px", echo = F}
+knitr::include_app("https://genchanghsu0115.shinyapps.io/Discrete_logistic_mod_shinyapp/", height = "750px")
+```
+Credit to [Gen-Chang Hsu](https://genchanghsu.github.io/index.html)
+
+<!--chapter:end:03_Week_3_New.Rmd-->
+
