@@ -558,7 +558,7 @@ Adjust \(\overline{r}\)
 
 Credit to \href{https://genchanghsu.github.io/index.html}{Gen-Chang Hsu}
 
-\textbf{Part 2 - Population Growth with Allee Effects}
+\textbf{Part 2 - Population growth with Allee effects}
 
 Some populations experience negative growth rates when the population size is too low, a phenomenon known as ``Allee effect''. For example, some flowering plants require a minimal local density to attract pollinators (clustering effects). Below this density, pollinators will not be able to detect the presence of flowers and therefore the plants cannot complete their life cycle. Some flower species, e.g., \emph{Itea}, requires a minimal population size of \(A\) to attract its specialized bee pollinator and its population growth is directly related to pollinator visitation, its population dynamics can be described using the below differential equation:
 
@@ -582,7 +582,7 @@ where \(0 < A < K\). The term \(A\) represents ``Allee threshold'', below which 
 \NormalTok{K }\OtherTok{=} \DecValTok{500}
 \FunctionTok{curve}\NormalTok{(r}\SpecialCharTok{*}\NormalTok{x}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{x}\SpecialCharTok{/}\NormalTok{K)}\SpecialCharTok{*}\NormalTok{(x}\SpecialCharTok{/}\NormalTok{A}\DecValTok{{-}1}\NormalTok{), }\AttributeTok{from =} \DecValTok{0}\NormalTok{, }\AttributeTok{to =} \DecValTok{550}\NormalTok{, }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{550}\NormalTok{),}
       \AttributeTok{xlab =} \StringTok{"N"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"dN/dt"}\NormalTok{, }\AttributeTok{las =} \DecValTok{1}\NormalTok{)}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{, }\AttributeTok{col =}\StringTok{"red"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
 \FunctionTok{points}\NormalTok{(}\AttributeTok{y =} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{3}\NormalTok{), }\AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, A, K), }\AttributeTok{pch =} \FunctionTok{c}\NormalTok{(}\DecValTok{16}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{16}\NormalTok{))}
 \FunctionTok{text}\NormalTok{(}\AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, A, K), }\AttributeTok{y =} \FunctionTok{rep}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{3}\NormalTok{), }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"0"}\NormalTok{, }\StringTok{"A"}\NormalTok{, }\StringTok{"K"}\NormalTok{), }\AttributeTok{font =} \DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
 \FunctionTok{arrows}\NormalTok{(}\AttributeTok{x0 =} \FunctionTok{c}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DecValTok{200}\NormalTok{, }\DecValTok{550}\NormalTok{), }\AttributeTok{y0 =} \SpecialCharTok{{-}}\DecValTok{10}\NormalTok{, }\AttributeTok{x1 =} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{450}\NormalTok{, }\DecValTok{510}\NormalTok{), }\AttributeTok{y1 =} \SpecialCharTok{{-}}\DecValTok{10}\NormalTok{, }\AttributeTok{length =} \FloatTok{0.08}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}

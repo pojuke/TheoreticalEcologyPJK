@@ -409,7 +409,7 @@ Credit to [Gen-Chang Hsu](https://genchanghsu.github.io/index.html)
 
 <br> <br> <br> <br> <br>
 
-**Part 2 - Population Growth with Allee Effects**
+**Part 2 - Population growth with Allee effects**
 
 Some populations experience negative growth rates when the population size is too low, a phenomenon known as "Allee effect". For example, some flowering plants require a minimal local density to attract pollinators (clustering effects). Below this density, pollinators will not be able to detect the presence of flowers and therefore the plants cannot complete their life cycle. Some flower species, e.g., *Itea*, requires a minimal population size of $A$ to attract its specialized bee pollinator and its population growth is directly related to pollinator visitation, its population dynamics can be described using the below differential equation:
 
@@ -427,7 +427,7 @@ A = 150
 K = 500
 curve(r*x*(1-x/K)*(x/A-1), from = 0, to = 550, xlim = c(0, 550),
       xlab = "N", ylab = "dN/dt", las = 1)
-abline(h = 0, lty = 2, col ="red")
+abline(h = 0, lty = 2)
 points(y = rep(0, 3), x = c(0, A, K), pch = c(16, 1, 16))
 text(x = c(0, A, K), y = rep(20, 3), labels = c("0", "A", "K"), font = 3, col = "blue")
 arrows(x0 = c(100, 200, 550), y0 = -10, x1 = c(10, 450, 510), y1 = -10, length = 0.08, lwd = 2)
