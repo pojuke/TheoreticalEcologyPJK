@@ -1,0 +1,61 @@
+# Week 3 - Logistic population growth and stability analysis  {-} 
+
+```{r, out.width="800px", echo = F}
+knitr::include_app("https://genchanghsu0115.shinyapps.io/Logistic_mod_shinyapp/", height = "500px")
+```
+Credit to [Gen-Chang Hsu](https://genchanghsu.github.io/index.html)
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+**Extra materials - Modeling discrete logistic models using for loops**
+
+
+Model:
+\[
+N_{t+1} = N_t(1+r(1-\frac{N_t}{K}))
+\]
+
+```{r}
+### (1) Define the discrete logistic growth equation
+log_fun <- function(r, N, K){N + r*N*(1-N/K)}
+```
+
+You may modify $r$ to see the change in stability of equilibrium $K$.
+```{r}
+### (2) Set the parameters
+r <- 1.8
+K <- 500
+N0 <- 10
+time <- 100
+
+### (3) Use for loop to iterate over the time sequence
+pop_size <- data.frame(times = 1:time)
+pop_size$N[1] <- N0
+head(pop_size)
+
+for(i in 2:time){
+  pop_size$N[i] <- log_fun(r = r, N = pop_size$N[i - 1], K = K)
+}
+
+head(pop_size)
+
+### (4) Population trajectory
+plot(N ~ times, data = pop_size, type = "l")
+abline(h = K, col = "red")
+points(N ~ times, data = pop_size)
+```
+
+<br>
+
+
+Here is a shiny app for the discrete logistic growth model. 
+
+```{r, out.width="800px", echo = F}
+knitr::include_app("https://genchanghsu0115.shinyapps.io/Discrete_logistic_mod_shinyapp/", height = "750px")
+```
+Credit to [Gen-Chang Hsu](https://genchanghsu.github.io/index.html)

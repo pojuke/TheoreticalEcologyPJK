@@ -554,83 +554,85 @@ Adjust \(\overline{r}\)
 \chapter*{Week 3 - Logistic population growth and stability analysis}\label{week-3---logistic-population-growth-and-stability-analysis}}
 \addcontentsline{toc}{chapter}{Week 3 - Logistic population growth and stability analysis}
 
+\textbf{Part 1 - Shining app for logistic growth}
+
 Credit to \href{https://genchanghsu.github.io/index.html}{Gen-Chang Hsu}
 
-\textbf{Extra materials - Modeling discrete logistic models using for loops}
+\textbf{Part 2 - Population Growth with Allee Effects}
 
-Model:
+Some populations experience negative growth rates when the population size is too low, a phenomenon known as ``Allee effect''. For example, some flowering plants require a minimal local density to attract pollinators (clustering effects). Below this density, pollinators will not be able to detect the presence of flowers and therefore the plants cannot complete their life cycle. Some flower species, e.g., \emph{Itea}, requires a minimal population size of \(A\) to attract its specialized bee pollinator and its population growth is directly related to pollinator visitation, its population dynamics can be described using the below differential equation:
+
 \[
-N_{t+1} = N_t(1+r(1-\frac{N_t}{K}))
+\frac{dN}{dt} = rN(1-\frac{N}{K})(\frac{N}{A}-1)
 \]
 
+where \(0 < A < K\). The term \(A\) represents ``Allee threshold'', below which the population growth rate is negative (because of no visiting pollinators) and thus the population will decline; \(r\) is the intrinsic rate of increase and \(K\) is the carrying capacity.
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\tightlist
+\item
+  You can calculate the equilibrium population sizes and use the graphical method to determine their stability. The equilibrium population sizes are \(N^* = 0\) (stable), \(N^* = A\) (unstable), and \(N^* = K\) (stable).
+\end{enumerate}
+
 \begin{Shaded}
 \begin{Highlighting}[]
-\DocumentationTok{\#\#\# (1) Define the discrete logistic growth equation}
-\NormalTok{log\_fun }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(r, N, K)\{N }\SpecialCharTok{+}\NormalTok{ r}\SpecialCharTok{*}\NormalTok{N}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{N}\SpecialCharTok{/}\NormalTok{K)\}}
+\NormalTok{r }\OtherTok{=} \DecValTok{1}
+\NormalTok{A }\OtherTok{=} \DecValTok{150}
+\NormalTok{K }\OtherTok{=} \DecValTok{500}
+\FunctionTok{curve}\NormalTok{(r}\SpecialCharTok{*}\NormalTok{x}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{x}\SpecialCharTok{/}\NormalTok{K)}\SpecialCharTok{*}\NormalTok{(x}\SpecialCharTok{/}\NormalTok{A}\DecValTok{{-}1}\NormalTok{), }\AttributeTok{from =} \DecValTok{0}\NormalTok{, }\AttributeTok{to =} \DecValTok{550}\NormalTok{, }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{550}\NormalTok{),}
+      \AttributeTok{xlab =} \StringTok{"N"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"dN/dt"}\NormalTok{, }\AttributeTok{las =} \DecValTok{1}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{, }\AttributeTok{col =}\StringTok{"red"}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(}\AttributeTok{y =} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{3}\NormalTok{), }\AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, A, K), }\AttributeTok{pch =} \FunctionTok{c}\NormalTok{(}\DecValTok{16}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{16}\NormalTok{))}
+\FunctionTok{text}\NormalTok{(}\AttributeTok{x =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, A, K), }\AttributeTok{y =} \FunctionTok{rep}\NormalTok{(}\DecValTok{20}\NormalTok{, }\DecValTok{3}\NormalTok{), }\AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"0"}\NormalTok{, }\StringTok{"A"}\NormalTok{, }\StringTok{"K"}\NormalTok{), }\AttributeTok{font =} \DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+\FunctionTok{arrows}\NormalTok{(}\AttributeTok{x0 =} \FunctionTok{c}\NormalTok{(}\DecValTok{100}\NormalTok{, }\DecValTok{200}\NormalTok{, }\DecValTok{550}\NormalTok{), }\AttributeTok{y0 =} \SpecialCharTok{{-}}\DecValTok{10}\NormalTok{, }\AttributeTok{x1 =} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{450}\NormalTok{, }\DecValTok{510}\NormalTok{), }\AttributeTok{y1 =} \SpecialCharTok{{-}}\DecValTok{10}\NormalTok{, }\AttributeTok{length =} \FloatTok{0.08}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-You may modify \(r\) to see the change in stability of equilibrium \(K\).
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\begin{enumerate}
+\def\labelenumi{(\arabic{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Simulate the dynamics with an intrinsic rate of increase of \(r\) = 1.2, the carrying capacity of \(K\) = 1000, and the minimal threshold density of \(A\) = 150. Observe the population trajectories to see how different initial population sizes can lead to different equilibrium population sizes (a phenomenon known as ``alternative stable states'').
+\end{enumerate}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\DocumentationTok{\#\#\# (2) Set the parameters}
-\NormalTok{r }\OtherTok{\textless{}{-}} \FloatTok{1.8}
-\NormalTok{K }\OtherTok{\textless{}{-}} \DecValTok{500}
-\NormalTok{N0 }\OtherTok{\textless{}{-}} \DecValTok{10}
-\NormalTok{time }\OtherTok{\textless{}{-}} \DecValTok{100}
-
-\DocumentationTok{\#\#\# (3) Use for loop to iterate over the time sequence}
-\NormalTok{pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{times =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{time)}
-\NormalTok{pop\_size}\SpecialCharTok{$}\NormalTok{N[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ N0}
-\FunctionTok{head}\NormalTok{(pop\_size)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##   times  N
-## 1     1 10
-## 2     2 10
-## 3     3 10
-## 4     4 10
-## 5     5 10
-## 6     6 10
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{time)\{}
-\NormalTok{  pop\_size}\SpecialCharTok{$}\NormalTok{N[i] }\OtherTok{\textless{}{-}} \FunctionTok{log\_fun}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{N =}\NormalTok{ pop\_size}\SpecialCharTok{$}\NormalTok{N[i }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{], }\AttributeTok{K =}\NormalTok{ K)}
+\FunctionTok{library}\NormalTok{(deSolve)}
+\NormalTok{Allee }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(t, state, pars) \{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, pars)), \{}
+\NormalTok{    dN\_dt }\OtherTok{=}\NormalTok{ r}\SpecialCharTok{*}\NormalTok{N}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{N}\SpecialCharTok{/}\NormalTok{K)}\SpecialCharTok{*}\NormalTok{(N}\SpecialCharTok{/}\NormalTok{A}\DecValTok{{-}1}\NormalTok{)}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(dN\_dt)))}
+\NormalTok{    \})}
 \NormalTok{\}}
+\NormalTok{t }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{7}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.01}\NormalTok{)}
 
-\FunctionTok{head}\NormalTok{(pop\_size)}
-\end{Highlighting}
-\end{Shaded}
+\NormalTok{state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{120}\NormalTok{,}\DecValTok{180}\NormalTok{, }\DecValTok{300}\NormalTok{, }\DecValTok{600}\NormalTok{, }\DecValTok{900}\NormalTok{, }\DecValTok{1200}\NormalTok{)}
+\FunctionTok{names}\NormalTok{(state) }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\StringTok{"N"}\NormalTok{, }\AttributeTok{time =} \FunctionTok{length}\NormalTok{(state))}
+\NormalTok{pars }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{A =} \DecValTok{150}\NormalTok{, }\AttributeTok{K =} \DecValTok{1000}\NormalTok{)}
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\DecValTok{5}\NormalTok{, }\DecValTok{4}\SpecialCharTok{+}\DecValTok{2}\NormalTok{, }\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{) }\SpecialCharTok{+} \FloatTok{0.1}\NormalTok{)}
 
-\begin{verbatim}
-##   times         N
-## 1     1  10.00000
-## 2     2  27.64000
-## 3     3  74.64171
-## 4     4 188.93980
-## 5     5 400.51775
-## 6     6 543.95762
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DocumentationTok{\#\#\# (4) Population trajectory}
-\FunctionTok{plot}\NormalTok{(N }\SpecialCharTok{\textasciitilde{}}\NormalTok{ times, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{)}
-\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ K, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
-\FunctionTok{points}\NormalTok{(N }\SpecialCharTok{\textasciitilde{}}\NormalTok{ times, }\AttributeTok{data =}\NormalTok{ pop\_size)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(state))\{}
+  \CommentTok{\#runthe ode solver}
+\NormalTok{  pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ Allee, }\AttributeTok{t =}\NormalTok{ t, }\AttributeTok{y =}\NormalTok{ state[i], }\AttributeTok{par =}\NormalTok{ pars)}
+  \FunctionTok{plot}\NormalTok{(pop\_size,}\AttributeTok{ann =}\NormalTok{ F, }\AttributeTok{las =}\NormalTok{T, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1500}\NormalTok{), }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\FloatTok{0.2}\NormalTok{,}\DecValTok{7}\NormalTok{))}
+  \FunctionTok{par}\NormalTok{(}\AttributeTok{new =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{\}}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{1000}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{150}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{axis}\NormalTok{(}\AttributeTok{side =} \DecValTok{2}\NormalTok{, }\AttributeTok{at =} \DecValTok{150}\NormalTok{, }\AttributeTok{las =}\NormalTok{ T)}
+\FunctionTok{title}\NormalTok{(}\AttributeTok{main =} \FunctionTok{paste0}\NormalTok{(}\StringTok{"Allee effect}\SpecialCharTok{\textbackslash{}n}\StringTok{(r = "}\NormalTok{,pars[}\StringTok{"r"}\NormalTok{],}
+                  \StringTok{", A = "}\NormalTok{,pars[}\StringTok{"A"}\NormalTok{],}
+                  \StringTok{", K = "}\NormalTok{,pars[}\StringTok{"K"}\NormalTok{], }\StringTok{")"}\NormalTok{),}
+      \AttributeTok{xlab =} \StringTok{"Time"}\NormalTok{)}
+\FunctionTok{title}\NormalTok{(}\AttributeTok{ylab =} \StringTok{"Numberof individuals"}\NormalTok{, }\AttributeTok{line =} \DecValTok{4}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-15-1.pdf}
-
-Here is a shiny app for the discrete logistic growth model.
-
-Credit to \href{https://genchanghsu.github.io/index.html}{Gen-Chang Hsu}
 
   \bibliography{book.bib,packages.bib}
 
