@@ -53,9 +53,9 @@ Credit to [Gen-Chang Hsu](https://genchanghsu.github.io/index.html)
 ###### Part 2: Bifurcation curve
 ### (1) data setting
 # intrinsic growth rate sequence
-r_seq <- seq(from = 1.8, to = 3, by = 0.01)
+r_seq <- seq(from = 1.8, to = 3, by = 0.001)
 # number of sampling
-N_rep <- 200
+N_rep <- 100
 
 # data 
 dat_plot <- data.frame(r = rep(r_seq, each = N_rep), N = 0)
@@ -81,7 +81,7 @@ for (lo in 1:length(r_seq)){
   dat_plot$N[(1 + (lo - 1)*N_rep):(lo*N_rep)] <- pop_size$N[(nrow(pop_size) - N_rep + 1):nrow(pop_size)]
 }
 
-plot(N ~ r, data = dat_plot, cex = 0.7, pch = 20)
+plot(N ~ r, data = dat_plot, cex = 0.05, pch = 20)
 
 ```
 

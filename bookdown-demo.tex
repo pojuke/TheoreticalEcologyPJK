@@ -634,6 +634,140 @@ where \(0 < A < K\). The term \(A\) represents ``Allee threshold'', below which 
 
 \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-15-1.pdf}
 
+\hypertarget{week-4---discrete-exponential-and-logistic-models}{%
+\chapter*{Week 4 - Discrete exponential and logistic models}\label{week-4---discrete-exponential-and-logistic-models}}
+\addcontentsline{toc}{chapter}{Week 4 - Discrete exponential and logistic models}
+
+\textbf{Part 1 - Model the discrete logistic population growth using for loops}
+Model:
+\[
+N_{t+1} = N_t(1+r(1-\frac{N_t}{K}))
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# (1) Define the discrete logistic growth equation}
+\NormalTok{log\_fun }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(r, N, K)\{N }\SpecialCharTok{+}\NormalTok{ r}\SpecialCharTok{*}\NormalTok{N}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{N}\SpecialCharTok{/}\NormalTok{K)\}}
+\end{Highlighting}
+\end{Shaded}
+
+You may modify \(r\) to see the change in stability of equilibrium \(K\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# (2) Set the parameters}
+\NormalTok{r }\OtherTok{\textless{}{-}} \FloatTok{1.8}
+\NormalTok{K }\OtherTok{\textless{}{-}} \DecValTok{500}
+\NormalTok{N0 }\OtherTok{\textless{}{-}} \DecValTok{10}
+\NormalTok{time }\OtherTok{\textless{}{-}} \DecValTok{100}
+
+\DocumentationTok{\#\#\# (3) Use for loop to iterate over the time sequence}
+\NormalTok{pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{times =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{time)}
+\NormalTok{pop\_size}\SpecialCharTok{$}\NormalTok{N[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ N0}
+\FunctionTok{head}\NormalTok{(pop\_size)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   times  N
+## 1     1 10
+## 2     2 10
+## 3     3 10
+## 4     4 10
+## 5     5 10
+## 6     6 10
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{time)\{}
+\NormalTok{  pop\_size}\SpecialCharTok{$}\NormalTok{N[i] }\OtherTok{\textless{}{-}} \FunctionTok{log\_fun}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{N =}\NormalTok{ pop\_size}\SpecialCharTok{$}\NormalTok{N[i }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{], }\AttributeTok{K =}\NormalTok{ K)}
+\NormalTok{\}}
+
+\FunctionTok{head}\NormalTok{(pop\_size)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   times         N
+## 1     1  10.00000
+## 2     2  27.64000
+## 3     3  74.64171
+## 4     4 188.93980
+## 5     5 400.51775
+## 6     6 543.95762
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# (4) Population trajectory}
+\FunctionTok{plot}\NormalTok{(N }\SpecialCharTok{\textasciitilde{}}\NormalTok{ times, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ K, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(N }\SpecialCharTok{\textasciitilde{}}\NormalTok{ times, }\AttributeTok{data =}\NormalTok{ pop\_size)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+Here is a shiny app for the discrete logistic growth model.
+
+Credit to \href{https://genchanghsu.github.io/index.html}{Gen-Chang Hsu}
+
+\textbf{Part 2 - Bifurcation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\#\#\# Part 2: Bifurcation curve}
+\DocumentationTok{\#\#\# (1) data setting}
+\CommentTok{\# intrinsic growth rate sequence}
+\NormalTok{r\_seq }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \FloatTok{1.8}\NormalTok{, }\AttributeTok{to =} \DecValTok{3}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.001}\NormalTok{)}
+\CommentTok{\# number of sampling}
+\NormalTok{N\_rep }\OtherTok{\textless{}{-}} \DecValTok{100}
+
+\CommentTok{\# data }
+\NormalTok{dat\_plot }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{r =} \FunctionTok{rep}\NormalTok{(r\_seq, }\AttributeTok{each =}\NormalTok{ N\_rep), }\AttributeTok{N =} \DecValTok{0}\NormalTok{)}
+\FunctionTok{head}\NormalTok{(dat\_plot)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     r N
+## 1 1.8 0
+## 2 1.8 0
+## 3 1.8 0
+## 4 1.8 0
+## 5 1.8 0
+## 6 1.8 0
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# (2) Run the discrete logistic model}
+\ControlFlowTok{for}\NormalTok{ (lo }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(r\_seq))\{}
+\NormalTok{  log\_fun }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(r, N, K)\{N }\SpecialCharTok{+}\NormalTok{ r}\SpecialCharTok{*}\NormalTok{N}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{N}\SpecialCharTok{/}\NormalTok{K)\}}
+
+\NormalTok{  r }\OtherTok{\textless{}{-}}\NormalTok{ r\_seq[lo]}
+\NormalTok{  K }\OtherTok{\textless{}{-}} \DecValTok{500}
+\NormalTok{  N0 }\OtherTok{\textless{}{-}} \DecValTok{10}
+\NormalTok{  time }\OtherTok{\textless{}{-}} \DecValTok{1000}
+
+\NormalTok{  pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{times =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{time)}
+\NormalTok{  pop\_size}\SpecialCharTok{$}\NormalTok{N[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ N0}
+
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{time)\{}
+\NormalTok{    pop\_size}\SpecialCharTok{$}\NormalTok{N[i] }\OtherTok{\textless{}{-}} \FunctionTok{log\_fun}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{N =}\NormalTok{ pop\_size}\SpecialCharTok{$}\NormalTok{N[i }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{], }\AttributeTok{K =}\NormalTok{ K)}
+\NormalTok{  \}}
+
+  \CommentTok{\# save the data}
+\NormalTok{  dat\_plot}\SpecialCharTok{$}\NormalTok{N[(}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ (lo }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}\SpecialCharTok{*}\NormalTok{N\_rep)}\SpecialCharTok{:}\NormalTok{(lo}\SpecialCharTok{*}\NormalTok{N\_rep)] }\OtherTok{\textless{}{-}}\NormalTok{ pop\_size}\SpecialCharTok{$}\NormalTok{N[(}\FunctionTok{nrow}\NormalTok{(pop\_size) }\SpecialCharTok{{-}}\NormalTok{ N\_rep }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(pop\_size)]}
+\NormalTok{\}}
+
+\FunctionTok{plot}\NormalTok{(N }\SpecialCharTok{\textasciitilde{}}\NormalTok{ r, }\AttributeTok{data =}\NormalTok{ dat\_plot, }\AttributeTok{cex =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{pch =} \DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-19-1.pdf}
+
   \bibliography{book.bib,packages.bib}
 
 \end{document}
