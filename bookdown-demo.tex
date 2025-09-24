@@ -661,45 +661,16 @@ You may modify \(r\) to see the change in stability of equilibrium \(K\).
 \NormalTok{N0 }\OtherTok{\textless{}{-}} \DecValTok{10}
 \NormalTok{time }\OtherTok{\textless{}{-}} \DecValTok{100}
 
+\NormalTok{Parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{K =}\NormalTok{ K)}
+
 \DocumentationTok{\#\#\# (3) Use for loop to iterate over the time sequence}
 \NormalTok{pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{times =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{time)}
 \NormalTok{pop\_size}\SpecialCharTok{$}\NormalTok{N[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ N0}
-\FunctionTok{head}\NormalTok{(pop\_size)}
-\end{Highlighting}
-\end{Shaded}
 
-\begin{verbatim}
-##   times  N
-## 1     1 10
-## 2     2 10
-## 3     3 10
-## 4     4 10
-## 5     5 10
-## 6     6 10
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{time)\{}
 \NormalTok{  pop\_size}\SpecialCharTok{$}\NormalTok{N[i] }\OtherTok{\textless{}{-}} \FunctionTok{log\_fun}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{N =}\NormalTok{ pop\_size}\SpecialCharTok{$}\NormalTok{N[i }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{], }\AttributeTok{K =}\NormalTok{ K)}
 \NormalTok{\}}
 
-\FunctionTok{head}\NormalTok{(pop\_size)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##   times         N
-## 1     1  10.00000
-## 2     2  27.64000
-## 3     3  74.64171
-## 4     4 188.93980
-## 5     5 400.51775
-## 6     6 543.95762
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \DocumentationTok{\#\#\# (4) Population trajectory}
 \FunctionTok{plot}\NormalTok{(N }\SpecialCharTok{\textasciitilde{}}\NormalTok{ times, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{)}
 \FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ K, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
@@ -709,64 +680,142 @@ You may modify \(r\) to see the change in stability of equilibrium \(K\).
 
 \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-17-1.pdf}
 
+\textbf{Part 2 - Generic cobweb}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\#\#\# Part 2: Generic cobweb}
+\DocumentationTok{\#\#\# (1) define function}
+\NormalTok{ReturnMap }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(Func, x0, times, xmax, }\AttributeTok{curve\_n =} \DecValTok{1000}\NormalTok{, parms)\{}
+  
+  \CommentTok{\# get time series iteration}
+\NormalTok{  x }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(x0, times)}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{times)\{}
+\NormalTok{    x[i] }\OtherTok{\textless{}{-}} \FunctionTok{Func}\NormalTok{(x[i}\DecValTok{{-}1}\NormalTok{], parms)}
+\NormalTok{  \}}
+  
+  \CommentTok{\# get fine grid for function curve}
+\NormalTok{  x.grid }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, xmax, }\AttributeTok{length.out =}\NormalTok{ curve\_n)}
+\NormalTok{  y.grid }\OtherTok{\textless{}{-}} \FunctionTok{Func}\NormalTok{(x.grid, parms)}
+\NormalTok{  ymax }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(y.grid, xmax)}
+  
+  \CommentTok{\# create canvas}
+  \FunctionTok{plot}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, xmax), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, ymax), }\AttributeTok{xaxs =} \StringTok{"i"}\NormalTok{, }\AttributeTok{yaxs =} \StringTok{"i"}\NormalTok{, }\AttributeTok{bty =} \StringTok{"l"}\NormalTok{, }
+       \AttributeTok{xlab =} \FunctionTok{expression}\NormalTok{(N[t]), }\AttributeTok{ylab =} \FunctionTok{expression}\NormalTok{(N[t}\SpecialCharTok{+}\DecValTok{1}\NormalTok{]))}
+  \FunctionTok{abline}\NormalTok{(}\AttributeTok{a =} \DecValTok{0}\NormalTok{, }\AttributeTok{b =} \DecValTok{1}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{, }\AttributeTok{col =} \StringTok{"grey50"}\NormalTok{)          }
+  \FunctionTok{lines}\NormalTok{(x.grid, y.grid, }\AttributeTok{col =} \StringTok{"steelblue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)      }
+  
+  \CommentTok{\# cobweb (horizontal to diagonal, vertical up to function)}
+  \FunctionTok{segments}\NormalTok{(}\AttributeTok{x0 =}\NormalTok{ x[}\DecValTok{1}\NormalTok{], }\AttributeTok{y0 =} \DecValTok{0}\NormalTok{,   }\AttributeTok{x1 =}\NormalTok{ x[}\DecValTok{1}\NormalTok{],   }\AttributeTok{y1 =}\NormalTok{ x[}\DecValTok{2}\NormalTok{], }\AttributeTok{col =} \StringTok{"firebrick"}\NormalTok{)}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{(times}\DecValTok{{-}1}\NormalTok{))\{}
+    \FunctionTok{segments}\NormalTok{(}\AttributeTok{x0 =}\NormalTok{ x[i}\DecValTok{{-}1}\NormalTok{], }\AttributeTok{y0 =}\NormalTok{ x[i],   }
+             \AttributeTok{x1 =}\NormalTok{ x[i],   }\AttributeTok{y1 =}\NormalTok{ x[i], }\AttributeTok{col =} \StringTok{"firebrick"}\NormalTok{)}
+    \FunctionTok{segments}\NormalTok{(}\AttributeTok{x0 =}\NormalTok{ x[i],   }\AttributeTok{y0 =}\NormalTok{ x[i], }
+             \AttributeTok{x1 =}\NormalTok{ x[i],   }\AttributeTok{y1 =}\NormalTok{ x[i}\SpecialCharTok{+}\DecValTok{1}\NormalTok{], }\AttributeTok{col =} \StringTok{"firebrick"}\NormalTok{)}
+\NormalTok{  \}}
+  
+\NormalTok{\}}
+
+\DocumentationTok{\#\#\# (2) Set up different discrete model function with outside parameters}
+
+\DocumentationTok{\#\#\#\# Discrete logistic function with outside parameters}
+\NormalTok{Logistic }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(N, parms)\{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(parms), \{}
+    \FunctionTok{return}\NormalTok{(N }\SpecialCharTok{+}\NormalTok{ r}\SpecialCharTok{*}\NormalTok{N}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{N}\SpecialCharTok{/}\NormalTok{K))}
+\NormalTok{  \})}
+\NormalTok{\}}
+\NormalTok{Parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{K =}\NormalTok{ K)}
+
+\DocumentationTok{\#\#\#\# Ricker function with outside parameters}
+\NormalTok{Ricker }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(N, parms)\{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(parms), \{}
+    \FunctionTok{return}\NormalTok{(N }\SpecialCharTok{*} \FunctionTok{exp}\NormalTok{(r}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{N}\SpecialCharTok{/}\NormalTok{K)))}
+\NormalTok{  \})}
+\NormalTok{\}}
+\NormalTok{Parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{K =}\NormalTok{ K)}
+
+\DocumentationTok{\#\#\#\# Beverton{-}Holt function with outside parameters}
+\NormalTok{Beverton }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(N, parms)\{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(parms), \{}
+    \FunctionTok{return}\NormalTok{(lambda }\SpecialCharTok{*}\NormalTok{ N }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ alpha }\SpecialCharTok{*}\NormalTok{ N))}
+\NormalTok{  \})}
+\NormalTok{\}}
+\NormalTok{Parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{lambda =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{)}
+
+
+\DocumentationTok{\#\#\# (3) Use the ReturnMap function}
+
+\FunctionTok{ReturnMap}\NormalTok{(}\AttributeTok{Func =}\NormalTok{ Logistic,}
+          \AttributeTok{x0 =} \DecValTok{10}\NormalTok{, }
+          \AttributeTok{times =} \DecValTok{150}\NormalTok{,}
+          \AttributeTok{xmax =} \DecValTok{310}\NormalTok{,}
+          \AttributeTok{curve\_n =} \DecValTok{1000}\NormalTok{, }
+          \AttributeTok{parms =}\NormalTok{ Parms)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-18-1.pdf}
+
 Here is a shiny app for the discrete logistic growth model.
 
 Credit to \href{https://genchanghsu.github.io/index.html}{Gen-Chang Hsu}
 
-\textbf{Part 2 - Bifurcation}
+\textbf{Part 3 - Bifurcation}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\DocumentationTok{\#\#\#\#\#\# Part 2: Bifurcation curve}
-\DocumentationTok{\#\#\# (1) data setting}
-\CommentTok{\# intrinsic growth rate sequence}
-\NormalTok{r\_seq }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \FloatTok{1.8}\NormalTok{, }\AttributeTok{to =} \DecValTok{3}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.001}\NormalTok{)}
-\CommentTok{\# number of sampling}
-\NormalTok{N\_rep }\OtherTok{\textless{}{-}} \DecValTok{100}
+\DocumentationTok{\#\#\#\#\# Part 3: Logistic map and bifurcation}
 
-\CommentTok{\# data }
-\NormalTok{dat\_plot }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{r =} \FunctionTok{rep}\NormalTok{(r\_seq, }\AttributeTok{each =}\NormalTok{ N\_rep), }\AttributeTok{N =} \DecValTok{0}\NormalTok{)}
-\FunctionTok{head}\NormalTok{(dat\_plot)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##     r N
-## 1 1.8 0
-## 2 1.8 0
-## 3 1.8 0
-## 4 1.8 0
-## 5 1.8 0
-## 6 1.8 0
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\DocumentationTok{\#\#\# (2) Run the discrete logistic model}
-\ControlFlowTok{for}\NormalTok{ (lo }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(r\_seq))\{}
-\NormalTok{  log\_fun }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(r, N, K)\{N }\SpecialCharTok{+}\NormalTok{ r}\SpecialCharTok{*}\NormalTok{N}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{N}\SpecialCharTok{/}\NormalTok{K)\}}
-
-\NormalTok{  r }\OtherTok{\textless{}{-}}\NormalTok{ r\_seq[lo]}
-\NormalTok{  K }\OtherTok{\textless{}{-}} \DecValTok{500}
-\NormalTok{  N0 }\OtherTok{\textless{}{-}} \DecValTok{10}
-\NormalTok{  time }\OtherTok{\textless{}{-}} \DecValTok{1000}
-
-\NormalTok{  pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{times =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{time)}
-\NormalTok{  pop\_size}\SpecialCharTok{$}\NormalTok{N[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ N0}
-
-  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{time)\{}
-\NormalTok{    pop\_size}\SpecialCharTok{$}\NormalTok{N[i] }\OtherTok{\textless{}{-}} \FunctionTok{log\_fun}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{N =}\NormalTok{ pop\_size}\SpecialCharTok{$}\NormalTok{N[i }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{], }\AttributeTok{K =}\NormalTok{ K)}
+\DocumentationTok{\#\#\# (1) Define the function}
+\NormalTok{RickerPlot }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(Func, variable, var\_vec, x0, times, }\AttributeTok{x\_print =} \DecValTok{200}\NormalTok{, parms)\{}
+  
+  \CommentTok{\# prepare saving space }
+\NormalTok{  data\_plot }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{var =} \FunctionTok{rep}\NormalTok{(var\_vec, }\AttributeTok{each =}\NormalTok{ x\_print), }\AttributeTok{x =} \DecValTok{0}\NormalTok{)}
+  
+  \CommentTok{\# change bifurcation parameter}
+  \ControlFlowTok{for}\NormalTok{ (k }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(var\_vec))\{}
+\NormalTok{    parms[variable] }\OtherTok{\textless{}{-}}\NormalTok{ var\_vec[k]}
+\NormalTok{    x }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(x0, times)}
+    
+    \CommentTok{\# get time series with new bifurcation parameter}
+    \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{times)\{}
+\NormalTok{      x[i] }\OtherTok{\textless{}{-}} \FunctionTok{Func}\NormalTok{(x[i}\DecValTok{{-}1}\NormalTok{], parms)}
+\NormalTok{    \}}
+    
+    \CommentTok{\# save the data}
+\NormalTok{    data\_plot}\SpecialCharTok{$}\NormalTok{x[(}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ (k }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}\SpecialCharTok{*}\NormalTok{x\_print)}\SpecialCharTok{:}\NormalTok{(k}\SpecialCharTok{*}\NormalTok{x\_print)] }\OtherTok{\textless{}{-}}\NormalTok{ x[(times }\SpecialCharTok{{-}}\NormalTok{ x\_print }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\NormalTok{times]}
 \NormalTok{  \}}
-
-  \CommentTok{\# save the data}
-\NormalTok{  dat\_plot}\SpecialCharTok{$}\NormalTok{N[(}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ (lo }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)}\SpecialCharTok{*}\NormalTok{N\_rep)}\SpecialCharTok{:}\NormalTok{(lo}\SpecialCharTok{*}\NormalTok{N\_rep)] }\OtherTok{\textless{}{-}}\NormalTok{ pop\_size}\SpecialCharTok{$}\NormalTok{N[(}\FunctionTok{nrow}\NormalTok{(pop\_size) }\SpecialCharTok{{-}}\NormalTok{ N\_rep }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(pop\_size)]}
+  
+  \CommentTok{\# plot }
+  \FunctionTok{plot}\NormalTok{(x }\SpecialCharTok{\textasciitilde{}}\NormalTok{ var, }\AttributeTok{data =}\NormalTok{ data\_plot, }\AttributeTok{cex =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{pch =} \DecValTok{20}\NormalTok{, }
+       \AttributeTok{xlab =}\NormalTok{ variable, }\AttributeTok{ylab =} \StringTok{"Population size"}\NormalTok{)}
+  
 \NormalTok{\}}
 
-\FunctionTok{plot}\NormalTok{(N }\SpecialCharTok{\textasciitilde{}}\NormalTok{ r, }\AttributeTok{data =}\NormalTok{ dat\_plot, }\AttributeTok{cex =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{pch =} \DecValTok{20}\NormalTok{)}
+\DocumentationTok{\#\#\#\# Discrete logistic function with outside parameters}
+\NormalTok{Logistic }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(N, parms)\{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(parms), \{}
+    \FunctionTok{return}\NormalTok{(N }\SpecialCharTok{+}\NormalTok{ r}\SpecialCharTok{*}\NormalTok{N}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{N}\SpecialCharTok{/}\NormalTok{K))}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#\# (2) Parameter setting}
+
+\NormalTok{Parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{K =}\NormalTok{ K)}
+\NormalTok{r\_seq }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \FloatTok{1.8}\NormalTok{, }\AttributeTok{to =} \DecValTok{3}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.001}\NormalTok{)}
+
+\DocumentationTok{\#\#\# (3) Use generic ricker plot function}
+\FunctionTok{RickerPlot}\NormalTok{(}\AttributeTok{Func =}\NormalTok{ Logistic, }
+           \AttributeTok{variable =} \StringTok{"r"}\NormalTok{, }
+           \AttributeTok{var\_vec =}\NormalTok{ r\_seq, }
+           \AttributeTok{x0 =} \DecValTok{10}\NormalTok{, }
+           \AttributeTok{times =} \DecValTok{500}\NormalTok{, }
+           \AttributeTok{x\_print =} \DecValTok{100}\NormalTok{, }
+           \AttributeTok{parms =}\NormalTok{ Parms)}
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-19-1.pdf}
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-20-1.pdf}
 
   \bibliography{book.bib,packages.bib}
 
