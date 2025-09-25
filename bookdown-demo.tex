@@ -657,16 +657,14 @@ You may modify \(r\) to see the change in stability of equilibrium \(K\).
 \begin{Highlighting}[]
 \DocumentationTok{\#\#\# (2) Set the parameters}
 \NormalTok{r }\OtherTok{\textless{}{-}} \FloatTok{1.8}
-\NormalTok{K }\OtherTok{\textless{}{-}} \DecValTok{500}
+\NormalTok{K }\OtherTok{\textless{}{-}} \DecValTok{200}
 \NormalTok{N0 }\OtherTok{\textless{}{-}} \DecValTok{10}
 \NormalTok{time }\OtherTok{\textless{}{-}} \DecValTok{100}
-
 \NormalTok{Parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{K =}\NormalTok{ K)}
 
 \DocumentationTok{\#\#\# (3) Use for loop to iterate over the time sequence}
 \NormalTok{pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{times =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{time)}
 \NormalTok{pop\_size}\SpecialCharTok{$}\NormalTok{N[}\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ N0}
-
 \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{time)\{}
 \NormalTok{  pop\_size}\SpecialCharTok{$}\NormalTok{N[i] }\OtherTok{\textless{}{-}} \FunctionTok{log\_fun}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{N =}\NormalTok{ pop\_size}\SpecialCharTok{$}\NormalTok{N[i }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{], }\AttributeTok{K =}\NormalTok{ K)}
 \NormalTok{\}}
@@ -716,9 +714,7 @@ You may modify \(r\) to see the change in stability of equilibrium \(K\).
   
 \NormalTok{\}}
 
-\DocumentationTok{\#\#\# (2) Set up different discrete model function with outside parameters}
-
-\DocumentationTok{\#\#\#\# Discrete logistic function with outside parameters}
+\DocumentationTok{\#\#\# (2) Set up discrete logistic function with outside parameters}
 \NormalTok{Logistic }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(N, parms)\{}
   \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(parms), \{}
     \FunctionTok{return}\NormalTok{(N }\SpecialCharTok{+}\NormalTok{ r}\SpecialCharTok{*}\NormalTok{N}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{N}\SpecialCharTok{/}\NormalTok{K))}
@@ -726,25 +722,7 @@ You may modify \(r\) to see the change in stability of equilibrium \(K\).
 \NormalTok{\}}
 \NormalTok{Parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{K =}\NormalTok{ K)}
 
-\DocumentationTok{\#\#\#\# Ricker function with outside parameters}
-\NormalTok{Ricker }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(N, parms)\{}
-  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(parms), \{}
-    \FunctionTok{return}\NormalTok{(N }\SpecialCharTok{*} \FunctionTok{exp}\NormalTok{(r}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{N}\SpecialCharTok{/}\NormalTok{K)))}
-\NormalTok{  \})}
-\NormalTok{\}}
-\NormalTok{Parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{K =}\NormalTok{ K)}
-
-\DocumentationTok{\#\#\#\# Beverton{-}Holt function with outside parameters}
-\NormalTok{Beverton }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(N, parms)\{}
-  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(parms), \{}
-    \FunctionTok{return}\NormalTok{(lambda }\SpecialCharTok{*}\NormalTok{ N }\SpecialCharTok{/}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{+}\NormalTok{ alpha }\SpecialCharTok{*}\NormalTok{ N))}
-\NormalTok{  \})}
-\NormalTok{\}}
-\NormalTok{Parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{lambda =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{)}
-
-
 \DocumentationTok{\#\#\# (3) Use the ReturnMap function}
-
 \FunctionTok{ReturnMap}\NormalTok{(}\AttributeTok{Func =}\NormalTok{ Logistic,}
           \AttributeTok{x0 =} \DecValTok{10}\NormalTok{, }
           \AttributeTok{times =} \DecValTok{150}\NormalTok{,}
@@ -765,7 +743,6 @@ Credit to \href{https://genchanghsu.github.io/index.html}{Gen-Chang Hsu}
 \begin{Shaded}
 \begin{Highlighting}[]
 \DocumentationTok{\#\#\#\#\# Part 3: Logistic map and bifurcation}
-
 \DocumentationTok{\#\#\# (1) Define the function}
 \NormalTok{RickerPlot }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(Func, variable, var\_vec, x0, times, }\AttributeTok{x\_print =} \DecValTok{200}\NormalTok{, parms)\{}
   
@@ -800,7 +777,6 @@ Credit to \href{https://genchanghsu.github.io/index.html}{Gen-Chang Hsu}
 \NormalTok{\}}
 
 \DocumentationTok{\#\#\# (2) Parameter setting}
-
 \NormalTok{Parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =}\NormalTok{ r, }\AttributeTok{K =}\NormalTok{ K)}
 \NormalTok{r\_seq }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \FloatTok{1.8}\NormalTok{, }\AttributeTok{to =} \DecValTok{3}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.001}\NormalTok{)}
 

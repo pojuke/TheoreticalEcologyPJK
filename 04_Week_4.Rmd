@@ -15,16 +15,14 @@ You may modify $r$ to see the change in stability of equilibrium $K$.
 ```{r}
 ### (2) Set the parameters
 r <- 1.8
-K <- 500
+K <- 200
 N0 <- 10
 time <- 100
-
 Parms <- c(r = r, K = K)
 
 ### (3) Use for loop to iterate over the time sequence
 pop_size <- data.frame(times = 1:time)
 pop_size$N[1] <- N0
-
 for(i in 2:time){
   pop_size$N[i] <- log_fun(r = r, N = pop_size$N[i - 1], K = K)
 }
@@ -70,9 +68,7 @@ ReturnMap <- function(Func, x0, times, xmax, curve_n = 1000, parms){
   
 }
 
-### (2) Set up different discrete model function with outside parameters
-
-#### Discrete logistic function with outside parameters
+### (2) Set up discrete logistic function with outside parameters
 Logistic <- function(N, parms){
   with(as.list(parms), {
     return(N + r*N*(1-N/K))
@@ -80,25 +76,7 @@ Logistic <- function(N, parms){
 }
 Parms <- c(r = r, K = K)
 
-#### Ricker function with outside parameters
-Ricker <- function(N, parms){
-  with(as.list(parms), {
-    return(N * exp(r*(1-N/K)))
-  })
-}
-Parms <- c(r = r, K = K)
-
-#### Beverton-Holt function with outside parameters
-Beverton <- function(N, parms){
-  with(as.list(parms), {
-    return(lambda * N / (1 + alpha * N))
-  })
-}
-Parms <- c(lambda = 1.2, alpha = 0.2)
-
-
 ### (3) Use the ReturnMap function
-
 ReturnMap(Func = Logistic,
           x0 = 10, 
           times = 150,
@@ -122,7 +100,6 @@ Credit to [Gen-Chang Hsu](https://genchanghsu.github.io/index.html)
 
 ```{r}
 ##### Part 3: Logistic map and bifurcation
-
 ### (1) Define the function
 RickerPlot <- function(Func, variable, var_vec, x0, times, x_print = 200, parms){
   
@@ -157,7 +134,6 @@ Logistic <- function(N, parms){
 }
 
 ### (2) Parameter setting
-
 Parms <- c(r = r, K = K)
 r_seq <- seq(from = 1.8, to = 3, by = 0.001)
 
