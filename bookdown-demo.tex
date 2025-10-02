@@ -820,6 +820,176 @@ Here, \(P_{00}\) can be colonized by plant \(A\) when propagules arrive (per cap
 
 ~~~~In this lab, we are going to model the dynamics of this plant-soil system. We will start by converting the flow diagram into a set of differential equations and then solve them numerically using the package \texttt{deSolve}.
 
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(deSolve)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(tidyr)}
+
+
+\DocumentationTok{\#\#\# Model specification}
+\NormalTok{PSF }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(Time, State, Pars)\{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(State, Pars)),\{}
+\NormalTok{    dP00\_dt }\OtherTok{=} \SpecialCharTok{{-}}\NormalTok{ rA }\SpecialCharTok{*}\NormalTok{ (PA0 }\SpecialCharTok{+}\NormalTok{ PAA) }\SpecialCharTok{*}\NormalTok{ P00 }\SpecialCharTok{+}\NormalTok{ mA }\SpecialCharTok{*}\NormalTok{ PA0 }\SpecialCharTok{+}\NormalTok{ dA }\SpecialCharTok{*}\NormalTok{ P0A }
+\NormalTok{    dPA0\_dt }\OtherTok{=}\NormalTok{ rA }\SpecialCharTok{*}\NormalTok{ (PA0 }\SpecialCharTok{+}\NormalTok{ PAA) }\SpecialCharTok{*}\NormalTok{ P00 }\SpecialCharTok{{-}}\NormalTok{ cA }\SpecialCharTok{*}\NormalTok{ PA0 }\SpecialCharTok{{-}}\NormalTok{ mA }\SpecialCharTok{*}\NormalTok{ PA0}
+\NormalTok{    dPAA\_dt }\OtherTok{=}\NormalTok{ cA }\SpecialCharTok{*}\NormalTok{ PA0 }\SpecialCharTok{+}\NormalTok{ alpha }\SpecialCharTok{*}\NormalTok{ rA }\SpecialCharTok{*}\NormalTok{ (PA0 }\SpecialCharTok{+}\NormalTok{ PAA) }\SpecialCharTok{*}\NormalTok{ P0A }\SpecialCharTok{{-}}\NormalTok{ mA }\SpecialCharTok{*}\NormalTok{ PAA}
+\NormalTok{    dP0A\_dt }\OtherTok{=}\NormalTok{ mA }\SpecialCharTok{*}\NormalTok{ PAA }\SpecialCharTok{{-}}\NormalTok{ alpha }\SpecialCharTok{*}\NormalTok{ rA }\SpecialCharTok{*}\NormalTok{ (PA0 }\SpecialCharTok{+}\NormalTok{ PAA) }\SpecialCharTok{*}\NormalTok{ P0A }\SpecialCharTok{{-}}\NormalTok{ dA }\SpecialCharTok{*}\NormalTok{ P0A}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(dP00\_dt, dPA0\_dt, dPAA\_dt, dP0A\_dt)))}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+
+\DocumentationTok{\#\#\#\# Set simulation parameters with the \textquotesingle{}quick simulation parameters\textquotesingle{}}
+\NormalTok{pars }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\AttributeTok{rA =} \FloatTok{0.5}\NormalTok{,}
+         \AttributeTok{mA =} \FloatTok{0.1}\NormalTok{,}
+         \AttributeTok{cA =} \FloatTok{0.5}\NormalTok{,}
+         \AttributeTok{dA =} \FloatTok{0.4}\NormalTok{,}
+         \AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{)}
+
+
+\DocumentationTok{\#\#\#\# Set initial condition and time steps}
+\NormalTok{times }\OtherTok{=} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.1}\NormalTok{)}
+\NormalTok{ini }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\AttributeTok{P00 =} \FloatTok{0.75}\NormalTok{, }\AttributeTok{PA0 =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{PAA =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{P0A =} \FloatTok{0.1}\NormalTok{)}
+
+
+\DocumentationTok{\#\#\#\# Run the simulation}
+\NormalTok{pop\_size }\OtherTok{=} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ PSF, }\AttributeTok{y =}\NormalTok{ ini, }\AttributeTok{parms =}\NormalTok{ pars, }\AttributeTok{times =}\NormalTok{ times)}
+
+
+\DocumentationTok{\#\#\#\# Check if simulations reached stable point }
+\FunctionTok{tail}\NormalTok{(pop\_size)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          time       P00        PA0       PAA       P0A
+##  [996,]  99.5 0.1634825 0.09738004 0.6174124 0.1217251
+##  [997,]  99.6 0.1634825 0.09738004 0.6174124 0.1217251
+##  [998,]  99.7 0.1634825 0.09738004 0.6174124 0.1217251
+##  [999,]  99.8 0.1634825 0.09738004 0.6174124 0.1217251
+## [1000,]  99.9 0.1634825 0.09738004 0.6174124 0.1217251
+## [1001,] 100.0 0.1634825 0.09738004 0.6174124 0.1217251
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{rowSums}\NormalTok{(}\FunctionTok{tail}\NormalTok{(pop\_size[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [996,]  [997,]  [998,]  [999,] [1000,] [1001,] 
+##       1       1       1       1       1       1
+\end{verbatim}
+
+~~~~After checking the outcomes of our numerical simulation, we can visualize the system dynamics through time, using any method you prefer. The following are some examples:
+
+Visualization of the system dynamics through time using function \texttt{matplot}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Plot (matplot)}
+\FunctionTok{matplot}\NormalTok{(}\AttributeTok{x =}\NormalTok{ pop\_size[, }\DecValTok{1}\NormalTok{], }\AttributeTok{y =}\NormalTok{ pop\_size[, }\DecValTok{2}\SpecialCharTok{:}\DecValTok{5}\NormalTok{], }\AttributeTok{type =} \StringTok{"l"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+Visualization of the system dynamics through time using base R, with axis labels and given line colors.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Plot (base R)}
+\FunctionTok{plot}\NormalTok{(}\AttributeTok{x =} \FunctionTok{range}\NormalTok{(times), }\AttributeTok{y =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{type =} \StringTok{"n"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"Time"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Proportion"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(P00 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{col =} \StringTok{"black"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(PA0 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(PAA }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{col =} \StringTok{"purple"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(P0A }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topleft"}\NormalTok{, }
+       \AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"P00"}\NormalTok{, }\StringTok{"PA0"}\NormalTok{, }\StringTok{"PAA"}\NormalTok{, }\StringTok{"P0A"}\NormalTok{), }
+       \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"black"}\NormalTok{, }\StringTok{"blue"}\NormalTok{, }\StringTok{"purple"}\NormalTok{, }\StringTok{"red"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\NormalTok{, }\AttributeTok{bty =} \StringTok{"n"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-23-1.pdf}
+
+Data organization using package \texttt{tidyverse} and visualization of the system dynamics through time using package \texttt{ggplot2}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# ggplot course website version}
+\NormalTok{pop\_size }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"Patch"}\NormalTok{, }\AttributeTok{value =} \StringTok{"Proportion"}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{time) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ time, }\AttributeTok{y =}\NormalTok{ Proportion, }\AttributeTok{color =}\NormalTok{ Patch)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{linewidth =} \FloatTok{1.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-24-1.pdf}
+
+~~~~Now we see that the system would eventually be stable, we can jump through the time series and directly take the final equilibrium point (assuming the selected simulation length works for different parameter values). Our next step is to modify the target parameter related to our research question and study their resulting outcome. For example, we want to see how the final fate of this system would change under different decay rates of the conditioned microbial effect (i.e., d\_\{A\}, the transitioning from P\_\{0A\} to uncolonized and unconditioned soil P\_\{00\}). We can efficiently vary the target parameter using a for-loop to run the simulation under different decay rates.
+
+Using for loop to run the simulation under different decay rates (\(d_{A}\)).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# For{-}loop over different parameter values }
+\DocumentationTok{\#\#\# Parameter range and saving space setup}
+\NormalTok{dA\_seq }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{to =} \FloatTok{0.8}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.1}\NormalTok{)}
+\NormalTok{Data }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{, }\AttributeTok{nrow =} \FunctionTok{length}\NormalTok{(dA\_seq), }\AttributeTok{ncol =} \DecValTok{6}\NormalTok{))}
+\FunctionTok{names}\NormalTok{(Data) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"dA"}\NormalTok{, }\StringTok{"time"}\NormalTok{, }\StringTok{"P00"}\NormalTok{, }\StringTok{"PA0"}\NormalTok{, }\StringTok{"PAA"}\NormalTok{, }\StringTok{"P0A"}\NormalTok{)}
+\NormalTok{Data[, }\DecValTok{1}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ dA\_seq}
+
+\DocumentationTok{\#\#\# Use for loop to change the parameter every time}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(dA\_seq))\{}
+  
+  \CommentTok{\# Set simulation parameters}
+\NormalTok{  pars\_new }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{rA =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{mA =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{cA =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{dA =}\NormalTok{ dA\_seq[i], }\AttributeTok{alpha =} \FloatTok{0.3}\NormalTok{)}
+  
+  \CommentTok{\# Simulate}
+\NormalTok{  pop\_size\_new }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ PSF, }\AttributeTok{y =}\NormalTok{ ini, }\AttributeTok{parms =}\NormalTok{ pars\_new, }\AttributeTok{times =}\NormalTok{ times)}
+  
+  \CommentTok{\# Save results}
+\NormalTok{  Data[i, }\FunctionTok{c}\NormalTok{(}\DecValTok{2}\SpecialCharTok{:}\DecValTok{6}\NormalTok{)] }\OtherTok{\textless{}{-}}\NormalTok{ pop\_size\_new[}\FunctionTok{length}\NormalTok{(times), ]}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Visualization of the stable state under different decay rates (\(d_{A}\)) using base R, with axis labels and given line colors. Does the pattern match your intuition?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Plot resulting equilibrium against different dA  }
+\FunctionTok{plot}\NormalTok{(}\AttributeTok{x =} \FunctionTok{range}\NormalTok{(dA\_seq), }\AttributeTok{y =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1}\NormalTok{), }\AttributeTok{type =} \StringTok{"n"}\NormalTok{, }
+     \AttributeTok{xlab =} \StringTok{"Decay rate of conditioned soil"}\NormalTok{, }
+     \AttributeTok{ylab =} \StringTok{"Equilibrium proportion"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(P00 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dA, }\AttributeTok{data =}\NormalTok{ Data, }\AttributeTok{col =} \StringTok{"black"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(PA0 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dA, }\AttributeTok{data =}\NormalTok{ Data, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(PAA }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dA, }\AttributeTok{data =}\NormalTok{ Data, }\AttributeTok{col =} \StringTok{"purple"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(P0A }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dA, }\AttributeTok{data =}\NormalTok{ Data, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topleft"}\NormalTok{, }
+       \AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"P00"}\NormalTok{, }\StringTok{"PA0"}\NormalTok{, }\StringTok{"PAA"}\NormalTok{, }\StringTok{"P0A"}\NormalTok{), }
+       \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"black"}\NormalTok{, }\StringTok{"blue"}\NormalTok{, }\StringTok{"purple"}\NormalTok{, }\StringTok{"red"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\NormalTok{, }\AttributeTok{bty =} \StringTok{"n"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-26-1.pdf}
+Visualization of the stable state under different decay rates (\(d_{A}\)) using package \texttt{ggplot2}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# ggplot course website version}
+\NormalTok{Data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"Patch"}\NormalTok{, }\AttributeTok{value =} \StringTok{"Proportion"}\NormalTok{,}\SpecialCharTok{{-}}\NormalTok{dA, }\SpecialCharTok{{-}}\NormalTok{time) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ dA, }\AttributeTok{y =}\NormalTok{ Proportion, }\AttributeTok{color =}\NormalTok{ Patch)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{linewidth =} \FloatTok{1.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-27-1.pdf}
+
   \bibliography{book.bib,packages.bib}
 
 \end{document}
