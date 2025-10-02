@@ -990,6 +990,187 @@ Visualization of the stable state under different decay rates (\(d_{A}\)) using 
 
 \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-27-1.pdf}
 
+\hypertarget{week-6---harvesting-and-bifurcation}{%
+\chapter*{Week 6 - Harvesting and bifurcation}\label{week-6---harvesting-and-bifurcation}}
+\addcontentsline{toc}{chapter}{Week 6 - Harvesting and bifurcation}
+
+In this lab section, we're going to analyze the budworm population
+dynamic model from \href{https://doi.org/10.2307/3939}{\textbf{Ludwig et al.,
+1978}}.
+
+\textbf{Part 1 - Stability of the budworm model}
+
+In part 1 we're going to visualize the stability of the budworm model,
+by plotting the differential equation. We will plot the the differential
+equation with different initial, which we will see that the number and stability of equilibrium changes when parameter changes.
+
+\[
+\dfrac{dN}{dt} = rN(1 - \dfrac{N}{K}) - \dfrac{HN^2}{A^2 + N^2}
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Plotting the functional form for different parameters}
+\DocumentationTok{\#\#\#\# Parameter setting}
+\NormalTok{r }\OtherTok{\textless{}{-}} \FloatTok{0.055}\NormalTok{; K }\OtherTok{\textless{}{-}} \DecValTok{10}\NormalTok{; H }\OtherTok{\textless{}{-}} \FloatTok{0.1}\NormalTok{; A }\OtherTok{\textless{}{-}} \DecValTok{1}
+
+\DocumentationTok{\#\#\#\# Visualize the whole dN/dt with different H}
+\NormalTok{N.vec }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \DecValTok{0}\NormalTok{, }\AttributeTok{to =} \DecValTok{10}\NormalTok{, }\AttributeTok{length =} \DecValTok{500}\NormalTok{)}
+\NormalTok{H.breaks }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.05}\NormalTok{, }\FloatTok{0.12}\NormalTok{, }\FloatTok{0.20}\NormalTok{)}
+\NormalTok{dat }\OtherTok{\textless{}{-}} \FunctionTok{outer}\NormalTok{(}\AttributeTok{X =}\NormalTok{ N.vec, }\AttributeTok{Y =}\NormalTok{ H.breaks,}
+             \ControlFlowTok{function}\NormalTok{(N, H)\{r }\SpecialCharTok{*}\NormalTok{ N }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ N }\SpecialCharTok{/}\NormalTok{ K) }\SpecialCharTok{{-}}\NormalTok{ (H }\SpecialCharTok{*}\NormalTok{ N}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{/}\NormalTok{ (A}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ N}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))\})}
+\FunctionTok{matplot}\NormalTok{(}\AttributeTok{x =}\NormalTok{ N.vec, }\AttributeTok{y =}\NormalTok{ dat, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }
+        \AttributeTok{xlab =} \StringTok{"N"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"dN/dt"}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{, }\AttributeTok{las =} \DecValTok{1}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"bottomleft"}\NormalTok{, }\AttributeTok{legend =}\NormalTok{ H.breaks, }\AttributeTok{title =} \StringTok{"H"}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lty=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-28-1.pdf}
+
+Second, we're going to plot \(harvest\) rate against \(N\) with
+separate components of \(dN/Ndt\), which the blue line is
+\[
+\dfrac{HN}{A^2 + N^2}
+\]
+with different \(H\), the red line is,
+\[
+r(1 - \dfrac{N}{K})
+\]
+and the points that blue line and red line crosses are the equilibrium points.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Visualize separate components of dN/Ndt with different H}
+\NormalTok{N.vec }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \DecValTok{0}\NormalTok{, }\AttributeTok{to =} \DecValTok{10}\NormalTok{, }\AttributeTok{length =} \DecValTok{500}\NormalTok{)}
+\NormalTok{H.breaks }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\FloatTok{0.05}\NormalTok{, }\FloatTok{0.12}\NormalTok{, }\FloatTok{0.20}\NormalTok{)}
+\NormalTok{dat.growth }\OtherTok{\textless{}{-}} \FunctionTok{outer}\NormalTok{(}\AttributeTok{X =}\NormalTok{ N.vec, }\AttributeTok{Y =}\NormalTok{ H.breaks,}
+                    \ControlFlowTok{function}\NormalTok{(N, H)\{H }\SpecialCharTok{*}\NormalTok{ N }\SpecialCharTok{/}\NormalTok{ (A}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ N}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)\}) }\CommentTok{\# Note notation change}
+\FunctionTok{matplot}\NormalTok{(}\AttributeTok{x =}\NormalTok{ N.vec, }\AttributeTok{y =}\NormalTok{ dat.growth, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.10}\NormalTok{), }\AttributeTok{las =} \DecValTok{1}\NormalTok{, }
+        \AttributeTok{xlab =} \StringTok{"N"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"growth / harvest rate"}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\FunctionTok{curve}\NormalTok{(r }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ x}\SpecialCharTok{/}\NormalTok{K), }\AttributeTok{add =}\NormalTok{ T, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{) }\CommentTok{\# Just curve since its the same line, and note variable notation change}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\AttributeTok{legend =}\NormalTok{ H.breaks, }\AttributeTok{title =} \StringTok{"H"}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lty=}\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-29-1.pdf}
+
+\textbf{Part 2 - Use \texttt{rootSolve} function \texttt{gradient} and \texttt{uniroot.all}, to solve stability of budworm model}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Stability of the budworm model, as a function of its parameters}
+\DocumentationTok{\#\#\#\# Using "rootSolve" function "gradient" and "uniroot.all"}
+\DocumentationTok{\#\#\#\# Works best for simple models and those with known solutions}
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
+\FunctionTok{library}\NormalTok{(rootSolve)}
+\DocumentationTok{\#\#\#\# Parameter setting}
+\NormalTok{r }\OtherTok{\textless{}{-}} \FloatTok{0.055}\NormalTok{; K }\OtherTok{\textless{}{-}} \DecValTok{10}\NormalTok{; H }\OtherTok{\textless{}{-}} \FloatTok{0.1}\NormalTok{; A }\OtherTok{\textless{}{-}} \DecValTok{1}
+
+\DocumentationTok{\#\#\#\# Spruce budworm model for rootSolve}
+\NormalTok{Budworm }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(N, }\AttributeTok{H =} \FloatTok{0.1}\NormalTok{)\{}
+\NormalTok{  r }\SpecialCharTok{*}\NormalTok{ N }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ N }\SpecialCharTok{/}\NormalTok{ K) }\SpecialCharTok{{-}}\NormalTok{ (H }\SpecialCharTok{*}\NormalTok{ N}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{/}\NormalTok{ (A}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ N}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#\#\# Function of root stability}
+\NormalTok{Stability }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{H.value =} \FloatTok{0.1}\NormalTok{)\{}
+\NormalTok{  equilibrium }\OtherTok{\textless{}{-}} \FunctionTok{uniroot.all}\NormalTok{(}\AttributeTok{f =}\NormalTok{ Budworm, }\AttributeTok{interval =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, K), }\AttributeTok{H =}\NormalTok{ H.value) }\CommentTok{\# finds all roots}
+\NormalTok{  lambda }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\AttributeTok{mode =} \StringTok{"numeric"}\NormalTok{, }\AttributeTok{length =} \FunctionTok{length}\NormalTok{(equilibrium))}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(equilibrium))\{}
+\NormalTok{    lambda[i] }\OtherTok{\textless{}{-}} \FunctionTok{sign}\NormalTok{(}\FunctionTok{gradient}\NormalTok{(}\AttributeTok{f =}\NormalTok{ Budworm, }\AttributeTok{x =}\NormalTok{ equilibrium[i], }\AttributeTok{H =}\NormalTok{ H.value))}
+\NormalTok{  \}}
+  \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{Equilibrium =}\NormalTok{ equilibrium,}
+              \AttributeTok{Lambda =}\NormalTok{ lambda))}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#\#\# Bifurcation diagram for H}
+\NormalTok{H.vec }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FloatTok{0.001}\NormalTok{, }\FloatTok{0.3}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.0001}\NormalTok{)}
+
+\DocumentationTok{\#\# Create plotting frame}
+\FunctionTok{plot}\NormalTok{(}\DecValTok{0}\NormalTok{, }\AttributeTok{xlim =} \FunctionTok{range}\NormalTok{(H.vec), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{10}\NormalTok{), }\AttributeTok{type =} \StringTok{"n"}\NormalTok{, }\AttributeTok{las =} \DecValTok{1}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"H"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Equilibrium density, N*"}\NormalTok{, }\AttributeTok{main =} \StringTok{"Budworm model bifurcation along H"}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\AttributeTok{pch =} \DecValTok{15}\NormalTok{, }\AttributeTok{pt.cex =} \DecValTok{2}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\StringTok{"stable"}\NormalTok{, }\StringTok{"unstable"}\NormalTok{),}
+       \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"darkblue"}\NormalTok{, }\StringTok{"lightblue"}\NormalTok{))}
+
+\DocumentationTok{\#\# Calculate number of roots and stability across range of H}
+\ControlFlowTok{for}\NormalTok{(H }\ControlFlowTok{in}\NormalTok{ H.vec)\{}
+\NormalTok{  temp }\OtherTok{\textless{}{-}} \FunctionTok{Stability}\NormalTok{(}\AttributeTok{H.value =}\NormalTok{ H)}
+  \FunctionTok{points}\NormalTok{(}\AttributeTok{x =} \FunctionTok{rep}\NormalTok{(H, }\FunctionTok{length}\NormalTok{(temp}\SpecialCharTok{$}\NormalTok{Equilibrium)),}
+         \AttributeTok{y =}\NormalTok{ temp}\SpecialCharTok{$}\NormalTok{Equilibrium,}
+         \AttributeTok{pch =} \DecValTok{15}\NormalTok{, }\AttributeTok{col =} \FunctionTok{ifelse}\NormalTok{(temp}\SpecialCharTok{$}\NormalTok{Lambda }\SpecialCharTok{==} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\StringTok{"darkblue"}\NormalTok{, }\StringTok{"lightblue"}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-30-1.pdf}
+
+Take a look a this
+\href{https://www.math.ksu.edu/~albin/teaching/math340_fall2018/slides/03_bifurcations.html}{\textbf{website}} if you're interested in more details of bifurcation.
+
+\textbf{Extra materials}
+\textbf{Using \texttt{deSolve} function \texttt{ode} to brute-force stable solution}
+
+Here we're going to use \texttt{deSolve} to solve the budworm model,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Budworm model for deSolve}
+
+\FunctionTok{library}\NormalTok{(deSolve)}
+
+\NormalTok{BudwormODE }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(times, state, parms) \{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{    dN\_dt }\OtherTok{=}\NormalTok{ r }\SpecialCharTok{*}\NormalTok{ N }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ N }\SpecialCharTok{/}\NormalTok{ K) }\SpecialCharTok{{-}}\NormalTok{ (H }\SpecialCharTok{*}\NormalTok{ N}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{/}\NormalTok{ (A}\SpecialCharTok{\^{}}\DecValTok{2} \SpecialCharTok{+}\NormalTok{ N}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(dN\_dt)))}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#\# Parameters setting}
+\NormalTok{times }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5000}\NormalTok{, }\AttributeTok{by =} \DecValTok{100}\NormalTok{)}
+\NormalTok{state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N =} \DecValTok{10}\NormalTok{)}
+
+\DocumentationTok{\#\#\#\# Bifurcation diagram for H {-}{-} the forward branch}
+\DocumentationTok{\#\# Set first forward simulation and saving space}
+\NormalTok{H.vec.forward }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FloatTok{0.001}\NormalTok{, }\FloatTok{0.25}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.001}\NormalTok{)}
+\NormalTok{parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =} \FloatTok{0.055}\NormalTok{, }\AttributeTok{K =} \DecValTok{10}\NormalTok{, }\AttributeTok{H =}\NormalTok{ H.vec.forward[}\DecValTok{1}\NormalTok{], }\AttributeTok{A =} \DecValTok{1}\NormalTok{)}
+\NormalTok{temp }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ BudwormODE, }\AttributeTok{times =}\NormalTok{ times, }\AttributeTok{y =}\NormalTok{ state, }\AttributeTok{parms =}\NormalTok{ parms)}
+\NormalTok{forward }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{H =}\NormalTok{ H.vec.forward,}
+                      \AttributeTok{N =} \FunctionTok{rep}\NormalTok{(temp[}\FunctionTok{length}\NormalTok{(times), }\DecValTok{2}\NormalTok{], }\FunctionTok{length}\NormalTok{(H.vec.forward)))}
+\DocumentationTok{\#\# Run across forward vector, using previous step equilibrium as new initial state}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(H.vec.forward))\{}
+\NormalTok{  state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N =}\NormalTok{ forward[i}\DecValTok{{-}1}\NormalTok{, }\DecValTok{2}\NormalTok{] }\SpecialCharTok{+} \FloatTok{0.001}\NormalTok{) }\DocumentationTok{\#\# Remember to add small perturbation}
+\NormalTok{  parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =} \FloatTok{0.055}\NormalTok{, }\AttributeTok{K =} \DecValTok{10}\NormalTok{, }\AttributeTok{H =}\NormalTok{ forward[i, }\DecValTok{1}\NormalTok{], }\AttributeTok{A =} \DecValTok{1}\NormalTok{)}
+\NormalTok{  temp }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ BudwormODE, }\AttributeTok{times =}\NormalTok{ times, }\AttributeTok{y =}\NormalTok{ state, }\AttributeTok{parms =}\NormalTok{ parms)}
+\NormalTok{  forward[i, }\DecValTok{2}\NormalTok{] }\OtherTok{=}\NormalTok{ temp[}\FunctionTok{length}\NormalTok{(times), }\DecValTok{2}\NormalTok{]}
+\NormalTok{\}}
+\DocumentationTok{\#\#\#\# Bifurcation diagram for H {-}{-} the backward branch}
+\DocumentationTok{\#\# Set first backward simulation and saving space}
+\NormalTok{H.vec.backward }\OtherTok{\textless{}{-}} \FunctionTok{rev}\NormalTok{(H.vec.forward)}
+\NormalTok{parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =} \FloatTok{0.055}\NormalTok{, }\AttributeTok{K =} \DecValTok{10}\NormalTok{, }\AttributeTok{H =}\NormalTok{ H.vec.backward[}\DecValTok{1}\NormalTok{], }\AttributeTok{A =} \DecValTok{1}\NormalTok{)}
+\NormalTok{temp }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ BudwormODE, }\AttributeTok{times =}\NormalTok{ times, }\AttributeTok{y =}\NormalTok{ state, }\AttributeTok{parms =}\NormalTok{ parms)}
+\NormalTok{backward }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{H =}\NormalTok{ H.vec.backward,}
+                       \AttributeTok{N =} \FunctionTok{rep}\NormalTok{(temp[}\FunctionTok{length}\NormalTok{(times), }\DecValTok{2}\NormalTok{], }\FunctionTok{length}\NormalTok{(H.vec.backward)))}
+\DocumentationTok{\#\# Run across backward vector, using previous step equilibrium as new initial state}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(H.vec.backward))\{}
+\NormalTok{  state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N =}\NormalTok{ backward[i}\DecValTok{{-}1}\NormalTok{, }\DecValTok{2}\NormalTok{] }\SpecialCharTok{+} \FloatTok{0.001}\NormalTok{)  }\DocumentationTok{\#\# Remember to add small perturbation}
+\NormalTok{  parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =} \FloatTok{0.055}\NormalTok{, }\AttributeTok{K =} \DecValTok{10}\NormalTok{, }\AttributeTok{H =}\NormalTok{ backward[i, }\DecValTok{1}\NormalTok{], }\AttributeTok{A =} \DecValTok{1}\NormalTok{)}
+\NormalTok{  temp }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ BudwormODE, }\AttributeTok{times =}\NormalTok{ times, }\AttributeTok{y =}\NormalTok{ state, }\AttributeTok{parms =}\NormalTok{ parms)}
+\NormalTok{  backward[i, }\DecValTok{2}\NormalTok{] }\OtherTok{=}\NormalTok{ temp[}\FunctionTok{length}\NormalTok{(times), }\DecValTok{2}\NormalTok{]}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#\#\# Plot both forward and backward branch}
+\FunctionTok{plot}\NormalTok{(forward[, }\DecValTok{1}\NormalTok{], forward[, }\DecValTok{2}\NormalTok{],}
+     \AttributeTok{xlim =} \FunctionTok{range}\NormalTok{(H.vec.forward), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{10}\NormalTok{), }\AttributeTok{las =} \DecValTok{1}\NormalTok{, }\AttributeTok{pch =} \DecValTok{1}\NormalTok{, }\AttributeTok{col =} \StringTok{"darkblue"}\NormalTok{, }\AttributeTok{cex =} \FloatTok{1.6}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"H"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Equilibrium density, N*"}\NormalTok{, }\AttributeTok{main =} \StringTok{"Budworm model bifurcation along H"}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(backward[, }\DecValTok{1}\NormalTok{], backward[, }\DecValTok{2}\NormalTok{], }\AttributeTok{pch =} \DecValTok{16}\NormalTok{, }\AttributeTok{col =} \StringTok{"lightblue"}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\AttributeTok{pch =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{16}\NormalTok{), }\AttributeTok{pt.cex =} \FloatTok{1.5}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\StringTok{"forward"}\NormalTok{, }\StringTok{"backward"}\NormalTok{),}
+       \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"darkblue"}\NormalTok{, }\StringTok{"lightblue"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-31-1.pdf}
+
   \bibliography{book.bib,packages.bib}
 
 \end{document}
