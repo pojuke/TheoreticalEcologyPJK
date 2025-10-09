@@ -1171,6 +1171,205 @@ Here we're going to use \texttt{deSolve} to solve the budworm model,
 
 \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-31-1.pdf}
 
+\hypertarget{week-7---age-structure-population-model}{%
+\chapter*{Week 7 - Age-structure population model}\label{week-7---age-structure-population-model}}
+\addcontentsline{toc}{chapter}{Week 7 - Age-structure population model}
+
+In this lab section, we will analyze a Leslie matrix using \texttt{for} loops and matrix algebra, compare the results with those obtained via eigen-analysis, and visualize the population dynamics and age distribution.
+
+\textbf{Part 1 - Visualizing stable age distribution}
+
+For any diagonalizable n-by-n matrix \(M\) with only one dominant eigenvalue, and for any n-by-1 vector \(v\), \(M^tv\) will shift to the same direction with the eigenvector of \(M\) corresponding to the dominant eigenvalue when \(t\) is large. Here, we visualize this fact numerically.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\NormalTok{Time }\OtherTok{=} \DecValTok{6}
+\NormalTok{A }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\DecValTok{0}\NormalTok{), }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, }\AttributeTok{byrow=}\NormalTok{T)}
+\NormalTok{N }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{, Time, }\DecValTok{2}\NormalTok{)}
+\NormalTok{N[}\DecValTok{1}\NormalTok{, ] }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{Time)\{}
+\NormalTok{  N[i, ] }\OtherTok{=}\NormalTok{ A }\SpecialCharTok{\%*\%}\NormalTok{ N[i}\DecValTok{{-}1}\NormalTok{, ]}
+\NormalTok{\}}
+\NormalTok{Data }\OtherTok{=} \FunctionTok{as.data.frame}\NormalTok{(N)}
+\NormalTok{Data}\SpecialCharTok{$}\NormalTok{Time }\OtherTok{=} \FunctionTok{rep}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{Time)}
+\NormalTok{Data}\SpecialCharTok{$}\NormalTok{V1.start }\OtherTok{=} \DecValTok{0}
+\NormalTok{Data}\SpecialCharTok{$}\NormalTok{V2.start }\OtherTok{=} \DecValTok{0}
+
+\FunctionTok{ggplot}\NormalTok{(Data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{V1, }\AttributeTok{y=}\NormalTok{V2, }\AttributeTok{col=}\FunctionTok{as.factor}\NormalTok{(Time))) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_segment}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{V1.start, }\AttributeTok{y=}\NormalTok{V2.start, }\AttributeTok{xend=}\NormalTok{V1, }\AttributeTok{yend=}\NormalTok{V2), }
+               \AttributeTok{arrow=}\FunctionTok{arrow}\NormalTok{(}\AttributeTok{type=}\StringTok{"closed"}\NormalTok{, }\AttributeTok{length=}\FunctionTok{unit}\NormalTok{(}\FloatTok{0.4}\NormalTok{,}\StringTok{"cm"}\NormalTok{))) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{V1}\FloatTok{+0.1}\NormalTok{, }\AttributeTok{y=}\NormalTok{V2}\FloatTok{+0.1}\NormalTok{, }\AttributeTok{label=}\NormalTok{Time)) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\StringTok{"Time"}\NormalTok{, }\AttributeTok{type=}\StringTok{"qual"}\NormalTok{, }\AttributeTok{palette=}\DecValTok{2}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x=}\StringTok{"Age 1"}\NormalTok{, }\AttributeTok{y=}\StringTok{"Age 2"}\NormalTok{) }\SpecialCharTok{+}  
+  \FunctionTok{theme\_classic}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-32-1.pdf}
+
+\textbf{Part 2 - Analyzing Leslie matrix}
+
+Consider an age-strutured population model
+\[
+n_{t} = L^tn_0
+\]
+where \(L\) is a Leslie matrix and \(n_t = (n_{1,t}, n_{2,t}, n_{3,t})\) is the population sizes with three different ages in time \(t\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Leslie matrix and initial age classes}
+\NormalTok{leslie }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{data =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{5}\NormalTok{,}
+                          \FloatTok{0.5}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{,}
+                          \DecValTok{0}\NormalTok{, }\FloatTok{0.3}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+                      \AttributeTok{nrow =} \DecValTok{3}\NormalTok{,}
+                      \AttributeTok{ncol =} \DecValTok{3}\NormalTok{,}
+                      \AttributeTok{byrow =}\NormalTok{ T)}
+
+\NormalTok{N0 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+
+\DocumentationTok{\#\#\# for loop and matrix algebra}
+\NormalTok{time }\OtherTok{\textless{}{-}} \DecValTok{50}
+\NormalTok{pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{Age1 =} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, time),}
+                       \AttributeTok{Age2 =} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, time),}
+                       \AttributeTok{Age3 =} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, time))}
+\NormalTok{pop\_size[}\DecValTok{1}\NormalTok{, ] }\OtherTok{\textless{}{-}}\NormalTok{ N0}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{2}\SpecialCharTok{:}\NormalTok{time) \{}
+  \CommentTok{\# Matrix multiplication}
+\NormalTok{  pop\_size[i, ] }\OtherTok{\textless{}{-}}\NormalTok{ leslie }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(pop\_size[i}\DecValTok{{-}1}\NormalTok{, ])}
+\NormalTok{\}}
+
+\CommentTok{\# Total abundance}
+\NormalTok{pop\_size}\SpecialCharTok{$}\NormalTok{N }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(pop\_size)}
+
+\FunctionTok{head}\NormalTok{(pop\_size)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Age1  Age2  Age3      N
+## 1 10.000 1.000 1.000 12.000
+## 2  6.000 5.000 0.300 11.300
+## 3  6.500 3.000 1.500 11.000
+## 4 10.500 3.250 0.900 14.650
+## 5  7.750 5.250 0.975 13.975
+## 6 10.125 3.875 1.575 15.575
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,time), }\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{265}\NormalTok{), }\AttributeTok{type =} \StringTok{"n"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"time"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"pop\_size"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{time , pop\_size}\SpecialCharTok{$}\NormalTok{Age1, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{time , pop\_size}\SpecialCharTok{$}\NormalTok{Age2, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\NormalTok{time , pop\_size}\SpecialCharTok{$}\NormalTok{Age3, }\AttributeTok{col =} \StringTok{"green"}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topleft"}\NormalTok{,}
+       \AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"Age1"}\NormalTok{, }\StringTok{"Age2"}\NormalTok{, }\StringTok{"Age3"}\NormalTok{),}
+       \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"red"}\NormalTok{, }\StringTok{"blue"}\NormalTok{, }\StringTok{"green"}\NormalTok{),}
+       \AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-33-1.pdf}
+
+Plot in log-scale:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{matplot}\NormalTok{(}\AttributeTok{x =} \DecValTok{1}\SpecialCharTok{:}\NormalTok{time, }\AttributeTok{y =} \FunctionTok{log}\NormalTok{(pop\_size[, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{]), }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{1}\NormalTok{,}
+        \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"red"}\NormalTok{, }\StringTok{"green"}\NormalTok{, }\StringTok{"blue"}\NormalTok{, }\StringTok{"black"}\NormalTok{),}
+        \AttributeTok{xlab =} \StringTok{"Time"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"log(population size)"}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"bottomright"}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\StringTok{"Age 1"}\NormalTok{, }\StringTok{"Age 2"}\NormalTok{, }\StringTok{"Age 3"}\NormalTok{, }\StringTok{"Total"}\NormalTok{), }\AttributeTok{bty =} \StringTok{"n"}\NormalTok{,}
+       \AttributeTok{lty =} \DecValTok{1}\NormalTok{ , }\AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"red"}\NormalTok{, }\StringTok{"green"}\NormalTok{, }\StringTok{"blue"}\NormalTok{, }\StringTok{"black"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-34-1.pdf}
+
+By the derivation in the class, the asymptotic population sizes can be approximated by
+\[
+n_t \approx c\cdot \lambda_1^t\cdot u_1
+\]
+where \(c\) is a constant, \(\lambda_1\) is the dominant eigenvalue and \(u_1\) is the corresponding eigenvector. Hence, with the long-term dynamics, the population grows at a rate \(\lambda_1\) and with the age distribution \(u_1\). Here, we check this fact numerically.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Asymptotic growth rate and stable age distribution}
+
+\NormalTok{asymptotic\_growth }\OtherTok{\textless{}{-}}\NormalTok{ pop\_size}\SpecialCharTok{$}\NormalTok{N[time]}\SpecialCharTok{/}\NormalTok{pop\_size}\SpecialCharTok{$}\NormalTok{N[time}\DecValTok{{-}1}\NormalTok{]}
+\NormalTok{asymptotic\_growth}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.089991
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{age\_distribution }\OtherTok{\textless{}{-}}\NormalTok{ pop\_size[time, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(pop\_size[time, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{])}
+\NormalTok{age\_distribution}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         Age1      Age2       Age3
+## 50 0.6309254 0.2894175 0.07965708
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Eigen{-}analysis of the Leslie matrix}
+\NormalTok{EIGEN }\OtherTok{\textless{}{-}} \FunctionTok{eigen}\NormalTok{(leslie)}
+\NormalTok{EIGEN}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## eigen() decomposition
+## $values
+## [1]  1.0899905+0.0000000i -0.5449953+0.6253475i -0.5449953-0.6253475i
+## 
+## $vectors
+##              [,1]                   [,2]                   [,3]
+## [1,] 0.9030054+0i -0.84189720+0.0000000i -0.84189720+0.0000000i
+## [2,] 0.4142263+0i  0.33341356+0.3825709i  0.33341356-0.3825709i
+## [3,] 0.1140082+0i  0.02508328-0.1818099i  0.02508328+0.1818099i
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{abs}\NormalTok{(EIGEN}\SpecialCharTok{$}\NormalTok{values[}\DecValTok{1}\NormalTok{]) }\CommentTok{\# dominant eigenvalue}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1.089991
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{as.numeric}\NormalTok{(EIGEN}\SpecialCharTok{$}\NormalTok{vectors[, }\DecValTok{1}\NormalTok{] }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(EIGEN}\SpecialCharTok{$}\NormalTok{vectors[, }\DecValTok{1}\NormalTok{])) }\CommentTok{\# corresponding eigenvector}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.63092527 0.28941777 0.07965696
+\end{verbatim}
+
+The asymptotic growth rate and stable age distribution obtained from for loops and eigen-analysis are similar.
+
+\textbf{Part 3 - In-class exercise: Analyzing population matrix of common teasel}
+
+\href{https://en.wikipedia.org/wiki/Dipsacus_fullonum}{Common teasel (\emph{Dipsacus sylvestris})} is a herbaceous plant commonly found in abandoned fields and meadows in North America. It has a complex life cycle consisting of various stages. The seeds may lie dormant for one or two years. Seeds that germinate form small rosettes, which will gradually transit into medium and eventually large rosettes. These rosettes (all three sizes) may remain in the same stage for years before entering the next stage. After undergoing vernalization, large (and a few medium) rosettes will form stalks and flower in the upcoming summer, set seeds once, and die. Occasionally, the flowering plants will produce seeds that directly germinate into small/medium/large rosettes without entering dormancy.
+
+Here is a transition diagram for the teasel. Please convert this diagram into a stage-based transition matrix (Lefkovitch matrix) and derive the asymptotic growth rate \(\lambda\) in R.
+
+\textbf{Part 4 - COM(P)ADRE: A global database of population matrices}
+
+\href{https://compadre-db.org/ExploreDatabase}{COM(P)ADRE} is an online repository containing matrix population models on hundreds of plants, animals, algae, fungi, bacteria, and viruses around the world, as well as their associated metadata. Take a look at the website: You will be exploring the population dynamics of a species (of your choice) in your assignment!
+
   \bibliography{book.bib,packages.bib}
 
 \end{document}
