@@ -1068,7 +1068,7 @@ leslie <- matrix(data = c(0, 1, 5,
                       ncol = 3,
                       byrow = T)
 
-N0 <- c(10, 1, 1)
+N0 <- c(10, 0, 0)
 
 ### for loop and matrix algebra
 time <- 50
@@ -1142,6 +1142,24 @@ Here is a transition diagram for the teasel. Please convert this diagram into a 
 
 <br>
 
+```{r}
+### Leslie matrix for Teasel
+Teasel <- matrix(data = c(0,      0,      0,      0,      0,      322.38,
+                          0.966,  0,      0,      0,      0,      0,
+                          0.013,  0.010,  0.125,  0,      0,      3.448,
+                          0.007,  0,      0.125,  0.238,  0,      30.17,
+                          0.008,  0,      0,      0.245,  0.167,  0.862,
+                          0,      0,      0,      0.023,  0.75,   0),
+                 nrow = 6,
+                 ncol = 6,
+                 byrow = T)
+### Use eigen() function
+EIGEN <- eigen(Teasel)
+### Dominant eigenvalue
+abs(EIGEN$values[1])
+### corresponding eigenvector
+round(as.numeric(EIGEN$vectors[, 1] / sum(EIGEN$vectors[, 1])), 3)
+```
 
 **Part 4 - COM(P)ADRE: A global database of population matrices**
 
@@ -1149,5 +1167,5 @@ Here is a transition diagram for the teasel. Please convert this diagram into a 
 
 <br>
 
-<!--chapter:end:07_Week_7_age.Rmd-->
+<!--chapter:end:07_Week_7_age_afterclass.Rmd-->
 

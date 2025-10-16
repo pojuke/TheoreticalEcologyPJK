@@ -1227,7 +1227,7 @@ where \(L\) is a Leslie matrix and \(n_t = (n_{1,t}, n_{2,t}, n_{3,t})\) is the 
                       \AttributeTok{ncol =} \DecValTok{3}\NormalTok{,}
                       \AttributeTok{byrow =}\NormalTok{ T)}
 
-\NormalTok{N0 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{N0 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)}
 
 \DocumentationTok{\#\#\# for loop and matrix algebra}
 \NormalTok{time }\OtherTok{\textless{}{-}} \DecValTok{50}
@@ -1249,13 +1249,13 @@ where \(L\) is a Leslie matrix and \(n_t = (n_{1,t}, n_{2,t}, n_{3,t})\) is the 
 \end{Shaded}
 
 \begin{verbatim}
-##     Age1  Age2  Age3      N
-## 1 10.000 1.000 1.000 12.000
-## 2  6.000 5.000 0.300 11.300
-## 3  6.500 3.000 1.500 11.000
-## 4 10.500 3.250 0.900 14.650
-## 5  7.750 5.250 0.975 13.975
-## 6 10.125 3.875 1.575 15.575
+##   Age1 Age2  Age3      N
+## 1 10.0 0.00 0.000 10.000
+## 2  0.0 5.00 0.000  5.000
+## 3  5.0 0.00 1.500  6.500
+## 4  7.5 2.50 0.000 10.000
+## 5  2.5 3.75 0.750  7.000
+## 6  7.5 1.25 1.125  9.875
 \end{verbatim}
 
 \begin{Shaded}
@@ -1303,7 +1303,7 @@ where \(c\) is a constant, \(\lambda_1\) is the dominant eigenvalue and \(u_1\) 
 \end{Shaded}
 
 \begin{verbatim}
-## [1] 1.089991
+## [1] 1.089992
 \end{verbatim}
 
 \begin{Shaded}
@@ -1315,7 +1315,7 @@ where \(c\) is a constant, \(\lambda_1\) is the dominant eigenvalue and \(u_1\) 
 
 \begin{verbatim}
 ##         Age1      Age2       Age3
-## 50 0.6309254 0.2894175 0.07965708
+## 50 0.6309262 0.2894167 0.07965713
 \end{verbatim}
 
 \begin{Shaded}
@@ -1365,6 +1365,40 @@ The asymptotic growth rate and stable age distribution obtained from for loops a
 \href{https://en.wikipedia.org/wiki/Dipsacus_fullonum}{Common teasel (\emph{Dipsacus sylvestris})} is a herbaceous plant commonly found in abandoned fields and meadows in North America. It has a complex life cycle consisting of various stages. The seeds may lie dormant for one or two years. Seeds that germinate form small rosettes, which will gradually transit into medium and eventually large rosettes. These rosettes (all three sizes) may remain in the same stage for years before entering the next stage. After undergoing vernalization, large (and a few medium) rosettes will form stalks and flower in the upcoming summer, set seeds once, and die. Occasionally, the flowering plants will produce seeds that directly germinate into small/medium/large rosettes without entering dormancy.
 
 Here is a transition diagram for the teasel. Please convert this diagram into a stage-based transition matrix (Lefkovitch matrix) and derive the asymptotic growth rate \(\lambda\) in R.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Leslie matrix for Teasel}
+\NormalTok{Teasel }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\AttributeTok{data =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,      }\DecValTok{0}\NormalTok{,      }\DecValTok{0}\NormalTok{,      }\DecValTok{0}\NormalTok{,      }\DecValTok{0}\NormalTok{,      }\FloatTok{322.38}\NormalTok{,}
+                          \FloatTok{0.966}\NormalTok{,  }\DecValTok{0}\NormalTok{,      }\DecValTok{0}\NormalTok{,      }\DecValTok{0}\NormalTok{,      }\DecValTok{0}\NormalTok{,      }\DecValTok{0}\NormalTok{,}
+                          \FloatTok{0.013}\NormalTok{,  }\FloatTok{0.010}\NormalTok{,  }\FloatTok{0.125}\NormalTok{,  }\DecValTok{0}\NormalTok{,      }\DecValTok{0}\NormalTok{,      }\FloatTok{3.448}\NormalTok{,}
+                          \FloatTok{0.007}\NormalTok{,  }\DecValTok{0}\NormalTok{,      }\FloatTok{0.125}\NormalTok{,  }\FloatTok{0.238}\NormalTok{,  }\DecValTok{0}\NormalTok{,      }\FloatTok{30.17}\NormalTok{,}
+                          \FloatTok{0.008}\NormalTok{,  }\DecValTok{0}\NormalTok{,      }\DecValTok{0}\NormalTok{,      }\FloatTok{0.245}\NormalTok{,  }\FloatTok{0.167}\NormalTok{,  }\FloatTok{0.862}\NormalTok{,}
+                          \DecValTok{0}\NormalTok{,      }\DecValTok{0}\NormalTok{,      }\DecValTok{0}\NormalTok{,      }\FloatTok{0.023}\NormalTok{,  }\FloatTok{0.75}\NormalTok{,   }\DecValTok{0}\NormalTok{),}
+                 \AttributeTok{nrow =} \DecValTok{6}\NormalTok{,}
+                 \AttributeTok{ncol =} \DecValTok{6}\NormalTok{,}
+                 \AttributeTok{byrow =}\NormalTok{ T)}
+\DocumentationTok{\#\#\# Use eigen() function}
+\NormalTok{EIGEN }\OtherTok{\textless{}{-}} \FunctionTok{eigen}\NormalTok{(Teasel)}
+\DocumentationTok{\#\#\# Dominant eigenvalue}
+\FunctionTok{abs}\NormalTok{(EIGEN}\SpecialCharTok{$}\NormalTok{values[}\DecValTok{1}\NormalTok{])}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2.32188
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# corresponding eigenvector}
+\FunctionTok{round}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(EIGEN}\SpecialCharTok{$}\NormalTok{vectors[, }\DecValTok{1}\NormalTok{] }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(EIGEN}\SpecialCharTok{$}\NormalTok{vectors[, }\DecValTok{1}\NormalTok{])), }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.637 0.265 0.012 0.069 0.012 0.005
+\end{verbatim}
 
 \textbf{Part 4 - COM(P)ADRE: A global database of population matrices}
 
