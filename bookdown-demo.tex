@@ -1404,6 +1404,250 @@ Here is a transition diagram for the teasel. Please convert this diagram into a 
 
 \href{https://compadre-db.org/ExploreDatabase}{COM(P)ADRE} is an online repository containing matrix population models on hundreds of plants, animals, algae, fungi, bacteria, and viruses around the world, as well as their associated metadata. Take a look at the website: You will be exploring the population dynamics of a species (of your choice) in your assignment!
 
+\hypertarget{week-8---lotka-volterra-competition-model---population-dynamics}{%
+\chapter*{Week 8 - Lotka-Volterra competition model - Population dynamics}\label{week-8---lotka-volterra-competition-model---population-dynamics}}
+\addcontentsline{toc}{chapter}{Week 8 - Lotka-Volterra competition model - Population dynamics}
+
+In this lab, we are going to analyze the two-species Lotka-Volterra competition model numerically and visualize the population dynamics under different parameter settings.
+
+\textbf{Part 1 - Visualize the Population Dynamics with Time Series}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(deSolve)}
+
+\NormalTok{LV\_model }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.4}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.2}\NormalTok{, }
+                     \AttributeTok{a11 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a21 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{400}\NormalTok{, }\AttributeTok{a22 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a12 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{300}\NormalTok{, }
+                     \AttributeTok{N1\_0 =} \DecValTok{10}\NormalTok{, }\AttributeTok{N2\_0 =} \DecValTok{10}\NormalTok{) \{}
+
+  \DocumentationTok{\#\#\# Model specification}
+\NormalTok{  LV }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(times, state, parms) \{}
+    \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{      dN1\_dt }\OtherTok{=}\NormalTok{ N1 }\SpecialCharTok{*}\NormalTok{ (r1 }\SpecialCharTok{{-}}\NormalTok{ a11}\SpecialCharTok{*}\NormalTok{N1 }\SpecialCharTok{{-}}\NormalTok{ a12}\SpecialCharTok{*}\NormalTok{N2)}
+\NormalTok{      dN2\_dt }\OtherTok{=}\NormalTok{ N2 }\SpecialCharTok{*}\NormalTok{ (r2 }\SpecialCharTok{{-}}\NormalTok{ a22}\SpecialCharTok{*}\NormalTok{N2 }\SpecialCharTok{{-}}\NormalTok{ a21}\SpecialCharTok{*}\NormalTok{N1)}
+      \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(dN1\_dt, dN2\_dt)))}
+\NormalTok{    \})}
+\NormalTok{  \}}
+
+  \DocumentationTok{\#\#\# Model parameters}
+\NormalTok{  times }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.1}\NormalTok{)}
+\NormalTok{  state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N1 =}\NormalTok{ N1\_0, }\AttributeTok{N2 =}\NormalTok{ N2\_0)}
+\NormalTok{  parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r1 =}\NormalTok{ r1, }\AttributeTok{r2 =}\NormalTok{ r2, }\AttributeTok{a11 =}\NormalTok{ a11, }\AttributeTok{a21 =}\NormalTok{ a21, }\AttributeTok{a22 =}\NormalTok{ a22, }\AttributeTok{a12 =}\NormalTok{ a12)}
+
+  \DocumentationTok{\#\#\# Model application}
+\NormalTok{  pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ LV, }\AttributeTok{times =}\NormalTok{ times, }\AttributeTok{y =}\NormalTok{ state, }\AttributeTok{parms =}\NormalTok{ parms)}
+
+  \DocumentationTok{\#\#\# Visualize the population dynamics}
+  \FunctionTok{par}\NormalTok{(}\AttributeTok{mar =} \FunctionTok{c}\NormalTok{(}\FloatTok{5.1}\NormalTok{, }\FloatTok{4.1}\NormalTok{, }\FloatTok{4.1}\NormalTok{, }\FloatTok{8.1}\NormalTok{), }\AttributeTok{xpd =} \ConstantTok{TRUE}\NormalTok{)}
+  \FunctionTok{plot}\NormalTok{(N1 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ pop\_size,}
+       \AttributeTok{col =} \StringTok{"lightblue"}\NormalTok{, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{3}\NormalTok{,}
+       \AttributeTok{las =} \DecValTok{1}\NormalTok{,}
+       \AttributeTok{xlim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{max}\NormalTok{(times)), }\AttributeTok{ylim =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{max}\NormalTok{(pop\_size[,}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{])),}
+       \AttributeTok{xlab =} \StringTok{"Time"}\NormalTok{,}
+       \AttributeTok{ylab =} \StringTok{"Population size"}\NormalTok{,}
+       \AttributeTok{main =} \StringTok{"Lotka{-}Volterra competition"}\NormalTok{)}
+  \FunctionTok{lines}\NormalTok{(N2 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{col =} \StringTok{"pink"}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{3}\NormalTok{)}
+  \FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{,}
+       \FunctionTok{c}\NormalTok{(}\StringTok{"N1"}\NormalTok{, }\StringTok{"N2"}\NormalTok{),}
+       \AttributeTok{lty =} \DecValTok{1}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{3}\NormalTok{,}
+       \AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"lightblue"}\NormalTok{, }\StringTok{"pink"}\NormalTok{),}
+       \AttributeTok{bty =} \StringTok{"n"}\NormalTok{,}
+       \AttributeTok{inset =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\FloatTok{0.2}\NormalTok{,}\DecValTok{0}\NormalTok{),}
+       \AttributeTok{title =} \StringTok{"Species"}
+\NormalTok{       )}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Plot the population dynamics under different parameter sets.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \DocumentationTok{\#\#\# Different parameter settings}
+  \DocumentationTok{\#\# N1\_0 = 200 and N2\_0 = 5}
+  \FunctionTok{LV\_model}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.2}\NormalTok{, }
+           \AttributeTok{a11 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a21 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a22 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a12 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }
+           \AttributeTok{N1\_0 =} \DecValTok{200}\NormalTok{, }\AttributeTok{N2\_0 =} \DecValTok{5}\NormalTok{)  }\CommentTok{\# N1 wins}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-38-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \DocumentationTok{\#\# N1\_0 = 5 and N2\_0 = 200}
+  \FunctionTok{LV\_model}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.2}\NormalTok{, }
+           \AttributeTok{a11 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a21 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a22 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a12 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }
+           \AttributeTok{N1\_0 =} \DecValTok{10}\NormalTok{, }\AttributeTok{N2\_0 =} \DecValTok{200}\NormalTok{)  }\CommentTok{\# N1 wins}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-38-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \DocumentationTok{\#\# N1\_0 = 200 and N2\_0 = 5}
+  \FunctionTok{LV\_model}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.2}\NormalTok{, }
+           \AttributeTok{a11 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a21 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a22 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a12 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }
+           \AttributeTok{N1\_0 =} \DecValTok{200}\NormalTok{, }\AttributeTok{N2\_0 =} \DecValTok{5}\NormalTok{)  }\CommentTok{\# N2 wins}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-38-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \DocumentationTok{\#\# N1\_0 = 5 and N2\_0 = 200}
+  \FunctionTok{LV\_model}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.2}\NormalTok{, }
+           \AttributeTok{a11 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a21 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a22 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a12 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }
+           \AttributeTok{N1\_0 =} \DecValTok{5}\NormalTok{, }\AttributeTok{N2\_0 =} \DecValTok{200}\NormalTok{)  }\CommentTok{\# N2 wins}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-38-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \DocumentationTok{\#\# N1\_0 = 200 and N2\_0 = 5}
+  \FunctionTok{LV\_model}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.2}\NormalTok{, }
+           \AttributeTok{a11 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a21 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a22 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a12 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{300}\NormalTok{, }
+           \AttributeTok{N1\_0 =} \DecValTok{200}\NormalTok{, }\AttributeTok{N2\_0 =} \DecValTok{5}\NormalTok{)  }\CommentTok{\# stable coexistence}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-38-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \DocumentationTok{\#\# N1\_0 = 5 and N2\_0 = 200}
+  \FunctionTok{LV\_model}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{a11 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a21 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a22 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a12 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{300}\NormalTok{, }\AttributeTok{N1\_0 =} \DecValTok{5}\NormalTok{, }\AttributeTok{N2\_0 =} \DecValTok{200}\NormalTok{)  }\CommentTok{\# stable coexistence}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-38-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \DocumentationTok{\#\# N1\_0 = 200 and N2\_0 = 150}
+  \FunctionTok{LV\_model}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.2}\NormalTok{, }
+           \AttributeTok{a11 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a21 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a22 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a12 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }
+           \AttributeTok{N1\_0 =} \DecValTok{200}\NormalTok{, }\AttributeTok{N2\_0 =} \DecValTok{150}\NormalTok{)  }\CommentTok{\# priority effect (N1 wins)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-38-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \DocumentationTok{\#\# N1\_0 = 150 and N2\_0 = 200}
+  \FunctionTok{LV\_model}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.2}\NormalTok{, }
+           \AttributeTok{a11 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a21 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a22 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a12 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }
+           \AttributeTok{N1\_0 =} \DecValTok{150}\NormalTok{, }\AttributeTok{N2\_0 =} \DecValTok{200}\NormalTok{)  }\CommentTok{\# priority effect (N2 wins)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-38-8.pdf}
+
+\textbf{Part 2 - Visualize the Population Dynamics with State Space}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# phase diagram}
+\NormalTok{phase\_plane }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(r1, r2, a11, a21, a22, a12, title, t)\{}
+    \DocumentationTok{\#\#\# Vectors}
+\NormalTok{  LV }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(times, state, parms) \{}
+    \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{      dN1\_dt }\OtherTok{=}\NormalTok{ N1 }\SpecialCharTok{*}\NormalTok{ (r1 }\SpecialCharTok{{-}}\NormalTok{ a11}\SpecialCharTok{*}\NormalTok{N1 }\SpecialCharTok{{-}}\NormalTok{ a12}\SpecialCharTok{*}\NormalTok{N2)}
+\NormalTok{      dN2\_dt }\OtherTok{=}\NormalTok{ N2 }\SpecialCharTok{*}\NormalTok{ (r2 }\SpecialCharTok{{-}}\NormalTok{ a22}\SpecialCharTok{*}\NormalTok{N2 }\SpecialCharTok{{-}}\NormalTok{ a21}\SpecialCharTok{*}\NormalTok{N1)}
+      \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(dN1\_dt, dN2\_dt)))}
+\NormalTok{    \})}
+\NormalTok{  \}}
+
+\NormalTok{  times }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, t)}
+\NormalTok{  parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r1 =}\NormalTok{ r1, }\AttributeTok{r2 =}\NormalTok{ r2, }\AttributeTok{a11 =}\NormalTok{ a11, }\AttributeTok{a21 =}\NormalTok{ a21, }\AttributeTok{a22 =}\NormalTok{ a22, }\AttributeTok{a12 =}\NormalTok{ a12)}
+
+\NormalTok{  x\_inter}\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{c}\NormalTok{(r1}\SpecialCharTok{/}\NormalTok{a11, r2}\SpecialCharTok{/}\NormalTok{a21))}
+\NormalTok{  y\_inter }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{c}\NormalTok{(r2}\SpecialCharTok{/}\NormalTok{a22, r1}\SpecialCharTok{/}\NormalTok{a12))}
+
+  \CommentTok{\# create position of arrows}
+\NormalTok{  vector\_grid }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{, x\_inter, }\AttributeTok{length.out =} \DecValTok{10}\NormalTok{),}
+                             \FunctionTok{seq}\NormalTok{(}\DecValTok{5}\NormalTok{, y\_inter, }\AttributeTok{length.out =} \DecValTok{10}\NormalTok{))}
+
+\NormalTok{  vector\_data }\OtherTok{\textless{}{-}}\NormalTok{ vector\_grid }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{pmap}\NormalTok{(., }\ControlFlowTok{function}\NormalTok{(Var1, Var2)\{}
+\NormalTok{      state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N1 =}\NormalTok{ Var1, }\AttributeTok{N2 =}\NormalTok{ Var2)}
+\NormalTok{      pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ LV, }\AttributeTok{times =}\NormalTok{ times, }\AttributeTok{y =}\NormalTok{ state, }\AttributeTok{parms =}\NormalTok{ parms)}
+\NormalTok{      pop\_size[}\DecValTok{2}\NormalTok{, }\DecValTok{2}\SpecialCharTok{:}\DecValTok{3}\NormalTok{]}
+\NormalTok{    \}) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{bind\_rows}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{rename}\NormalTok{(}\AttributeTok{xend =}\NormalTok{ N1, }\AttributeTok{yend =}\NormalTok{ N2) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{bind\_cols}\NormalTok{(vector\_grid) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{rename}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Var1, }\AttributeTok{y =}\NormalTok{ Var2)}
+
+    \DocumentationTok{\#\#\# Phase plane}
+    \FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+}
+      \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{slope =} \SpecialCharTok{{-}}\NormalTok{a11}\SpecialCharTok{/}\NormalTok{a12, }\AttributeTok{intercept =}\NormalTok{ r1}\SpecialCharTok{/}\NormalTok{a12, }
+                  \AttributeTok{color =} \StringTok{"\#E41A1C"}\NormalTok{, }\AttributeTok{size =} \FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+      \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{slope =} \SpecialCharTok{{-}}\NormalTok{a21}\SpecialCharTok{/}\NormalTok{a22, }\AttributeTok{intercept =}\NormalTok{ r2}\SpecialCharTok{/}\NormalTok{a22, }
+                  \AttributeTok{color =} \StringTok{"\#377EB8"}\NormalTok{, }\AttributeTok{size =} \FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+      \FunctionTok{geom\_segment}\NormalTok{(}\AttributeTok{data =}\NormalTok{ vector\_data,}
+                   \FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y, }\AttributeTok{xend =}\NormalTok{ xend, }\AttributeTok{yend =}\NormalTok{ yend),}
+                   \AttributeTok{arrow =} \FunctionTok{arrow}\NormalTok{(}\AttributeTok{length =} \FunctionTok{unit}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\StringTok{"cm"}\NormalTok{))) }\SpecialCharTok{+}    
+      \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{name =} \StringTok{"N1"}\NormalTok{, }\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, x\_inter), }\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+      \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{name =} \StringTok{"N2"}\NormalTok{, }\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, y\_inter), }\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+      \FunctionTok{theme\_bw}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{13}\NormalTok{) }\SpecialCharTok{+}
+      \FunctionTok{theme}\NormalTok{(}\AttributeTok{panel.grid =} \FunctionTok{element\_blank}\NormalTok{(),}
+            \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{),}
+            \AttributeTok{aspect.ratio =} \DecValTok{1}\NormalTok{) }\SpecialCharTok{+}
+      \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =}\NormalTok{ title)}
+\NormalTok{  \}}
+\end{Highlighting}
+\end{Shaded}
+
+Plot the population dynamics under different parameter sets.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \FunctionTok{phase\_plane}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{a11 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }
+              \AttributeTok{a21 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a22 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a12 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }
+              \AttributeTok{t =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{title =} \StringTok{"Stable coexistence"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-40-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \FunctionTok{phase\_plane}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.2}\NormalTok{, }
+              \AttributeTok{a11 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a21 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a22 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a12 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }
+              \AttributeTok{t =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{title =} \StringTok{"Unstable coexistence (saddle)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-40-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \FunctionTok{phase\_plane}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.2}\NormalTok{, }
+              \AttributeTok{a11 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a21 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a22 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a12 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }
+              \AttributeTok{t =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{title =} \StringTok{"N1 wins"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-40-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \FunctionTok{phase\_plane}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.2}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.2}\NormalTok{, }
+              \AttributeTok{a11 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }\AttributeTok{a21 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a22 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{200}\NormalTok{, }\AttributeTok{a12 =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{100}\NormalTok{, }
+              \AttributeTok{t =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{title =} \StringTok{"N2 wins"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-40-4.pdf}
+
   \bibliography{book.bib,packages.bib}
 
 \end{document}
