@@ -1345,7 +1345,7 @@ Plot the population dynamics under different parameter sets.
 <!--chapter:end:09_week_9_Midterm.Rmd-->
 
 
-# Week 9 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues {-} 
+# Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues {-} 
 
 
 Consider a linear system

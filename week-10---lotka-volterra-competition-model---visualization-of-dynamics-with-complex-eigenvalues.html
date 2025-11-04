@@ -5,22 +5,22 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues | Introduction to Theoretical Ecology</title>
-  <meta name="description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="description" content="This is the course website for Introduction to Theoretical Ecology 2025 Fall at National Taiwan University." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues | Introduction to Theoretical Ecology" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
-  <meta property="og:description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
+  <meta property="og:description" content="This is the course website for Introduction to Theoretical Ecology 2025 Fall at National Taiwan University." />
   <meta name="github-repo" content="pojuke/TheoreticalEcologyPJK" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues | Introduction to Theoretical Ecology" />
   
-  <meta name="twitter:description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
+  <meta name="twitter:description" content="This is the course website for Introduction to Theoretical Ecology 2025 Fall at National Taiwan University." />
   <meta name="twitter:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
 
-<meta name="author" content="Instructor: Po-Ju Ke ~~~~~ Teaching Assistant: Hsiang-Chih Lo" />
+<meta name="author" content="Instructor: Po-Ju Ke ~~~~~ Teaching Assistant: Guan-Yu Chen" />
 
 
 
@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="week-9---midterm.html"/>
-<link rel="next" href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -144,18 +144,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course information</a></li>
 <li class="chapter" data-level="" data-path="syllabus.html"><a href="syllabus.html"><i class="fa fa-check"></i>Syllabus</a></li>
 <li class="chapter" data-level="" data-path="week-2---exponential-population-growth.html"><a href="week-2---exponential-population-growth.html"><i class="fa fa-check"></i>Week 2 - Exponential population growth</a></li>
-<li class="chapter" data-level="" data-path="week-3---national-holiday-no-class.html"><a href="week-3---national-holiday-no-class.html"><i class="fa fa-check"></i>Week 3 - National holiday (No class)</a></li>
-<li class="chapter" data-level="" data-path="week-4---logistic-population-growth-and-stability-analysis.html"><a href="week-4---logistic-population-growth-and-stability-analysis.html"><i class="fa fa-check"></i>Week 4 - Logistic population growth and stability analysis</a></li>
+<li class="chapter" data-level="" data-path="week-3---logistic-population-growth-and-stability-analysis.html"><a href="week-3---logistic-population-growth-and-stability-analysis.html"><i class="fa fa-check"></i>Week 3 - Logistic population growth and stability analysis</a></li>
+<li class="chapter" data-level="" data-path="week-4---discrete-exponential-and-logistic-models.html"><a href="week-4---discrete-exponential-and-logistic-models.html"><i class="fa fa-check"></i>Week 4 - Discrete exponential and logistic models</a></li>
 <li class="chapter" data-level="" data-path="week-5---metapopulations-and-patch-occupancy-models.html"><a href="week-5---metapopulations-and-patch-occupancy-models.html"><i class="fa fa-check"></i>Week 5 - Metapopulations and patch occupancy models</a></li>
 <li class="chapter" data-level="" data-path="week-6---harvesting-and-bifurcation.html"><a href="week-6---harvesting-and-bifurcation.html"><i class="fa fa-check"></i>Week 6 - Harvesting and bifurcation</a></li>
 <li class="chapter" data-level="" data-path="week-7---age-structure-population-model.html"><a href="week-7---age-structure-population-model.html"><i class="fa fa-check"></i>Week 7 - Age-structure population model</a></li>
 <li class="chapter" data-level="" data-path="week-8---lotka-volterra-competition-model---population-dynamics.html"><a href="week-8---lotka-volterra-competition-model---population-dynamics.html"><i class="fa fa-check"></i>Week 8 - Lotka-Volterra competition model - Population dynamics</a></li>
 <li class="chapter" data-level="" data-path="week-9---midterm.html"><a href="week-9---midterm.html"><i class="fa fa-check"></i>Week 9 - Midterm</a></li>
 <li class="chapter" data-level="" data-path="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"><i class="fa fa-check"></i>Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues</a></li>
-<li class="chapter" data-level="" data-path="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"><i class="fa fa-check"></i>Week 11 - Lotka-Volterra model of predator-prey interactions and time-scale separation</a></li>
-<li class="chapter" data-level="" data-path="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html"><i class="fa fa-check"></i>Week 12 - Rosenzweig-MacArthur predator-prey model and May’s complexity-stability relationship</a></li>
-<li class="chapter" data-level="" data-path="week-13---parameter-space-for-apparent-competition-model.html"><a href="week-13---parameter-space-for-apparent-competition-model.html"><i class="fa fa-check"></i>Week 13 - Parameter space for apparent competition model</a></li>
-<li class="chapter" data-level="" data-path="week-14---resource-competition.html"><a href="week-14---resource-competition.html"><i class="fa fa-check"></i>Week 14 - Resource competition</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -178,162 +174,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues" class="section level1 unnumbered hasAnchor">
 <h1>Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues<a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><strong>Part 1 - Visualize the Trajectory of 2 Species Population Dynamics</strong></p>
-<p>In class, we learned that the stability of a nonlinear ODE can be characterized by studying the dynamics of the “displacement for the equilibrium” (<span class="math inline">\(\pmb\varepsilon\)</span>), which follows a much simpler linear ODE. If the linear ODE describing the dynamics of the displacement have a stable equilibrium at zero, then this indicates that the original equilibrium of the nonlinear ODE will also be stable. Consider the case where the dynamics of displacements <span class="math inline">\(\pmb\varepsilon\)</span> can be described by the following linear ODE:</p>
-<p><span class="math display">\[
+<p>Consider a linear system
+<span class="math display">\[
 \dfrac{d \vec{\pmb\varepsilon}}{d t} = \mathcal{J}\vec{\pmb\varepsilon}
-\]</span></p>
-<p>where <span class="math inline">\(\vec{\pmb\varepsilon} = (\varepsilon_1, \varepsilon_2)^T\)</span> and <span class="math inline">\(\mathcal{J} = \begin{pmatrix} -1 &amp; 1\\ -2 &amp; -1 \end{pmatrix}\)</span>. Or, we can write the linear system by two ODEs: <span class="math display">\[\begin{align*}
+\]</span>
+where <span class="math inline">\(\vec{\pmb\varepsilon} = (\varepsilon_1, \varepsilon_2)^T\)</span> and <span class="math inline">\(\mathcal{J} = \begin{pmatrix} -1 &amp; 1\\ -2 &amp; -1 \end{pmatrix}\)</span>.
+Or, we can write the linear system by two ODEs:
+<span class="math display">\[\begin{align*}
   \dfrac{d \varepsilon_1}{d t} &amp;= (-1)\times \varepsilon_1 + (1)\times\varepsilon_2\\
   \dfrac{d \varepsilon_2}{d t} &amp;= (-2)\times \varepsilon_1 + (-1)\times\varepsilon_2\\
 \end{align*}\]</span></p>
-<p>We can see that this ODE has an equilibrium at zero and the eigenvalues are as follows, which have negative real parts (indicating that it’ll be stable) with a non-zero imaginary part (indicating that it’ll rotate towards the equilibrium, as shown below).</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb69-1" tabindex="-1"></a><span class="fu">eigen</span>(<span class="fu">matrix</span>(<span class="fu">c</span>( <span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span>), <span class="dv">2</span>, <span class="dv">2</span>, T))<span class="sc">$</span>values <span class="co"># eigenvalues</span></span></code></pre></div>
-<pre><code>## [1] -1+1.414214i -1-1.414214i</code></pre>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb71-2"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb71-3"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-3" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
-<span id="cb71-4"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-4" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
-<span id="cb71-5"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-5" tabindex="-1"></a><span class="fu">library</span>(gifski)</span>
-<span id="cb71-6"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-6" tabindex="-1"></a></span>
-<span id="cb71-7"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-7" tabindex="-1"></a><span class="do">### Model specification</span></span>
-<span id="cb71-8"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-8" tabindex="-1"></a>ERROR <span class="ot">&lt;-</span> <span class="cf">function</span>(times, state, parms) {</span>
-<span id="cb71-9"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-9" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parms)), {</span>
-<span id="cb71-10"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-10" tabindex="-1"></a>    de1_dt <span class="ot">=</span> A <span class="sc">*</span> e1 <span class="sc">+</span> B <span class="sc">*</span> e2</span>
-<span id="cb71-11"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-11" tabindex="-1"></a>    de2_dt <span class="ot">=</span> C <span class="sc">*</span> e1 <span class="sc">+</span> D <span class="sc">*</span> e2</span>
-<span id="cb71-12"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-12" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="fu">c</span>(de1_dt, de2_dt)))</span>
-<span id="cb71-13"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-13" tabindex="-1"></a>  })</span>
-<span id="cb71-14"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-14" tabindex="-1"></a>}</span>
-<span id="cb71-15"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-15" tabindex="-1"></a></span>
-<span id="cb71-16"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-16" tabindex="-1"></a><span class="do">### Imaginary eigenvalue</span></span>
-<span id="cb71-17"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-17" tabindex="-1"></a><span class="do">### Model parameters</span></span>
-<span id="cb71-18"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-18" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="fl">0.0001</span>)</span>
-<span id="cb71-19"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-19" tabindex="-1"></a>state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">e1 =</span> <span class="fl">0.1</span>, <span class="at">e2 =</span> <span class="fl">0.1</span>)</span>
-<span id="cb71-20"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-20" tabindex="-1"></a>parms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">B =</span> <span class="dv">1</span>, <span class="at">C =</span> <span class="sc">-</span><span class="dv">2</span>, <span class="at">D =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb71-21"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-21" tabindex="-1"></a></span>
-<span id="cb71-22"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-22" tabindex="-1"></a><span class="do">### Model application</span></span>
-<span id="cb71-23"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-23" tabindex="-1"></a>error_1 <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> ERROR, <span class="at">times =</span> times, <span class="at">y =</span> state, <span class="at">parms =</span> parms)</span>
-<span id="cb71-24"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-24" tabindex="-1"></a><span class="fu">plot</span>(e2 <span class="sc">~</span> e1, error_1, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
-<span id="cb71-25"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-25" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb71-26"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb71-26" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) </span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb72-1" tabindex="-1"></a><span class="do">### Plot animation</span></span>
-<span id="cb72-2"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb72-2" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> error_1 <span class="sc">%&gt;%</span></span>
-<span id="cb72-3"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb72-3" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb72-4"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb72-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> e1, <span class="at">y =</span> e2)) <span class="sc">+</span></span>
-<span id="cb72-5"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb72-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb72-6"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb72-6" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype=</span><span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb72-7"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb72-7" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype=</span><span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb72-8"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb72-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">&quot;Time: {round(frame_time, digit = 1)}&quot;</span>) <span class="sc">+</span></span>
-<span id="cb72-9"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb72-9" tabindex="-1"></a>  <span class="fu">transition_time</span>(time) <span class="sc">+</span></span>
-<span id="cb72-10"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb72-10" tabindex="-1"></a>  <span class="fu">shadow_wake</span>(<span class="at">wake_length =</span> <span class="dv">1</span>)</span>
-<span id="cb72-11"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb72-11" tabindex="-1"></a><span class="co">#gif1 &lt;- animate(p1, renderer = gifski_renderer())</span></span>
-<span id="cb72-12"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb72-12" tabindex="-1"></a><span class="co">#anim_save(filename = &quot;W10_dynamics_error_imaginary.gif&quot;, gif1)</span></span></code></pre></div>
-<p><img src="W10_dynamics_error_imaginary.gif" /></p>
-<p>Here is another example that has negative real parts (indicating that it’ll be stable) with imaginary part equals to zero (indicating that it will not rotate but directly reaches the equilibrium, as shown below).</p>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb73-1" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="at">by =</span> <span class="fl">0.0001</span>)</span>
-<span id="cb73-2"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb73-2" tabindex="-1"></a>state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">e1 =</span> <span class="fl">0.1</span>, <span class="at">e2 =</span> <span class="fl">0.1</span>)</span>
-<span id="cb73-3"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb73-3" tabindex="-1"></a>parms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">B =</span> <span class="dv">1</span>, <span class="at">C =</span> <span class="dv">0</span>, <span class="at">D =</span> <span class="sc">-</span><span class="dv">2</span>)</span>
-<span id="cb73-4"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb73-4" tabindex="-1"></a></span>
-<span id="cb73-5"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb73-5" tabindex="-1"></a><span class="do">### Model application</span></span>
-<span id="cb73-6"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb73-6" tabindex="-1"></a>error_2 <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> ERROR, <span class="at">times =</span> times, <span class="at">y =</span> state, <span class="at">parms =</span> parms)</span>
-<span id="cb73-7"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb73-7" tabindex="-1"></a><span class="fu">plot</span>(e2 <span class="sc">~</span> e1, error_2, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
-<span id="cb73-8"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb73-8" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
-<span id="cb73-9"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb73-9" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) </span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb74-1" tabindex="-1"></a><span class="do">### Plot animation</span></span>
-<span id="cb74-2"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb74-2" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> error_2 <span class="sc">%&gt;%</span></span>
-<span id="cb74-3"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb74-3" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb74-4"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb74-4" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> e1, <span class="at">y =</span> e2)) <span class="sc">+</span></span>
-<span id="cb74-5"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb74-5" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb74-6"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb74-6" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">linetype=</span><span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb74-7"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb74-7" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype=</span><span class="st">&quot;dashed&quot;</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb74-8"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb74-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">subtitle =</span> <span class="st">&quot;Time: {round(frame_time, digit = 1)}&quot;</span>) <span class="sc">+</span></span>
-<span id="cb74-9"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb74-9" tabindex="-1"></a>  <span class="fu">transition_time</span>(time) <span class="sc">+</span></span>
-<span id="cb74-10"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb74-10" tabindex="-1"></a>  <span class="fu">shadow_wake</span>(<span class="at">wake_length =</span> <span class="dv">1</span>)</span>
-<span id="cb74-11"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb74-11" tabindex="-1"></a><span class="co">#gif2 &lt;- animate(p2, renderer = gifski_renderer())</span></span>
-<span id="cb74-12"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb74-12" tabindex="-1"></a><span class="co">#anim_save(filename = &quot;W10_dynamics_error_real.gif&quot;, gif2)</span></span></code></pre></div>
-<p><img src="W10_dynamics_error_real.gif" /></p>
-<p><strong>Part 2 - Invasion Simulation</strong></p>
-<p>In the following section, we are looking at how disturbances could affect population dynamics by doing reciprocal invasion simulations.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-1" tabindex="-1"></a>LV_invasion <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">r1 =</span> <span class="fl">1.0</span>, <span class="at">r2 =</span> <span class="fl">1.0</span>,</span>
-<span id="cb75-2"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-2" tabindex="-1"></a>                        <span class="at">a11 =</span> <span class="fl">0.05</span>, <span class="at">a21 =</span> <span class="fl">0.01</span>, <span class="at">a22 =</span> <span class="fl">0.05</span>, <span class="at">a12 =</span> <span class="fl">0.01</span>,</span>
-<span id="cb75-3"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-3" tabindex="-1"></a>                        <span class="at">runtime =</span> <span class="dv">100</span>, <span class="at">invasion =</span> <span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">75</span>)){</span>
-<span id="cb75-4"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-4" tabindex="-1"></a></span>
-<span id="cb75-5"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-5" tabindex="-1"></a>  <span class="do">### Model specification</span></span>
-<span id="cb75-6"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-6" tabindex="-1"></a>  LV <span class="ot">&lt;-</span> <span class="cf">function</span>(times, state, parms){</span>
-<span id="cb75-7"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-7" tabindex="-1"></a>    <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parms)), {</span>
-<span id="cb75-8"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-8" tabindex="-1"></a>      dN1_dt <span class="ot">=</span> N1 <span class="sc">*</span> (r1 <span class="sc">-</span> a11 <span class="sc">*</span> N1 <span class="sc">-</span> a12 <span class="sc">*</span> N2)</span>
-<span id="cb75-9"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-9" tabindex="-1"></a>      dN2_dt <span class="ot">=</span> N2 <span class="sc">*</span> (r2 <span class="sc">-</span> a22 <span class="sc">*</span> N2 <span class="sc">-</span> a21 <span class="sc">*</span> N1)</span>
-<span id="cb75-10"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-10" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">list</span>(<span class="fu">c</span>(dN1_dt, dN2_dt)))</span>
-<span id="cb75-11"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-11" tabindex="-1"></a>    })</span>
-<span id="cb75-12"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-12" tabindex="-1"></a>  }</span>
-<span id="cb75-13"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-13" tabindex="-1"></a></span>
-<span id="cb75-14"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-14" tabindex="-1"></a>  <span class="do">### Event function</span></span>
-<span id="cb75-15"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-15" tabindex="-1"></a>  <span class="do">### N2 invade N1-monoculture</span></span>
-<span id="cb75-16"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-16" tabindex="-1"></a>  eventfun_2invade <span class="ot">&lt;-</span> <span class="cf">function</span>(times, state, parms){</span>
-<span id="cb75-17"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-17" tabindex="-1"></a>    <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parms)), {</span>
-<span id="cb75-18"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-18" tabindex="-1"></a>      N1 <span class="ot">&lt;-</span> N1</span>
-<span id="cb75-19"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-19" tabindex="-1"></a>      N2 <span class="ot">&lt;-</span> N2 <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb75-20"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-20" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">c</span>(N1, N2))</span>
-<span id="cb75-21"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-21" tabindex="-1"></a>    })</span>
-<span id="cb75-22"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-22" tabindex="-1"></a>  }</span>
-<span id="cb75-23"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-23" tabindex="-1"></a></span>
-<span id="cb75-24"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-24" tabindex="-1"></a>  <span class="do">### N1 invade N2-monoculture</span></span>
-<span id="cb75-25"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-25" tabindex="-1"></a>  eventfun_1invade <span class="ot">&lt;-</span> <span class="cf">function</span>(times, state, parms){</span>
-<span id="cb75-26"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-26" tabindex="-1"></a>    <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parms)), {</span>
-<span id="cb75-27"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-27" tabindex="-1"></a>      N1 <span class="ot">&lt;-</span> N1 <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb75-28"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-28" tabindex="-1"></a>      N2 <span class="ot">&lt;-</span> N2</span>
-<span id="cb75-29"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-29" tabindex="-1"></a>      <span class="fu">return</span>(<span class="fu">c</span>(N1, N2))</span>
-<span id="cb75-30"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-30" tabindex="-1"></a>    })</span>
-<span id="cb75-31"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-31" tabindex="-1"></a>  }</span>
-<span id="cb75-32"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-32" tabindex="-1"></a></span>
-<span id="cb75-33"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-33" tabindex="-1"></a>  <span class="do">### Model parameters</span></span>
-<span id="cb75-34"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-34" tabindex="-1"></a>  times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, runtime, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
-<span id="cb75-35"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-35" tabindex="-1"></a>  state_1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">N1 =</span> <span class="fl">5.0</span>, <span class="at">N2 =</span> <span class="fl">0.0</span>)</span>
-<span id="cb75-36"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-36" tabindex="-1"></a>  state_2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">N1 =</span> <span class="fl">0.0</span>, <span class="at">N2 =</span> <span class="fl">5.0</span>)</span>
-<span id="cb75-37"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-37" tabindex="-1"></a>  parms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">r1 =</span> r1, <span class="at">r2 =</span> r2,</span>
-<span id="cb75-38"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-38" tabindex="-1"></a>             <span class="at">a11 =</span> a11, <span class="at">a21 =</span> a21, <span class="at">a22 =</span> a22, <span class="at">a12 =</span> a12)</span>
-<span id="cb75-39"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-39" tabindex="-1"></a></span>
-<span id="cb75-40"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-40" tabindex="-1"></a>  <span class="do">### Model application w/ event function</span></span>
-<span id="cb75-41"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-41" tabindex="-1"></a>  <span class="do">### N2 invade N1-monoculture</span></span>
-<span id="cb75-42"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-42" tabindex="-1"></a>  pop_size_1 <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> LV, <span class="at">times =</span> times,</span>
-<span id="cb75-43"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-43" tabindex="-1"></a>                    <span class="at">y =</span> state_1, <span class="at">parms =</span> parms,</span>
-<span id="cb75-44"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-44" tabindex="-1"></a>                    <span class="at">events =</span> <span class="fu">list</span>(<span class="at">func =</span> eventfun_2invade, <span class="at">time =</span> invasion))</span>
-<span id="cb75-45"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-45" tabindex="-1"></a></span>
-<span id="cb75-46"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-46" tabindex="-1"></a>  <span class="do">### N1 invade N2-monoculture</span></span>
-<span id="cb75-47"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-47" tabindex="-1"></a>  pop_size_2 <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> LV, <span class="at">times =</span> times,</span>
-<span id="cb75-48"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-48" tabindex="-1"></a>                    <span class="at">y =</span> state_2, <span class="at">parms =</span> parms,</span>
-<span id="cb75-49"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-49" tabindex="-1"></a>                    <span class="at">events =</span> <span class="fu">list</span>(<span class="at">func =</span> eventfun_1invade, <span class="at">time =</span> invasion))</span>
-<span id="cb75-50"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-50" tabindex="-1"></a></span>
-<span id="cb75-51"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-51" tabindex="-1"></a>  <span class="do">### Data manipulation</span></span>
-<span id="cb75-52"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-52" tabindex="-1"></a>  Data <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">rbind</span>(pop_size_1, pop_size_2))</span>
-<span id="cb75-53"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-53" tabindex="-1"></a>  Data<span class="sc">$</span>Scenario <span class="ot">&lt;-</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;N2 invade N1-monoculture&quot;</span>, <span class="st">&quot;N1 invade N2-monoculture&quot;</span>),</span>
-<span id="cb75-54"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-54" tabindex="-1"></a>                      <span class="at">each =</span> <span class="fu">length</span>(times))</span>
-<span id="cb75-55"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-55" tabindex="-1"></a></span>
-<span id="cb75-56"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-56" tabindex="-1"></a>  <span class="do">### Visualize the population dynamics</span></span>
-<span id="cb75-57"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-57" tabindex="-1"></a>  Data <span class="sc">%&gt;%</span></span>
-<span id="cb75-58"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-58" tabindex="-1"></a>    <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&quot;Species&quot;</span>, <span class="at">value =</span> <span class="st">&quot;pop_size&quot;</span>, <span class="sc">-</span><span class="fu">c</span>(time, Scenario)) <span class="sc">%&gt;%</span></span>
-<span id="cb75-59"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-59" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> pop_size, <span class="at">color =</span> Species)) <span class="sc">+</span></span>
-<span id="cb75-60"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-60" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb75-61"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-61" tabindex="-1"></a>    <span class="fu">facet_grid</span>(<span class="sc">~</span>Scenario) <span class="sc">+</span></span>
-<span id="cb75-62"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-62" tabindex="-1"></a>    <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
-<span id="cb75-63"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-63" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>) </span>
-<span id="cb75-64"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb75-64" tabindex="-1"></a>}</span></code></pre></div>
-<p>Plot the population dynamics under different parameter sets.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb76-1" tabindex="-1"></a><span class="do">#### Run mutual invasion tests</span></span>
-<span id="cb76-2"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb76-2" tabindex="-1"></a><span class="do">### N1 win: N1 can invade &amp; N2 cannot invade</span></span>
-<span id="cb76-3"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb76-3" tabindex="-1"></a><span class="fu">LV_invasion</span>(<span class="at">a11 =</span> <span class="fl">0.01</span>, <span class="at">a21 =</span> <span class="fl">0.05</span>, <span class="at">a22 =</span> <span class="fl">0.05</span>, <span class="at">a12 =</span> <span class="fl">0.01</span>)</span></code></pre></div>
+<p>Note that the element in the first row and second column is positive.</p>
 <p><img src="bookdown-demo_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb77-1" tabindex="-1"></a><span class="do">### N2 win: N1 cannot invade &amp; N2 can invade</span></span>
-<span id="cb77-2"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb77-2" tabindex="-1"></a><span class="fu">LV_invasion</span>(<span class="at">a11 =</span> <span class="fl">0.05</span>, <span class="at">a21 =</span> <span class="fl">0.01</span>, <span class="at">a22 =</span> <span class="fl">0.01</span>, <span class="at">a12 =</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-41-2.png" width="672" /></p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb78-1" tabindex="-1"></a><span class="do">### Coexist: N1 can invade &amp; N2 can invade</span></span>
-<span id="cb78-2"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb78-2" tabindex="-1"></a><span class="fu">LV_invasion</span>(<span class="at">a11 =</span> <span class="fl">0.05</span>, <span class="at">a21 =</span> <span class="fl">0.01</span>, <span class="at">a22 =</span> <span class="fl">0.05</span>, <span class="at">a12 =</span> <span class="fl">0.01</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-41-3.png" width="672" /></p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb79-1" tabindex="-1"></a><span class="do">### Priority Effect: N1 cannot invade &amp; N2 cannot invade</span></span>
-<span id="cb79-2"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html#cb79-2" tabindex="-1"></a><span class="fu">LV_invasion</span>(<span class="at">a11 =</span> <span class="fl">0.01</span>, <span class="at">a21 =</span> <span class="fl">0.05</span>, <span class="at">a22 =</span> <span class="fl">0.01</span>, <span class="at">a12 =</span> <span class="fl">0.05</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-41-4.png" width="672" /></p>
+<pre><code>##              time           e1            e2
+##  [99996,]  9.9995 3.192479e-05 -6.443030e-05
+##  [99997,]  9.9996 3.191516e-05 -6.443024e-05
+##  [99998,]  9.9997 3.190552e-05 -6.443018e-05
+##  [99999,]  9.9998 3.189589e-05 -6.443011e-05
+## [100000,]  9.9999 3.188626e-05 -6.443005e-05
+## [100001,] 10.0000 3.187663e-05 -6.442998e-05</code></pre>
+<p><img src="W9_dynamics_error.gif" /></p>
 
 </div>
             </section>
@@ -341,8 +201,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="week-9---midterm.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="week-9---midterm.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -356,42 +216,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/10_Week_10.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/10_Week_10_LVPP_eigen.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
