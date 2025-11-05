@@ -1656,32 +1656,231 @@ Plot the population dynamics under different parameter sets.
 \chapter*{Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues}\label{week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues}}
 \addcontentsline{toc}{chapter}{Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues}
 
-Consider a linear system
+\textbf{Part 1 - Visualize the Trajectory of 2 Species Population Dynamics}
+
+In class, we learned that the stability of a nonlinear ODE can be characterized by studying the dynamics of the ``displacement for the equilibrium'' (\(\pmb\varepsilon\)), which follows a much simpler linear ODE. If the linear ODE describing the dynamics of the displacement have a stable equilibrium at zero, then this indicates that the original equilibrium of the nonlinear ODE will also be stable. Consider the case where the dynamics of displacements \(\pmb\varepsilon\) can be described by the following linear ODE:
+
 \[
 \dfrac{d \vec{\pmb\varepsilon}}{d t} = \mathcal{J}\vec{\pmb\varepsilon}
 \]
-where \(\vec{\pmb\varepsilon} = (\varepsilon_1, \varepsilon_2)^T\) and \(\mathcal{J} = \begin{pmatrix} -1 & 1\\ -2 & -1 \end{pmatrix}\).
-Or, we can write the linear system by two ODEs:
-\begin{align*}
+
+where \(\vec{\pmb\varepsilon} = (\varepsilon_1, \varepsilon_2)^T\) and \(\mathcal{J} = \begin{pmatrix} -1 & 1\\ -2 & -1 \end{pmatrix}\). Or, we can write the linear system by two ODEs: \begin{align*}
   \dfrac{d \varepsilon_1}{d t} &= (-1)\times \varepsilon_1 + (1)\times\varepsilon_2\\
   \dfrac{d \varepsilon_2}{d t} &= (-2)\times \varepsilon_1 + (-1)\times\varepsilon_2\\
 \end{align*}
 
-Note that the element in the first row and second column is positive.
+We can see that this ODE has an equilibrium at zero and the eigenvalues are as follows, which have negative real parts (indicating that it'll be stable) with a non-zero imaginary part (indicating that it'll rotate towards the equilibrium, as shown below).
 
-\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-41-1.pdf}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{eigen}\NormalTok{(}\FunctionTok{matrix}\NormalTok{(}\FunctionTok{c}\NormalTok{( }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{), }\DecValTok{2}\NormalTok{, }\DecValTok{2}\NormalTok{, T))}\SpecialCharTok{$}\NormalTok{values }\CommentTok{\# eigenvalues}
+\end{Highlighting}
+\end{Shaded}
 
 \begin{verbatim}
-##              time           e1            e2
-##  [99996,]  9.9995 3.192479e-05 -6.443030e-05
-##  [99997,]  9.9996 3.191516e-05 -6.443024e-05
-##  [99998,]  9.9997 3.190552e-05 -6.443018e-05
-##  [99999,]  9.9998 3.189589e-05 -6.443011e-05
-## [100000,]  9.9999 3.188626e-05 -6.443005e-05
-## [100001,] 10.0000 3.187663e-05 -6.442998e-05
+## [1] -1+1.414214i -1-1.414214i
 \end{verbatim}
 
-\includegraphics{W9_dynamics_error.gif}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(deSolve)}
+\FunctionTok{library}\NormalTok{(gganimate)}
+\FunctionTok{library}\NormalTok{(gifski)}
+
+\DocumentationTok{\#\#\# Model specification}
+\NormalTok{ERROR }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(times, state, parms) \{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{    de1\_dt }\OtherTok{=}\NormalTok{ A }\SpecialCharTok{*}\NormalTok{ e1 }\SpecialCharTok{+}\NormalTok{ B }\SpecialCharTok{*}\NormalTok{ e2}
+\NormalTok{    de2\_dt }\OtherTok{=}\NormalTok{ C }\SpecialCharTok{*}\NormalTok{ e1 }\SpecialCharTok{+}\NormalTok{ D }\SpecialCharTok{*}\NormalTok{ e2}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(de1\_dt, de2\_dt)))}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#\# Imaginary eigenvalue}
+\DocumentationTok{\#\#\# Model parameters}
+\NormalTok{times }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{10}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.0001}\NormalTok{)}
+\NormalTok{state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{e1 =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{e2 =} \FloatTok{0.1}\NormalTok{)}
+\NormalTok{parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{A =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{B =} \DecValTok{1}\NormalTok{, }\AttributeTok{C =} \SpecialCharTok{{-}}\DecValTok{2}\NormalTok{, }\AttributeTok{D =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{)}
+
+\DocumentationTok{\#\#\# Model application}
+\NormalTok{error\_1 }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ ERROR, }\AttributeTok{times =}\NormalTok{ times, }\AttributeTok{y =}\NormalTok{ state, }\AttributeTok{parms =}\NormalTok{ parms)}
+\FunctionTok{plot}\NormalTok{(e2 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ e1, error\_1, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-42-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Plot animation}
+\NormalTok{p1 }\OtherTok{\textless{}{-}}\NormalTok{ error\_1 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ e1, }\AttributeTok{y =}\NormalTok{ e2)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Time: \{round(frame\_time, digit = 1)\}"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{transition\_time}\NormalTok{(time) }\SpecialCharTok{+}
+  \FunctionTok{shadow\_wake}\NormalTok{(}\AttributeTok{wake\_length =} \DecValTok{1}\NormalTok{)}
+\CommentTok{\#gif1 \textless{}{-} animate(p1, renderer = gifski\_renderer())}
+\CommentTok{\#anim\_save(filename = "W10\_dynamics\_error\_imaginary.gif", gif1)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{W10_dynamics_error_imaginary.gif}
+
+Here is another example that has negative real parts (indicating that it'll be stable) with imaginary part equals to zero (indicating that it will not rotate but directly reaches the equilibrium, as shown below).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{times }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{10}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.0001}\NormalTok{)}
+\NormalTok{state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{e1 =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{e2 =} \FloatTok{0.1}\NormalTok{)}
+\NormalTok{parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{A =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{B =} \DecValTok{1}\NormalTok{, }\AttributeTok{C =} \DecValTok{0}\NormalTok{, }\AttributeTok{D =} \SpecialCharTok{{-}}\DecValTok{2}\NormalTok{)}
+
+\DocumentationTok{\#\#\# Model application}
+\NormalTok{error\_2 }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ ERROR, }\AttributeTok{times =}\NormalTok{ times, }\AttributeTok{y =}\NormalTok{ state, }\AttributeTok{parms =}\NormalTok{ parms)}
+\FunctionTok{plot}\NormalTok{(e2 }\SpecialCharTok{\textasciitilde{}}\NormalTok{ e1, error\_2, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \DecValTok{0}\NormalTok{, }\AttributeTok{lty =} \DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-43-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Plot animation}
+\NormalTok{p2 }\OtherTok{\textless{}{-}}\NormalTok{ error\_2 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ e1, }\AttributeTok{y =}\NormalTok{ e2)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{linetype=}\StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{subtitle =} \StringTok{"Time: \{round(frame\_time, digit = 1)\}"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{transition\_time}\NormalTok{(time) }\SpecialCharTok{+}
+  \FunctionTok{shadow\_wake}\NormalTok{(}\AttributeTok{wake\_length =} \DecValTok{1}\NormalTok{)}
+\CommentTok{\#gif2 \textless{}{-} animate(p2, renderer = gifski\_renderer())}
+\CommentTok{\#anim\_save(filename = "W10\_dynamics\_error\_real.gif", gif2)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{W10_dynamics_error_real.gif}
+
+\textbf{Part 2 - Invasion Simulation}
+
+In the following section, we are looking at how disturbances could affect population dynamics by doing reciprocal invasion simulations.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{LV\_invasion }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{1.0}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{1.0}\NormalTok{,}
+                        \AttributeTok{a11 =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{a21 =} \FloatTok{0.01}\NormalTok{, }\AttributeTok{a22 =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{a12 =} \FloatTok{0.01}\NormalTok{,}
+                        \AttributeTok{runtime =} \DecValTok{100}\NormalTok{, }\AttributeTok{invasion =} \FunctionTok{c}\NormalTok{(}\DecValTok{50}\NormalTok{, }\DecValTok{75}\NormalTok{))\{}
+
+  \DocumentationTok{\#\#\# Model specification}
+\NormalTok{  LV }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(times, state, parms)\{}
+    \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{      dN1\_dt }\OtherTok{=}\NormalTok{ N1 }\SpecialCharTok{*}\NormalTok{ (r1 }\SpecialCharTok{{-}}\NormalTok{ a11 }\SpecialCharTok{*}\NormalTok{ N1 }\SpecialCharTok{{-}}\NormalTok{ a12 }\SpecialCharTok{*}\NormalTok{ N2)}
+\NormalTok{      dN2\_dt }\OtherTok{=}\NormalTok{ N2 }\SpecialCharTok{*}\NormalTok{ (r2 }\SpecialCharTok{{-}}\NormalTok{ a22 }\SpecialCharTok{*}\NormalTok{ N2 }\SpecialCharTok{{-}}\NormalTok{ a21 }\SpecialCharTok{*}\NormalTok{ N1)}
+      \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(dN1\_dt, dN2\_dt)))}
+\NormalTok{    \})}
+\NormalTok{  \}}
+
+  \DocumentationTok{\#\#\# Event function}
+  \DocumentationTok{\#\#\# N2 invade N1{-}monoculture}
+\NormalTok{  eventfun\_2invade }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(times, state, parms)\{}
+    \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{      N1 }\OtherTok{\textless{}{-}}\NormalTok{ N1}
+\NormalTok{      N2 }\OtherTok{\textless{}{-}}\NormalTok{ N2 }\SpecialCharTok{+} \DecValTok{1}
+      \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(N1, N2))}
+\NormalTok{    \})}
+\NormalTok{  \}}
+
+  \DocumentationTok{\#\#\# N1 invade N2{-}monoculture}
+\NormalTok{  eventfun\_1invade }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(times, state, parms)\{}
+    \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{      N1 }\OtherTok{\textless{}{-}}\NormalTok{ N1 }\SpecialCharTok{+} \DecValTok{1}
+\NormalTok{      N2 }\OtherTok{\textless{}{-}}\NormalTok{ N2}
+      \FunctionTok{return}\NormalTok{(}\FunctionTok{c}\NormalTok{(N1, N2))}
+\NormalTok{    \})}
+\NormalTok{  \}}
+
+  \DocumentationTok{\#\#\# Model parameters}
+\NormalTok{  times }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, runtime, }\AttributeTok{by =} \FloatTok{0.1}\NormalTok{)}
+\NormalTok{  state\_1 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N1 =} \FloatTok{5.0}\NormalTok{, }\AttributeTok{N2 =} \FloatTok{0.0}\NormalTok{)}
+\NormalTok{  state\_2 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N1 =} \FloatTok{0.0}\NormalTok{, }\AttributeTok{N2 =} \FloatTok{5.0}\NormalTok{)}
+\NormalTok{  parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r1 =}\NormalTok{ r1, }\AttributeTok{r2 =}\NormalTok{ r2,}
+             \AttributeTok{a11 =}\NormalTok{ a11, }\AttributeTok{a21 =}\NormalTok{ a21, }\AttributeTok{a22 =}\NormalTok{ a22, }\AttributeTok{a12 =}\NormalTok{ a12)}
+
+  \DocumentationTok{\#\#\# Model application w/ event function}
+  \DocumentationTok{\#\#\# N2 invade N1{-}monoculture}
+\NormalTok{  pop\_size\_1 }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ LV, }\AttributeTok{times =}\NormalTok{ times,}
+                    \AttributeTok{y =}\NormalTok{ state\_1, }\AttributeTok{parms =}\NormalTok{ parms,}
+                    \AttributeTok{events =} \FunctionTok{list}\NormalTok{(}\AttributeTok{func =}\NormalTok{ eventfun\_2invade, }\AttributeTok{time =}\NormalTok{ invasion))}
+
+  \DocumentationTok{\#\#\# N1 invade N2{-}monoculture}
+\NormalTok{  pop\_size\_2 }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ LV, }\AttributeTok{times =}\NormalTok{ times,}
+                    \AttributeTok{y =}\NormalTok{ state\_2, }\AttributeTok{parms =}\NormalTok{ parms,}
+                    \AttributeTok{events =} \FunctionTok{list}\NormalTok{(}\AttributeTok{func =}\NormalTok{ eventfun\_1invade, }\AttributeTok{time =}\NormalTok{ invasion))}
+
+  \DocumentationTok{\#\#\# Data manipulation}
+\NormalTok{  Data }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{rbind}\NormalTok{(pop\_size\_1, pop\_size\_2))}
+\NormalTok{  Data}\SpecialCharTok{$}\NormalTok{Scenario }\OtherTok{\textless{}{-}}\FunctionTok{rep}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\StringTok{"N2 invade N1{-}monoculture"}\NormalTok{, }\StringTok{"N1 invade N2{-}monoculture"}\NormalTok{),}
+                      \AttributeTok{each =} \FunctionTok{length}\NormalTok{(times))}
+
+  \DocumentationTok{\#\#\# Visualize the population dynamics}
+\NormalTok{  Data }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"Species"}\NormalTok{, }\AttributeTok{value =} \StringTok{"pop\_size"}\NormalTok{, }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(time, Scenario)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ time, }\AttributeTok{y =}\NormalTok{ pop\_size, }\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{linewidth =} \FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{facet\_grid}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{Scenario) }\SpecialCharTok{+}
+    \FunctionTok{theme\_classic}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{) }
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+Plot the population dynamics under different parameter sets.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Run mutual invasion tests}
+\DocumentationTok{\#\#\# N1 win: N1 can invade \& N2 cannot invade}
+\FunctionTok{LV\_invasion}\NormalTok{(}\AttributeTok{a11 =} \FloatTok{0.01}\NormalTok{, }\AttributeTok{a21 =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{a22 =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{a12 =} \FloatTok{0.01}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-45-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# N2 win: N1 cannot invade \& N2 can invade}
+\FunctionTok{LV\_invasion}\NormalTok{(}\AttributeTok{a11 =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{a21 =} \FloatTok{0.01}\NormalTok{, }\AttributeTok{a22 =} \FloatTok{0.01}\NormalTok{, }\AttributeTok{a12 =} \FloatTok{0.05}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-45-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Coexist: N1 can invade \& N2 can invade}
+\FunctionTok{LV\_invasion}\NormalTok{(}\AttributeTok{a11 =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{a21 =} \FloatTok{0.01}\NormalTok{, }\AttributeTok{a22 =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{a12 =} \FloatTok{0.01}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-45-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Priority Effect: N1 cannot invade \& N2 cannot invade}
+\FunctionTok{LV\_invasion}\NormalTok{(}\AttributeTok{a11 =} \FloatTok{0.01}\NormalTok{, }\AttributeTok{a21 =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{a22 =} \FloatTok{0.01}\NormalTok{, }\AttributeTok{a12 =} \FloatTok{0.05}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-45-4.pdf}
 
   \bibliography{book.bib,packages.bib}
 
