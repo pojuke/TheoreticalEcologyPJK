@@ -5,22 +5,22 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Week 11 - Lotka-Volterra model of predator-prey interactions and time-scale separation | Introduction to Theoretical Ecology</title>
-  <meta name="description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="description" content="This is the course website for Introduction to Theoretical Ecology 2025 Fall at National Taiwan University." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Week 11 - Lotka-Volterra model of predator-prey interactions and time-scale separation | Introduction to Theoretical Ecology" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
-  <meta property="og:description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
+  <meta property="og:description" content="This is the course website for Introduction to Theoretical Ecology 2025 Fall at National Taiwan University." />
   <meta name="github-repo" content="pojuke/TheoreticalEcologyPJK" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Week 11 - Lotka-Volterra model of predator-prey interactions and time-scale separation | Introduction to Theoretical Ecology" />
   
-  <meta name="twitter:description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
+  <meta name="twitter:description" content="This is the course website for Introduction to Theoretical Ecology 2025 Fall at National Taiwan University." />
   <meta name="twitter:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
 
-<meta name="author" content="Instructor: Po-Ju Ke ~~~~~ Teaching Assistant: Hsiang-Chih Lo" />
+<meta name="author" content="Instructor: Po-Ju Ke ~~~~~ Teaching Assistant: Guan-Yu Chen" />
 
 
 
@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"/>
-<link rel="next" href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -144,8 +144,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course information</a></li>
 <li class="chapter" data-level="" data-path="syllabus.html"><a href="syllabus.html"><i class="fa fa-check"></i>Syllabus</a></li>
 <li class="chapter" data-level="" data-path="week-2---exponential-population-growth.html"><a href="week-2---exponential-population-growth.html"><i class="fa fa-check"></i>Week 2 - Exponential population growth</a></li>
-<li class="chapter" data-level="" data-path="week-3---national-holiday-no-class.html"><a href="week-3---national-holiday-no-class.html"><i class="fa fa-check"></i>Week 3 - National holiday (No class)</a></li>
-<li class="chapter" data-level="" data-path="week-4---logistic-population-growth-and-stability-analysis.html"><a href="week-4---logistic-population-growth-and-stability-analysis.html"><i class="fa fa-check"></i>Week 4 - Logistic population growth and stability analysis</a></li>
+<li class="chapter" data-level="" data-path="week-3---logistic-population-growth-and-stability-analysis.html"><a href="week-3---logistic-population-growth-and-stability-analysis.html"><i class="fa fa-check"></i>Week 3 - Logistic population growth and stability analysis</a></li>
+<li class="chapter" data-level="" data-path="week-4---discrete-exponential-and-logistic-models.html"><a href="week-4---discrete-exponential-and-logistic-models.html"><i class="fa fa-check"></i>Week 4 - Discrete exponential and logistic models</a></li>
 <li class="chapter" data-level="" data-path="week-5---metapopulations-and-patch-occupancy-models.html"><a href="week-5---metapopulations-and-patch-occupancy-models.html"><i class="fa fa-check"></i>Week 5 - Metapopulations and patch occupancy models</a></li>
 <li class="chapter" data-level="" data-path="week-6---harvesting-and-bifurcation.html"><a href="week-6---harvesting-and-bifurcation.html"><i class="fa fa-check"></i>Week 6 - Harvesting and bifurcation</a></li>
 <li class="chapter" data-level="" data-path="week-7---age-structure-population-model.html"><a href="week-7---age-structure-population-model.html"><i class="fa fa-check"></i>Week 7 - Age-structure population model</a></li>
@@ -153,9 +153,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="week-9---midterm.html"><a href="week-9---midterm.html"><i class="fa fa-check"></i>Week 9 - Midterm</a></li>
 <li class="chapter" data-level="" data-path="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"><i class="fa fa-check"></i>Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues</a></li>
 <li class="chapter" data-level="" data-path="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"><i class="fa fa-check"></i>Week 11 - Lotka-Volterra model of predator-prey interactions and time-scale separation</a></li>
-<li class="chapter" data-level="" data-path="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html"><i class="fa fa-check"></i>Week 12 - Rosenzweig-MacArthur predator-prey model and May’s complexity-stability relationship</a></li>
-<li class="chapter" data-level="" data-path="week-13---parameter-space-for-apparent-competition-model.html"><a href="week-13---parameter-space-for-apparent-competition-model.html"><i class="fa fa-check"></i>Week 13 - Parameter space for apparent competition model</a></li>
-<li class="chapter" data-level="" data-path="week-14---resource-competition.html"><a href="week-14---resource-competition.html"><i class="fa fa-check"></i>Week 14 - Resource competition</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -212,12 +209,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb80-23"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb80-23" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> parms[<span class="dv">4</span>]<span class="sc">/</span>(parms[<span class="dv">3</span>] <span class="sc">*</span> parms[<span class="dv">2</span>]), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># equilibrium of N</span></span>
 <span id="cb80-24"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb80-24" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> parms[<span class="dv">1</span>] <span class="sc">/</span> parms[<span class="dv">2</span>], <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># equilibrium of P</span></span>
 <span id="cb80-25"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb80-25" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;P&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb81-1" tabindex="-1"></a><span class="do">### Visualization -- state-space diagram</span></span>
 <span id="cb81-2"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb81-2" tabindex="-1"></a><span class="fu">plot</span>(N <span class="sc">~</span> P, <span class="at">data =</span> pop_size, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
 <span id="cb81-3"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb81-3" tabindex="-1"></a><span class="fu">points</span>(parms[<span class="dv">4</span>]<span class="sc">/</span>(parms[<span class="dv">3</span>] <span class="sc">*</span> parms[<span class="dv">2</span>]), parms[<span class="dv">1</span>] <span class="sc">/</span> parms[<span class="dv">2</span>]) <span class="co"># equilibrium</span></span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-42-2.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-46-2.png" width="672" /></p>
 <p>What is the relationship between the <strong>long-term average</strong> of the cycle and the originally-expected equilibrium? To calculate long-term average, we need to find out the period of the cycle and then calculate the average population size within a period. The period of the cycle may be derived from the distance between peaks in the dynamics shown above, or by some algorithms, e.g. <code>pracma::findpeaks</code>.</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-1" tabindex="-1"></a><span class="fu">require</span>(<span class="st">&#39;pracma&#39;</span>)</span>
+<span id="cb82-2"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-2" tabindex="-1"></a>Peaks <span class="ot">&lt;-</span> pracma<span class="sc">::</span><span class="fu">findpeaks</span>(pop_size[, <span class="dv">2</span>])[, <span class="dv">2</span>]</span>
+<span id="cb82-3"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-3" tabindex="-1"></a><span class="fu">apply</span>(pop_size[Peaks[<span class="dv">3</span>]<span class="sc">:</span>Peaks[<span class="dv">5</span>], ], <span class="dv">2</span>, mean) <span class="co"># long-term average</span></span></code></pre></div>
+<pre><code>##      time         N         P 
+## 34.375000  6.264753 10.000004</code></pre>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb84-1" tabindex="-1"></a><span class="fu">c</span>(<span class="at">N =</span> parms[<span class="dv">4</span>]<span class="sc">/</span>(parms[<span class="dv">3</span>] <span class="sc">*</span> parms[<span class="dv">2</span>]), <span class="at">P =</span> parms[<span class="dv">1</span>] <span class="sc">/</span> parms[<span class="dv">2</span>]) <span class="co"># equilibrium point</span></span></code></pre></div>
+<pre><code>##   N.d   P.r 
+##  6.25 10.00</code></pre>
+<p>We can find that the long-term average population size <span class="math inline">\((N = 6.264753,~ P = 10.000004)\)</span> is close to the value of the unstable equilibrium points <span class="math inline">\((N = 6.25,~ P = 10)\)</span> that can be solved analytically.</p>
 <p><br></p>
 <p><strong>Part 2: Time-scale separation</strong></p>
 <p>Time-scale separation is a useful technique to reduce the dimension of the model system, where some state variables are assumed to operate at a much shorter time scale (i.e., fast variables) compared with the others (i.e., slow variables). The fast variables will be attracted rapidly to their new equilibrium in response to a slight change in the slow variables, such that the slow variables can be viewed as “constants” from the perspective of fast variables (and the fast variable will always be at its quasi-equilibrium from the perspective of the slow variable).</p>
@@ -232,78 +238,94 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>And then we plug <span class="math inline">\(\widehat{N}\)</span> into predator equation:</p>
 <p><span class="math display">\[\frac {dP}{dt} = (eaK-d)P(1-\frac{eaK(\frac{a}{r})}{eaK-d}P)\]</span></p>
 <p>One simple way to achieve time-scale separation in this model is to increase the prey growth rate so that prey will grow much faster than predator, mimicking the shorter generation time of prey relative to that of predator.</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-1" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
-<span id="cb82-2"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-2" tabindex="-1"></a></span>
-<span id="cb82-3"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-3" tabindex="-1"></a>Prey_logistic_model <span class="ot">&lt;-</span> <span class="cf">function</span>(times, state, parms) {</span>
-<span id="cb82-4"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-4" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parms)), {</span>
-<span id="cb82-5"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-5" tabindex="-1"></a>    dN_dt <span class="ot">=</span> r<span class="sc">*</span>N<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>(N<span class="sc">/</span>K))<span class="sc">-</span>a<span class="sc">*</span>N<span class="sc">*</span>P</span>
-<span id="cb82-6"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-6" tabindex="-1"></a>    dP_dt <span class="ot">=</span> e<span class="sc">*</span>a<span class="sc">*</span>N<span class="sc">*</span>P<span class="sc">-</span>d<span class="sc">*</span>P</span>
-<span id="cb82-7"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-7" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="fu">c</span>(dN_dt, dP_dt)))</span>
-<span id="cb82-8"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-8" tabindex="-1"></a>  })</span>
-<span id="cb82-9"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-9" tabindex="-1"></a>}</span>
-<span id="cb82-10"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-10" tabindex="-1"></a></span>
-<span id="cb82-11"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-11" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
-<span id="cb82-12"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-12" tabindex="-1"></a>state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">N =</span> <span class="dv">40</span>, <span class="at">P =</span> <span class="dv">20</span>)</span>
-<span id="cb82-13"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-13" tabindex="-1"></a>parms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">r =</span> <span class="dv">40</span>, <span class="at">K =</span> <span class="dv">60</span>, <span class="at">a =</span> <span class="fl">0.1</span>, <span class="at">e =</span> <span class="fl">0.1</span>, <span class="at">d =</span> <span class="fl">0.5</span>)  <span class="co"># r is chosen to be sufficiently large for time-scale separation</span></span>
-<span id="cb82-14"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-14" tabindex="-1"></a></span>
-<span id="cb82-15"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-15" tabindex="-1"></a>pop_size <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> Prey_logistic_model, <span class="at">times =</span> times, <span class="at">y =</span> state, <span class="at">parms =</span> parms)</span></code></pre></div>
-<p>Under time-scale separation, population of prey rapidly becomes stable and predator exhibits a logistic growth. We show these by the trajectories of <span class="math inline">\(P\)</span> and <span class="math inline">\(N\)</span> over time.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb83-1" tabindex="-1"></a><span class="co"># population trajectories</span></span>
-<span id="cb83-2"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb83-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(times)), <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(pop_size[, <span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;P&quot;</span>)] <span class="sc">+</span> <span class="dv">10</span>)), <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;time&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;population size&quot;</span>)</span>
-<span id="cb83-3"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb83-3" tabindex="-1"></a><span class="fu">lines</span>(N <span class="sc">~</span> time, <span class="at">data =</span> pop_size, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="co"># dynamics of N</span></span>
-<span id="cb83-4"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb83-4" tabindex="-1"></a><span class="fu">lines</span>(P <span class="sc">~</span> time, <span class="at">data =</span> pop_size, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># dynamics of P</span></span>
-<span id="cb83-5"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb83-5" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;P&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-1" tabindex="-1"></a><span class="fu">library</span>(deSolve)</span>
+<span id="cb86-2"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-2" tabindex="-1"></a></span>
+<span id="cb86-3"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-3" tabindex="-1"></a>Prey_logistic_model <span class="ot">&lt;-</span> <span class="cf">function</span>(times, state, parms) {</span>
+<span id="cb86-4"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-4" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parms)), {</span>
+<span id="cb86-5"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-5" tabindex="-1"></a>    dN_dt <span class="ot">=</span> r<span class="sc">*</span>N<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>(N<span class="sc">/</span>K))<span class="sc">-</span>a<span class="sc">*</span>N<span class="sc">*</span>P</span>
+<span id="cb86-6"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-6" tabindex="-1"></a>    dP_dt <span class="ot">=</span> e<span class="sc">*</span>a<span class="sc">*</span>N<span class="sc">*</span>P<span class="sc">-</span>d<span class="sc">*</span>P</span>
+<span id="cb86-7"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-7" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="fu">c</span>(dN_dt, dP_dt)))</span>
+<span id="cb86-8"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-8" tabindex="-1"></a>  })</span>
+<span id="cb86-9"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-9" tabindex="-1"></a>}</span>
+<span id="cb86-10"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-10" tabindex="-1"></a></span>
+<span id="cb86-11"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-11" tabindex="-1"></a>times <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb86-12"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-12" tabindex="-1"></a>state <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">N =</span> <span class="dv">40</span>, <span class="at">P =</span> <span class="dv">20</span>)</span>
+<span id="cb86-13"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-13" tabindex="-1"></a>parms <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">r =</span> <span class="dv">40</span>, <span class="at">K =</span> <span class="dv">60</span>, <span class="at">a =</span> <span class="fl">0.1</span>, <span class="at">e =</span> <span class="fl">0.1</span>, <span class="at">d =</span> <span class="fl">0.5</span>)  <span class="co"># r is chosen to be sufficiently large for time-scale separation</span></span>
+<span id="cb86-14"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-14" tabindex="-1"></a></span>
+<span id="cb86-15"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb86-15" tabindex="-1"></a>pop_size <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> Prey_logistic_model, <span class="at">times =</span> times, <span class="at">y =</span> state, <span class="at">parms =</span> parms)</span></code></pre></div>
+<p>Under time-scale separation, population of prey rapidly approaches its ZNGI and predator exhibits a logistic growth. We can also directly simulate the analytically derived predator equation with timescale separation, which follows the same logistics growth trajectory (grey circle). We show these by the trajectories of <span class="math inline">\(P\)</span> and <span class="math inline">\(N\)</span> over time.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-1" tabindex="-1"></a><span class="co"># population trajectories</span></span>
+<span id="cb87-2"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(times)), <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(pop_size[, <span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;P&quot;</span>)] <span class="sc">+</span> <span class="dv">10</span>)), <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;time&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;population size&quot;</span>)</span>
+<span id="cb87-3"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-3" tabindex="-1"></a><span class="fu">lines</span>(N <span class="sc">~</span> time, <span class="at">data =</span> pop_size, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="co"># dynamics of N</span></span>
+<span id="cb87-4"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-4" tabindex="-1"></a><span class="fu">lines</span>(P <span class="sc">~</span> time, <span class="at">data =</span> pop_size, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># dynamics of P</span></span>
+<span id="cb87-5"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-5" tabindex="-1"></a></span>
+<span id="cb87-6"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-6" tabindex="-1"></a><span class="co"># predator equation with timescale separation</span></span>
+<span id="cb87-7"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-7" tabindex="-1"></a>TimescaleLogistic <span class="ot">&lt;-</span> <span class="cf">function</span>(times, state, parms) {</span>
+<span id="cb87-8"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-8" tabindex="-1"></a>  <span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">c</span>(state, parms)), {</span>
+<span id="cb87-9"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-9" tabindex="-1"></a>    dP_dt <span class="ot">=</span> (e <span class="sc">*</span> a <span class="sc">*</span> K <span class="sc">-</span> d) <span class="sc">*</span> P <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> ((e <span class="sc">*</span> a <span class="sc">*</span> K <span class="sc">*</span>(a <span class="sc">/</span> r))<span class="sc">/</span>(e <span class="sc">*</span> a <span class="sc">*</span> K <span class="sc">-</span> d)) <span class="sc">*</span> P)</span>
+<span id="cb87-10"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-10" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">list</span>(<span class="fu">c</span>(dP_dt)))  </span>
+<span id="cb87-11"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-11" tabindex="-1"></a>  })</span>
+<span id="cb87-12"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-12" tabindex="-1"></a>}</span>
+<span id="cb87-13"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-13" tabindex="-1"></a></span>
+<span id="cb87-14"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-14" tabindex="-1"></a>times.timescale <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">1</span>)</span>
+<span id="cb87-15"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-15" tabindex="-1"></a>state.timescale <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">P =</span> <span class="dv">20</span>) <span class="co"># here we assume N has been at its quasi equilibrium</span></span>
+<span id="cb87-16"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-16" tabindex="-1"></a>parms.timescale <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">r =</span> <span class="dv">40</span>, <span class="at">K =</span> <span class="dv">60</span>, <span class="at">a =</span> <span class="fl">0.1</span>, <span class="at">e =</span> <span class="fl">0.1</span>, <span class="at">d =</span> <span class="fl">0.5</span>) <span class="co"># using same parameters</span></span>
+<span id="cb87-17"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-17" tabindex="-1"></a></span>
+<span id="cb87-18"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-18" tabindex="-1"></a>pop_size.timescale <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> TimescaleLogistic, <span class="at">times =</span> times.timescale, <span class="at">y =</span> state.timescale, <span class="at">parms =</span> parms.timescale)</span>
+<span id="cb87-19"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-19" tabindex="-1"></a><span class="fu">points</span>(P <span class="sc">~</span> time, <span class="at">data =</span> pop_size.timescale, <span class="at">type =</span> <span class="st">&#39;p&#39;</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;grey&quot;</span>)<span class="co"># dynamics of P with timescale separation</span></span>
+<span id="cb87-20"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-20" tabindex="-1"></a></span>
+<span id="cb87-21"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-21" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;P&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
 <p>Since <span class="math inline">\(N\)</span> is a fast variable, it will immediately achieve the its ZNGI on the state-space diagram.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb84-1" tabindex="-1"></a><span class="co"># state-space diagram</span></span>
-<span id="cb84-2"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb84-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(pop_size[, <span class="st">&quot;N&quot;</span>])), <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(pop_size[, <span class="st">&quot;P&quot;</span>])), <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;N&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;P&quot;</span>)</span>
-<span id="cb84-3"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb84-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="co"># ZNGI of N</span></span>
-<span id="cb84-4"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb84-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> parms[<span class="dv">1</span>]<span class="sc">/</span>parms[<span class="dv">3</span>], <span class="at">b =</span> <span class="sc">-</span>parms[<span class="dv">1</span>]<span class="sc">/</span>(parms[<span class="dv">3</span>]<span class="sc">*</span>parms[<span class="dv">2</span>]), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="co"># ZNGI of N</span></span>
-<span id="cb84-5"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb84-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># ZNGI of P</span></span>
-<span id="cb84-6"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb84-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> parms[<span class="dv">5</span>]<span class="sc">/</span>(parms[<span class="dv">4</span>]<span class="sc">*</span>parms[<span class="dv">3</span>]), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># ZNGI of P</span></span>
-<span id="cb84-7"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb84-7" tabindex="-1"></a><span class="fu">points</span>(P <span class="sc">~</span> N, <span class="at">data =</span> pop_size, <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb88-1" tabindex="-1"></a><span class="co"># state-space diagram</span></span>
+<span id="cb88-2"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb88-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(pop_size[, <span class="st">&quot;N&quot;</span>])), <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(pop_size[, <span class="st">&quot;P&quot;</span>])), <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;N&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;P&quot;</span>)</span>
+<span id="cb88-3"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb88-3" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="co"># ZNGI of N</span></span>
+<span id="cb88-4"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb88-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> parms[<span class="dv">1</span>]<span class="sc">/</span>parms[<span class="dv">3</span>], <span class="at">b =</span> <span class="sc">-</span>parms[<span class="dv">1</span>]<span class="sc">/</span>(parms[<span class="dv">3</span>]<span class="sc">*</span>parms[<span class="dv">2</span>]), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>) <span class="co"># ZNGI of N</span></span>
+<span id="cb88-5"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb88-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># ZNGI of P</span></span>
+<span id="cb88-6"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb88-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> parms[<span class="dv">5</span>]<span class="sc">/</span>(parms[<span class="dv">4</span>]<span class="sc">*</span>parms[<span class="dv">3</span>]), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># ZNGI of P</span></span>
+<span id="cb88-7"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb88-7" tabindex="-1"></a><span class="fu">points</span>(P <span class="sc">~</span> N, <span class="at">data =</span> pop_size, <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
 <p>Play with the growth rate <span class="math inline">\(r\)</span> from small to large values and see how the trajectory of prey and predator moves along the state-space.</p>
 <iframe src="https://genchanghsu0115.shinyapps.io/Time_scale_sep_shinyapp/?showcase=0" width="800px" height="700px" data-external="1">
 </iframe>
 <p>Shiny app is credit to <a href="https://genchanghsu.github.io/index.html">Gen-Chang Hsu</a></p>
 <p><strong>Part 3: Bifurcation diagram for the logistically-growing prey model</strong></p>
 <p>Here, we simulate the bifurcation diagram along the prey carrying capacity. Our analytical analyses told us that this model will not end up in a cycle (i.e., the final dynamics are stable equilibria that depend on the parameter value). Therefore, this bifurcation diagram is relatively straightforward: use a for-loop to change the parameter value and record the final state.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-1" tabindex="-1"></a><span class="co"># Create vector for K and saving space</span></span>
-<span id="cb85-2"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-2" tabindex="-1"></a>Parms.bifurcation <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">r =</span> <span class="fl">1.0</span>, <span class="at">K =</span> <span class="dv">60</span>, <span class="at">a =</span> <span class="fl">0.1</span>, <span class="at">e =</span> <span class="fl">0.1</span>, <span class="at">d =</span> <span class="fl">0.5</span>)</span>
-<span id="cb85-3"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-3" tabindex="-1"></a>Times.bifurcation <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1500</span>, <span class="at">by =</span> <span class="dv">1</span>)</span>
-<span id="cb85-4"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-4" tabindex="-1"></a>State.bifurcation <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">N =</span> <span class="dv">1</span>, <span class="at">P =</span> <span class="dv">1</span>)</span>
-<span id="cb85-5"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-5" tabindex="-1"></a>K.vector <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">30</span>, <span class="at">to =</span> <span class="dv">70</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
-<span id="cb85-6"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-6" tabindex="-1"></a>N.sim <span class="ot">&lt;-</span> <span class="fu">length</span>(K.vector)</span>
-<span id="cb85-7"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-7" tabindex="-1"></a>Data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">K =</span> K.vector,</span>
-<span id="cb85-8"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-8" tabindex="-1"></a>                   <span class="at">N.end =</span> <span class="fu">rep</span>(<span class="dv">0</span>, N.sim),</span>
-<span id="cb85-9"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-9" tabindex="-1"></a>                   <span class="at">P.end =</span> <span class="fu">rep</span>(<span class="dv">0</span>, N.sim))</span>
-<span id="cb85-10"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-10" tabindex="-1"></a></span>
-<span id="cb85-11"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-11" tabindex="-1"></a><span class="co"># Run the simulation for each K within the vector</span></span>
-<span id="cb85-12"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-12" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N.sim){</span>
-<span id="cb85-13"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-13" tabindex="-1"></a>  </span>
-<span id="cb85-14"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-14" tabindex="-1"></a>  <span class="co"># Run the simulation with updated K value</span></span>
-<span id="cb85-15"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-15" tabindex="-1"></a>  Parms.bifurcation[<span class="st">&quot;K&quot;</span>] <span class="ot">&lt;-</span> Data<span class="sc">$</span>K[i]</span>
-<span id="cb85-16"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-16" tabindex="-1"></a>  Temp <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> Prey_logistic_model,</span>
-<span id="cb85-17"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-17" tabindex="-1"></a>              <span class="at">times =</span> Times.bifurcation,</span>
-<span id="cb85-18"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-18" tabindex="-1"></a>              <span class="at">y =</span> State.bifurcation,</span>
-<span id="cb85-19"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-19" tabindex="-1"></a>              <span class="at">parms =</span> Parms.bifurcation)</span>
-<span id="cb85-20"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-20" tabindex="-1"></a>  <span class="co"># Since analytical analysis suggests no permanent cycles, simply take last point</span></span>
-<span id="cb85-21"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-21" tabindex="-1"></a>  Temp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(Temp)</span>
-<span id="cb85-22"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-22" tabindex="-1"></a>  Data<span class="sc">$</span>N.end[i] <span class="ot">&lt;-</span> <span class="fu">tail</span>(Temp, <span class="dv">1</span>)<span class="sc">$</span>N</span>
-<span id="cb85-23"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-23" tabindex="-1"></a>  Data<span class="sc">$</span>P.end[i] <span class="ot">&lt;-</span> <span class="fu">tail</span>(Temp, <span class="dv">1</span>)<span class="sc">$</span>P</span>
-<span id="cb85-24"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-24" tabindex="-1"></a></span>
-<span id="cb85-25"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-25" tabindex="-1"></a>}</span>
-<span id="cb85-26"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-26" tabindex="-1"></a></span>
-<span id="cb85-27"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-27" tabindex="-1"></a><span class="co"># Plot</span></span>
-<span id="cb85-28"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-28" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="fu">min</span>(K.vector), <span class="fu">max</span>(K.vector)), <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(Data[, <span class="fu">c</span>(<span class="st">&quot;N.end&quot;</span>, <span class="st">&quot;P.end&quot;</span>)]) <span class="sc">*</span> <span class="fl">1.2</span>),</span>
-<span id="cb85-29"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-29" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;K&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Equilibrium value&quot;</span>)</span>
-<span id="cb85-30"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-30" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>)</span>
-<span id="cb85-31"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-31" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> Parms.bifurcation[<span class="dv">5</span>]<span class="sc">/</span>(Parms.bifurcation[<span class="dv">4</span>]<span class="sc">*</span>Parms.bifurcation[<span class="dv">3</span>]), <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
-<span id="cb85-32"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-32" tabindex="-1"></a><span class="fu">points</span>(N.end <span class="sc">~</span> K, Data, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>,<span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
-<span id="cb85-33"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-33" tabindex="-1"></a><span class="fu">points</span>(P.end <span class="sc">~</span> K, Data, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
-<span id="cb85-34"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb85-34" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Prey&quot;</span>, <span class="st">&quot;Predator&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-1" tabindex="-1"></a><span class="co"># Create vector for K and saving space</span></span>
+<span id="cb89-2"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-2" tabindex="-1"></a>Parms.bifurcation <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">r =</span> <span class="fl">1.0</span>, <span class="at">K =</span> <span class="dv">60</span>, <span class="at">a =</span> <span class="fl">0.1</span>, <span class="at">e =</span> <span class="fl">0.1</span>, <span class="at">d =</span> <span class="fl">0.5</span>)</span>
+<span id="cb89-3"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-3" tabindex="-1"></a>Times.bifurcation <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1500</span>, <span class="at">by =</span> <span class="dv">1</span>)</span>
+<span id="cb89-4"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-4" tabindex="-1"></a>State.bifurcation <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">N =</span> <span class="dv">1</span>, <span class="at">P =</span> <span class="dv">1</span>)</span>
+<span id="cb89-5"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-5" tabindex="-1"></a>K.vector <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">30</span>, <span class="at">to =</span> <span class="dv">70</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb89-6"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-6" tabindex="-1"></a>N.sim <span class="ot">&lt;-</span> <span class="fu">length</span>(K.vector)</span>
+<span id="cb89-7"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-7" tabindex="-1"></a>Data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">K =</span> K.vector,</span>
+<span id="cb89-8"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-8" tabindex="-1"></a>                   <span class="at">N.end =</span> <span class="fu">rep</span>(<span class="dv">0</span>, N.sim),</span>
+<span id="cb89-9"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-9" tabindex="-1"></a>                   <span class="at">P.end =</span> <span class="fu">rep</span>(<span class="dv">0</span>, N.sim))</span>
+<span id="cb89-10"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-10" tabindex="-1"></a></span>
+<span id="cb89-11"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-11" tabindex="-1"></a><span class="co"># Run the simulation for each K within the vector</span></span>
+<span id="cb89-12"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-12" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N.sim){</span>
+<span id="cb89-13"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-13" tabindex="-1"></a>  </span>
+<span id="cb89-14"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-14" tabindex="-1"></a>  <span class="co"># Run the simulation with updated K value</span></span>
+<span id="cb89-15"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-15" tabindex="-1"></a>  Parms.bifurcation[<span class="st">&quot;K&quot;</span>] <span class="ot">&lt;-</span> Data<span class="sc">$</span>K[i]</span>
+<span id="cb89-16"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-16" tabindex="-1"></a>  Temp <span class="ot">&lt;-</span> <span class="fu">ode</span>(<span class="at">func =</span> Prey_logistic_model,</span>
+<span id="cb89-17"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-17" tabindex="-1"></a>              <span class="at">times =</span> Times.bifurcation,</span>
+<span id="cb89-18"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-18" tabindex="-1"></a>              <span class="at">y =</span> State.bifurcation,</span>
+<span id="cb89-19"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-19" tabindex="-1"></a>              <span class="at">parms =</span> Parms.bifurcation)</span>
+<span id="cb89-20"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-20" tabindex="-1"></a>  <span class="co"># Since analytical analysis suggests no permanent cycles, simply take last point</span></span>
+<span id="cb89-21"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-21" tabindex="-1"></a>  Temp <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(Temp)</span>
+<span id="cb89-22"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-22" tabindex="-1"></a>  Data<span class="sc">$</span>N.end[i] <span class="ot">&lt;-</span> <span class="fu">tail</span>(Temp, <span class="dv">1</span>)<span class="sc">$</span>N</span>
+<span id="cb89-23"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-23" tabindex="-1"></a>  Data<span class="sc">$</span>P.end[i] <span class="ot">&lt;-</span> <span class="fu">tail</span>(Temp, <span class="dv">1</span>)<span class="sc">$</span>P</span>
+<span id="cb89-24"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-24" tabindex="-1"></a></span>
+<span id="cb89-25"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-25" tabindex="-1"></a>}</span>
+<span id="cb89-26"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-26" tabindex="-1"></a></span>
+<span id="cb89-27"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-27" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb89-28"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-28" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="fu">min</span>(K.vector), <span class="fu">max</span>(K.vector)), <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(Data[, <span class="fu">c</span>(<span class="st">&quot;N.end&quot;</span>, <span class="st">&quot;P.end&quot;</span>)]) <span class="sc">*</span> <span class="fl">1.2</span>),</span>
+<span id="cb89-29"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-29" tabindex="-1"></a>     <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;K&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Equilibrium value&quot;</span>)</span>
+<span id="cb89-30"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-30" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>)</span>
+<span id="cb89-31"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-31" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> Parms.bifurcation[<span class="dv">5</span>]<span class="sc">/</span>(Parms.bifurcation[<span class="dv">4</span>]<span class="sc">*</span>Parms.bifurcation[<span class="dv">3</span>]), <span class="at">col=</span><span class="st">&quot;grey&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb89-32"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-32" tabindex="-1"></a><span class="fu">points</span>(N.end <span class="sc">~</span> K, Data, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>,<span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb89-33"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-33" tabindex="-1"></a><span class="fu">points</span>(P.end <span class="sc">~</span> K, Data, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
+<span id="cb89-34"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-34" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Prey&quot;</span>, <span class="st">&quot;Predator&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
 
 </div>
             </section>
@@ -311,8 +333,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -326,42 +348,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/11_Week_11_3.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/11_Week_11_LVPP_time.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>

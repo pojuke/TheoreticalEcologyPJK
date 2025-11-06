@@ -1882,6 +1882,233 @@ Plot the population dynamics under different parameter sets.
 
 \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-45-4.pdf}
 
+\hypertarget{week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation}{%
+\chapter*{Week 11 - Lotka-Volterra model of predator-prey interactions and time-scale separation}\label{week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation}}
+\addcontentsline{toc}{chapter}{Week 11 - Lotka-Volterra model of predator-prey interactions and time-scale separation}
+
+\textbf{Part 1: analyzing the classic Lotka-Volterra predator-prey model}
+
+In this lab, we are going to analyze the classic Lotka-Volterra predator-prey model:
+
+\begin{align*}
+\frac {dN}{dt} &= rN-aNP\\
+\frac {dP}{dt} &= eaNP-dP
+\end{align*}
+
+The non-trivial equilibrium of this system is \(E_c = (N = \frac{d}{ea}, P = \frac{r}{a})\).
+
+We simulate the model using the following parameter set (\(N_0\) = 10, \(P_0\) = 2, \(r\) = 1.0, \(a\) = 0.1, \(e\) = 0.8, \(d\) = 0.5) and plot the population trajectories of predator and prey over time. We also show their population dynamics in the state-space diagram.
+
+What will happen if you add a perturbation to the system (i.e., change the initial conditions)? Try out different values of \(N_0\) and \(P_0\) and visualize the differences in the state-space diagram by yourselve.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(deSolve)}
+\DocumentationTok{\#\#\# Model specification}
+\NormalTok{LV\_predation\_model }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(times, state, parms) \{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{    dN\_dt }\OtherTok{=}\NormalTok{ r}\SpecialCharTok{*}\NormalTok{N }\SpecialCharTok{{-}}\NormalTok{ a}\SpecialCharTok{*}\NormalTok{N}\SpecialCharTok{*}\NormalTok{P}
+\NormalTok{    dP\_dt }\OtherTok{=}\NormalTok{ e}\SpecialCharTok{*}\NormalTok{a}\SpecialCharTok{*}\NormalTok{N}\SpecialCharTok{*}\NormalTok{P }\SpecialCharTok{{-}}\NormalTok{ d}\SpecialCharTok{*}\NormalTok{P}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(dN\_dt, dP\_dt)))}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#\# Model parameters}
+\NormalTok{times }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.01}\NormalTok{)}
+\NormalTok{state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N =} \DecValTok{10}\NormalTok{, }\AttributeTok{P =} \DecValTok{2}\NormalTok{)}
+\NormalTok{parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =} \FloatTok{1.0}\NormalTok{, }\AttributeTok{a =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{e =} \FloatTok{0.8}\NormalTok{, }\AttributeTok{d =} \FloatTok{0.5}\NormalTok{)}
+
+\DocumentationTok{\#\#\# Model application}
+\NormalTok{pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ LV\_predation\_model, }\AttributeTok{times =}\NormalTok{ times, }\AttributeTok{y =}\NormalTok{ state, }\AttributeTok{parms =}\NormalTok{ parms)}
+
+\DocumentationTok{\#\#\# Visualization {-}{-} population dynamics}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{max}\NormalTok{(times)), }\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{max}\NormalTok{(pop\_size[, }\FunctionTok{c}\NormalTok{(}\StringTok{"N"}\NormalTok{, }\StringTok{"P"}\NormalTok{)] }\SpecialCharTok{+} \DecValTok{10}\NormalTok{)), }\AttributeTok{type =} \StringTok{"n"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"time"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"population size"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(N }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{) }\CommentTok{\# dynamics of N}
+\FunctionTok{lines}\NormalTok{(P }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{) }\CommentTok{\# dynamics of P}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ parms[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{/}\NormalTok{(parms[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ parms[}\DecValTok{2}\NormalTok{]), }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{) }\CommentTok{\# equilibrium of N}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =}\NormalTok{ parms[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ parms[}\DecValTok{2}\NormalTok{], }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{) }\CommentTok{\# equilibrium of P}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"N"}\NormalTok{, }\StringTok{"P"}\NormalTok{), }\AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"red"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-46-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Visualization {-}{-} state{-}space diagram}
+\FunctionTok{plot}\NormalTok{(N }\SpecialCharTok{\textasciitilde{}}\NormalTok{ P, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(parms[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{/}\NormalTok{(parms[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ parms[}\DecValTok{2}\NormalTok{]), parms[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ parms[}\DecValTok{2}\NormalTok{]) }\CommentTok{\# equilibrium}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-46-2.pdf}
+
+What is the relationship between the \textbf{long-term average} of the cycle and the originally-expected equilibrium? To calculate long-term average, we need to find out the period of the cycle and then calculate the average population size within a period. The period of the cycle may be derived from the distance between peaks in the dynamics shown above, or by some algorithms, e.g.~\texttt{pracma::findpeaks}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{require}\NormalTok{(}\StringTok{\textquotesingle{}pracma\textquotesingle{}}\NormalTok{)}
+\NormalTok{Peaks }\OtherTok{\textless{}{-}}\NormalTok{ pracma}\SpecialCharTok{::}\FunctionTok{findpeaks}\NormalTok{(pop\_size[, }\DecValTok{2}\NormalTok{])[, }\DecValTok{2}\NormalTok{]}
+\FunctionTok{apply}\NormalTok{(pop\_size[Peaks[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{:}\NormalTok{Peaks[}\DecValTok{5}\NormalTok{], ], }\DecValTok{2}\NormalTok{, mean) }\CommentTok{\# long{-}term average}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      time         N         P 
+## 34.375000  6.264753 10.000004
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{c}\NormalTok{(}\AttributeTok{N =}\NormalTok{ parms[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{/}\NormalTok{(parms[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ parms[}\DecValTok{2}\NormalTok{]), }\AttributeTok{P =}\NormalTok{ parms[}\DecValTok{1}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ parms[}\DecValTok{2}\NormalTok{]) }\CommentTok{\# equilibrium point}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   N.d   P.r 
+##  6.25 10.00
+\end{verbatim}
+
+We can find that the long-term average population size \((N = 6.264753,~ P = 10.000004)\) is close to the value of the unstable equilibrium points \((N = 6.25,~ P = 10)\) that can be solved analytically.
+
+\textbf{Part 2: Time-scale separation}
+
+Time-scale separation is a useful technique to reduce the dimension of the model system, where some state variables are assumed to operate at a much shorter time scale (i.e., fast variables) compared with the others (i.e., slow variables). The fast variables will be attracted rapidly to their new equilibrium in response to a slight change in the slow variables, such that the slow variables can be viewed as ``constants'' from the perspective of fast variables (and the fast variable will always be at its quasi-equilibrium from the perspective of the slow variable).
+
+Here, we are going to use the Lotka-Volterra model with logistic prey growth to demonstrate the time-scale separation technique:
+
+\begin{align*}
+\frac {dN}{dt} &= rN(1-\frac{N}{K})-aNP\\
+\frac {dP}{dt} &= eaNP-dP
+\end{align*}
+
+The ZNGIs of \(N\) are \(N = 0\) and \(r(1-\frac{N}{K}) - aP = 0\) and the ZNGIs of \(P\) are \(P = 0\) and \(eaN = d\) in this model.
+
+We treat \textbf{prey as a fast variable and predator as a slow variable}. First, we find the quasi-equilibrium \(\widehat{N}\) of prey by setting the prey equation to zero:
+
+\[\widehat{N} = K(1-\frac{aP}{r})\]
+
+And then we plug \(\widehat{N}\) into predator equation:
+
+\[\frac {dP}{dt} = (eaK-d)P(1-\frac{eaK(\frac{a}{r})}{eaK-d}P)\]
+
+One simple way to achieve time-scale separation in this model is to increase the prey growth rate so that prey will grow much faster than predator, mimicking the shorter generation time of prey relative to that of predator.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(deSolve)}
+
+\NormalTok{Prey\_logistic\_model }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(times, state, parms) \{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{    dN\_dt }\OtherTok{=}\NormalTok{ r}\SpecialCharTok{*}\NormalTok{N}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{(N}\SpecialCharTok{/}\NormalTok{K))}\SpecialCharTok{{-}}\NormalTok{a}\SpecialCharTok{*}\NormalTok{N}\SpecialCharTok{*}\NormalTok{P}
+\NormalTok{    dP\_dt }\OtherTok{=}\NormalTok{ e}\SpecialCharTok{*}\NormalTok{a}\SpecialCharTok{*}\NormalTok{N}\SpecialCharTok{*}\NormalTok{P}\SpecialCharTok{{-}}\NormalTok{d}\SpecialCharTok{*}\NormalTok{P}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(dN\_dt, dP\_dt)))}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\NormalTok{times }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.01}\NormalTok{)}
+\NormalTok{state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N =} \DecValTok{40}\NormalTok{, }\AttributeTok{P =} \DecValTok{20}\NormalTok{)}
+\NormalTok{parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =} \DecValTok{40}\NormalTok{, }\AttributeTok{K =} \DecValTok{60}\NormalTok{, }\AttributeTok{a =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{e =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{d =} \FloatTok{0.5}\NormalTok{)  }\CommentTok{\# r is chosen to be sufficiently large for time{-}scale separation}
+
+\NormalTok{pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ Prey\_logistic\_model, }\AttributeTok{times =}\NormalTok{ times, }\AttributeTok{y =}\NormalTok{ state, }\AttributeTok{parms =}\NormalTok{ parms)}
+\end{Highlighting}
+\end{Shaded}
+
+Under time-scale separation, population of prey rapidly approaches its ZNGI and predator exhibits a logistic growth. We can also directly simulate the analytically derived predator equation with timescale separation, which follows the same logistics growth trajectory (grey circle). We show these by the trajectories of \(P\) and \(N\) over time.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# population trajectories}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{max}\NormalTok{(times)), }\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{max}\NormalTok{(pop\_size[, }\FunctionTok{c}\NormalTok{(}\StringTok{"N"}\NormalTok{, }\StringTok{"P"}\NormalTok{)] }\SpecialCharTok{+} \DecValTok{10}\NormalTok{)), }\AttributeTok{type =} \StringTok{"n"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"time"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"population size"}\NormalTok{)}
+\FunctionTok{lines}\NormalTok{(N }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{) }\CommentTok{\# dynamics of N}
+\FunctionTok{lines}\NormalTok{(P }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{) }\CommentTok{\# dynamics of P}
+
+\CommentTok{\# predator equation with timescale separation}
+\NormalTok{TimescaleLogistic }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(times, state, parms) \{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{    dP\_dt }\OtherTok{=}\NormalTok{ (e }\SpecialCharTok{*}\NormalTok{ a }\SpecialCharTok{*}\NormalTok{ K }\SpecialCharTok{{-}}\NormalTok{ d) }\SpecialCharTok{*}\NormalTok{ P }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ ((e }\SpecialCharTok{*}\NormalTok{ a }\SpecialCharTok{*}\NormalTok{ K }\SpecialCharTok{*}\NormalTok{(a }\SpecialCharTok{/}\NormalTok{ r))}\SpecialCharTok{/}\NormalTok{(e }\SpecialCharTok{*}\NormalTok{ a }\SpecialCharTok{*}\NormalTok{ K }\SpecialCharTok{{-}}\NormalTok{ d)) }\SpecialCharTok{*}\NormalTok{ P)}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(dP\_dt)))  }
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\NormalTok{times.timescale }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{100}\NormalTok{, }\AttributeTok{by =} \DecValTok{1}\NormalTok{)}
+\NormalTok{state.timescale }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{P =} \DecValTok{20}\NormalTok{) }\CommentTok{\# here we assume N has been at its quasi equilibrium}
+\NormalTok{parms.timescale }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =} \DecValTok{40}\NormalTok{, }\AttributeTok{K =} \DecValTok{60}\NormalTok{, }\AttributeTok{a =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{e =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{d =} \FloatTok{0.5}\NormalTok{) }\CommentTok{\# using same parameters}
+
+\NormalTok{pop\_size.timescale }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ TimescaleLogistic, }\AttributeTok{times =}\NormalTok{ times.timescale, }\AttributeTok{y =}\NormalTok{ state.timescale, }\AttributeTok{parms =}\NormalTok{ parms.timescale)}
+\FunctionTok{points}\NormalTok{(P }\SpecialCharTok{\textasciitilde{}}\NormalTok{ time, }\AttributeTok{data =}\NormalTok{ pop\_size.timescale, }\AttributeTok{type =} \StringTok{\textquotesingle{}p\textquotesingle{}}\NormalTok{, }\AttributeTok{lty =} \DecValTok{1}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{1}\NormalTok{, }\AttributeTok{col =} \StringTok{"grey"}\NormalTok{)}\CommentTok{\# dynamics of P with timescale separation}
+
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{, }\AttributeTok{legend =} \FunctionTok{c}\NormalTok{(}\StringTok{"N"}\NormalTok{, }\StringTok{"P"}\NormalTok{), }\AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"red"}\NormalTok{), }\AttributeTok{lty =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-49-1.pdf}
+
+Since \(N\) is a fast variable, it will immediately achieve the its ZNGI on the state-space diagram.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# state{-}space diagram}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{max}\NormalTok{(pop\_size[, }\StringTok{"N"}\NormalTok{])), }\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{max}\NormalTok{(pop\_size[, }\StringTok{"P"}\NormalTok{])), }\AttributeTok{type =} \StringTok{"n"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"N"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"P"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =} \DecValTok{0}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{) }\CommentTok{\# ZNGI of N}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{a =}\NormalTok{ parms[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{/}\NormalTok{parms[}\DecValTok{3}\NormalTok{], }\AttributeTok{b =} \SpecialCharTok{{-}}\NormalTok{parms[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{/}\NormalTok{(parms[}\DecValTok{3}\NormalTok{]}\SpecialCharTok{*}\NormalTok{parms[}\DecValTok{2}\NormalTok{]), }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{) }\CommentTok{\# ZNGI of N}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{) }\CommentTok{\# ZNGI of P}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =}\NormalTok{ parms[}\DecValTok{5}\NormalTok{]}\SpecialCharTok{/}\NormalTok{(parms[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{*}\NormalTok{parms[}\DecValTok{3}\NormalTok{]), }\AttributeTok{col =} \StringTok{"red"}\NormalTok{) }\CommentTok{\# ZNGI of P}
+\FunctionTok{points}\NormalTok{(P }\SpecialCharTok{\textasciitilde{}}\NormalTok{ N, }\AttributeTok{data =}\NormalTok{ pop\_size, }\AttributeTok{col =} \StringTok{"gray"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-50-1.pdf}
+
+Play with the growth rate \(r\) from small to large values and see how the trajectory of prey and predator moves along the state-space.
+
+Shiny app is credit to \href{https://genchanghsu.github.io/index.html}{Gen-Chang Hsu}
+
+\textbf{Part 3: Bifurcation diagram for the logistically-growing prey model}
+
+Here, we simulate the bifurcation diagram along the prey carrying capacity. Our analytical analyses told us that this model will not end up in a cycle (i.e., the final dynamics are stable equilibria that depend on the parameter value). Therefore, this bifurcation diagram is relatively straightforward: use a for-loop to change the parameter value and record the final state.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Create vector for K and saving space}
+\NormalTok{Parms.bifurcation }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r =} \FloatTok{1.0}\NormalTok{, }\AttributeTok{K =} \DecValTok{60}\NormalTok{, }\AttributeTok{a =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{e =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{d =} \FloatTok{0.5}\NormalTok{)}
+\NormalTok{Times.bifurcation }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1500}\NormalTok{, }\AttributeTok{by =} \DecValTok{1}\NormalTok{)}
+\NormalTok{State.bifurcation }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N =} \DecValTok{1}\NormalTok{, }\AttributeTok{P =} \DecValTok{1}\NormalTok{)}
+\NormalTok{K.vector }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\AttributeTok{from =} \DecValTok{30}\NormalTok{, }\AttributeTok{to =} \DecValTok{70}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.1}\NormalTok{)}
+\NormalTok{N.sim }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(K.vector)}
+\NormalTok{Data }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{K =}\NormalTok{ K.vector,}
+                   \AttributeTok{N.end =} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, N.sim),}
+                   \AttributeTok{P.end =} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, N.sim))}
+
+\CommentTok{\# Run the simulation for each K within the vector}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\NormalTok{N.sim)\{}
+  
+  \CommentTok{\# Run the simulation with updated K value}
+\NormalTok{  Parms.bifurcation[}\StringTok{"K"}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ Data}\SpecialCharTok{$}\NormalTok{K[i]}
+\NormalTok{  Temp }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ Prey\_logistic\_model,}
+              \AttributeTok{times =}\NormalTok{ Times.bifurcation,}
+              \AttributeTok{y =}\NormalTok{ State.bifurcation,}
+              \AttributeTok{parms =}\NormalTok{ Parms.bifurcation)}
+  \CommentTok{\# Since analytical analysis suggests no permanent cycles, simply take last point}
+\NormalTok{  Temp }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(Temp)}
+\NormalTok{  Data}\SpecialCharTok{$}\NormalTok{N.end[i] }\OtherTok{\textless{}{-}} \FunctionTok{tail}\NormalTok{(Temp, }\DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{N}
+\NormalTok{  Data}\SpecialCharTok{$}\NormalTok{P.end[i] }\OtherTok{\textless{}{-}} \FunctionTok{tail}\NormalTok{(Temp, }\DecValTok{1}\NormalTok{)}\SpecialCharTok{$}\NormalTok{P}
+
+\NormalTok{\}}
+
+\CommentTok{\# Plot}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\FunctionTok{min}\NormalTok{(K.vector), }\FunctionTok{max}\NormalTok{(K.vector)), }\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{max}\NormalTok{(Data[, }\FunctionTok{c}\NormalTok{(}\StringTok{"N.end"}\NormalTok{, }\StringTok{"P.end"}\NormalTok{)]) }\SpecialCharTok{*} \FloatTok{1.2}\NormalTok{),}
+     \AttributeTok{type =} \StringTok{"n"}\NormalTok{, }\AttributeTok{xlab =} \StringTok{"K"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Equilibrium value"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{v =}\NormalTok{ Parms.bifurcation[}\DecValTok{5}\NormalTok{]}\SpecialCharTok{/}\NormalTok{(Parms.bifurcation[}\DecValTok{4}\NormalTok{]}\SpecialCharTok{*}\NormalTok{Parms.bifurcation[}\DecValTok{3}\NormalTok{]), }\AttributeTok{col=}\StringTok{"grey"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{2}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{3}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(N.end }\SpecialCharTok{\textasciitilde{}}\NormalTok{ K, Data, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{col =} \StringTok{"blue"}\NormalTok{,}\AttributeTok{lty =} \DecValTok{1}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{3}\NormalTok{)}
+\FunctionTok{points}\NormalTok{(P.end }\SpecialCharTok{\textasciitilde{}}\NormalTok{ K, Data, }\AttributeTok{type =} \StringTok{"l"}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{, }\AttributeTok{lty =} \DecValTok{1}\NormalTok{, }\AttributeTok{lwd =} \DecValTok{3}\NormalTok{)}
+\FunctionTok{legend}\NormalTok{(}\StringTok{"topleft"}\NormalTok{, }\FunctionTok{c}\NormalTok{(}\StringTok{"Prey"}\NormalTok{, }\StringTok{"Predator"}\NormalTok{), }\AttributeTok{col =} \FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"red"}\NormalTok{), }\AttributeTok{lwd =} \DecValTok{3}\NormalTok{, }\AttributeTok{lty =} \DecValTok{1}\NormalTok{, }\AttributeTok{bty =} \StringTok{"n"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-52-1.pdf}
+
   \bibliography{book.bib,packages.bib}
 
 \end{document}
