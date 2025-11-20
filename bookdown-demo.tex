@@ -2404,6 +2404,177 @@ Here, we simulate the bifurcation diagram along the prey carrying capacity. Diff
 
 \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-58-1.pdf}
 
+\hypertarget{week-13---parameter-space-for-apparent-competition-model}{%
+\chapter*{Week 13 - Parameter space for apparent competition model}\label{week-13---parameter-space-for-apparent-competition-model}}
+\addcontentsline{toc}{chapter}{Week 13 - Parameter space for apparent competition model}
+
+Here, we are going to visualize the outcomes of apparent competition in the \(r_1/a_1\) -- \(r_2/a_2\) space:
+\begin{align*}
+\frac{dN_1}{dt} &= r_1N_1(1-\frac{N_1}{K_1}) - a_1N_1P\\
+\frac{dN_2}{dt} &= r_2N_2(1-\frac{N_2}{K_2}) - a_2N_2P\\
+\frac{dP}{dt} &= e_1a_1N_1P + e_2a_2N_2P - mP.
+\end{align*}
+Two prey \(N_1\) and \(N_2\) grow logistically with intrinsic growth rate \(r_1\) and \(r_2\) and carrying capacity \(K_1\) and \(K_2\). Predator \(P\) consumes two prey following Holling type I functional response, with \(a_1\) and \(a_2\) representing the consumption rate of \(N_1\) and \(N_2\) by predator respectively. After consumption, the assimilation rate are \(e_1\) and \(e_2\). The death rate of predator is represented by \(m\).
+
+\textbf{Part 1: Directly simulate dynamical system}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(deSolve)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\DocumentationTok{\#\#\#\# ODE setup}
+\NormalTok{ApparentCompetition }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(times, state, parms) \{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{    dN1\_dt }\OtherTok{=}\NormalTok{ r1 }\SpecialCharTok{*}\NormalTok{ N1 }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ N1 }\SpecialCharTok{/}\NormalTok{ K1) }\SpecialCharTok{{-}}\NormalTok{ a1 }\SpecialCharTok{*}\NormalTok{ N1 }\SpecialCharTok{*}\NormalTok{ P}
+\NormalTok{    dN2\_dt }\OtherTok{=}\NormalTok{ r2 }\SpecialCharTok{*}\NormalTok{ N2 }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ N2 }\SpecialCharTok{/}\NormalTok{ K2) }\SpecialCharTok{{-}}\NormalTok{ a2 }\SpecialCharTok{*}\NormalTok{ N2 }\SpecialCharTok{*}\NormalTok{ P}
+\NormalTok{    dP\_dt }\OtherTok{=}\NormalTok{ e1 }\SpecialCharTok{*}\NormalTok{ a1 }\SpecialCharTok{*}\NormalTok{ N1 }\SpecialCharTok{*}\NormalTok{ P }\SpecialCharTok{+}\NormalTok{ e2 }\SpecialCharTok{*}\NormalTok{ a2 }\SpecialCharTok{*}\NormalTok{ N2 }\SpecialCharTok{*}\NormalTok{ P }\SpecialCharTok{{-}}\NormalTok{ d }\SpecialCharTok{*}\NormalTok{ P}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(dN1\_dt, dN2\_dt, dP\_dt)))}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\NormalTok{times }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{3000}\NormalTok{, }\AttributeTok{by =} \DecValTok{10}\NormalTok{)}
+\NormalTok{state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N1 =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{N2 =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{P =} \DecValTok{1}\NormalTok{)}
+\NormalTok{parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{r1 =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{r2 =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{a1 =} \FloatTok{0.35}\NormalTok{, }\AttributeTok{a2 =} \FloatTok{0.35}\NormalTok{, }\AttributeTok{e1 =} \FloatTok{0.4}\NormalTok{, }\AttributeTok{e2 =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{d =} \FloatTok{0.8}\NormalTok{, }\AttributeTok{K1 =} \DecValTok{15}\NormalTok{, }\AttributeTok{K2 =} \DecValTok{12}\NormalTok{) }\CommentTok{\# Omitting r1 and r2}
+ 
+
+\DocumentationTok{\#\#\#\# Set up parameter space of interest}
+\NormalTok{r\_min }\OtherTok{\textless{}{-}} \FloatTok{0.1}
+\NormalTok{r\_max }\OtherTok{\textless{}{-}} \FloatTok{0.7}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100}
+\NormalTok{r1\_vec }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(r\_min, r\_max, }\AttributeTok{length.out =}\NormalTok{ n)}
+\NormalTok{r2\_vec }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(r\_min, r\_max, }\AttributeTok{length.out =}\NormalTok{ n)}
+\NormalTok{comp\_out }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{r1 =}\NormalTok{ r1\_vec, }\AttributeTok{r2 =}\NormalTok{ r2\_vec)}
+
+
+\DocumentationTok{\#\#\#\# Create saving space for simulation output}
+\NormalTok{comp\_out }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(comp\_out,}
+                                \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{, }
+                                       \AttributeTok{nrow =} \FunctionTok{dim}\NormalTok{(comp\_out)[}\DecValTok{1}\NormalTok{], }
+                                       \AttributeTok{ncol =} \FunctionTok{length}\NormalTok{(state))))}
+\FunctionTok{names}\NormalTok{(comp\_out) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"r1"}\NormalTok{, }\StringTok{"r2"}\NormalTok{, }\StringTok{"N1"}\NormalTok{, }\StringTok{"N2"}\NormalTok{, }\StringTok{"P"}\NormalTok{)}
+
+
+\DocumentationTok{\#\#\#\# Simulate the ODE across the parameter space}
+\NormalTok{start\_time }\OtherTok{\textless{}{-}} \FunctionTok{Sys.time}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{dim}\NormalTok{(comp\_out)[}\DecValTok{1}\NormalTok{])\{}
+  
+\NormalTok{  temp\_parms }\OtherTok{\textless{}{-}}\NormalTok{ parms}
+\NormalTok{  temp\_parms[}\StringTok{"r1"}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ comp\_out[i, ]}\SpecialCharTok{$}\NormalTok{r1}
+\NormalTok{  temp\_parms[}\StringTok{"r2"}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ comp\_out[i, ]}\SpecialCharTok{$}\NormalTok{r2}
+  
+\NormalTok{  temp\_out }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ ApparentCompetition, }
+                  \AttributeTok{times =}\NormalTok{ times, }
+                  \AttributeTok{y =}\NormalTok{ state, }
+                  \AttributeTok{parms =}\NormalTok{ temp\_parms)}
+  
+\NormalTok{  N\_final }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(}\FunctionTok{na.omit}\NormalTok{(temp\_out)) }
+\NormalTok{  comp\_out[i, }\DecValTok{3}\SpecialCharTok{:}\DecValTok{5}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ temp\_out[N\_final, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+  
+\NormalTok{\}}
+\NormalTok{end\_time }\OtherTok{\textless{}{-}} \FunctionTok{Sys.time}\NormalTok{()}
+\NormalTok{end\_time }\SpecialCharTok{{-}}\NormalTok{ start\_time}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Time difference of 4.419463 mins
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Determine outcome status}
+\NormalTok{extinct\_thres }\OtherTok{\textless{}{-}} \FloatTok{1e{-}7}
+\NormalTok{comp\_out}\SpecialCharTok{$}\NormalTok{Outcome }\OtherTok{\textless{}{-}} 
+  \FunctionTok{ifelse}\NormalTok{(comp\_out[, }\DecValTok{3}\NormalTok{] }\SpecialCharTok{\textless{}}\NormalTok{ extinct\_thres, }\StringTok{"N2 win"}\NormalTok{, }
+         \FunctionTok{ifelse}\NormalTok{(comp\_out[, }\DecValTok{4}\NormalTok{] }\SpecialCharTok{\textless{}}\NormalTok{ extinct\_thres, }\StringTok{"N1 win"}\NormalTok{, }\StringTok{"Coexist"}\NormalTok{))}
+
+
+\DocumentationTok{\#\#\#\# Visualize the competition outcomes in the grids}
+\FunctionTok{ggplot}\NormalTok{(comp\_out, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ r1}\SpecialCharTok{/}\NormalTok{parms[}\DecValTok{3}\NormalTok{], }\AttributeTok{y =}\NormalTok{ r2}\SpecialCharTok{/}\NormalTok{parms[}\DecValTok{4}\NormalTok{], }\AttributeTok{z =}\NormalTok{ Outcome, }\AttributeTok{fill =}\NormalTok{ Outcome)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{intercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{slope =}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ parms[}\DecValTok{7}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ (parms[}\DecValTok{5}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ parms[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ parms[}\DecValTok{8}\NormalTok{])), }\AttributeTok{linewidth =} \FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{intercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{slope =}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ parms[}\DecValTok{7}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ (parms[}\DecValTok{6}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ parms[}\DecValTok{4}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ parms[}\DecValTok{9}\NormalTok{]))}\SpecialCharTok{\^{}{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \FunctionTok{expression}\NormalTok{(r[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{/}\NormalTok{a[}\DecValTok{1}\NormalTok{]), }\AttributeTok{y =} \FunctionTok{expression}\NormalTok{(r[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{/}\NormalTok{a[}\DecValTok{2}\NormalTok{])) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette =} \StringTok{"Set1"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{14}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{panel.grid =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{coord\_fixed}\NormalTok{(}\AttributeTok{ratio =} \DecValTok{1}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-60-1.pdf}
+
+\textbf{Part 2: Use analytical calculations}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Create saving space for simulation output}
+\NormalTok{r\_min }\OtherTok{\textless{}{-}} \FloatTok{0.1} \CommentTok{\# also try 0.01}
+\NormalTok{r\_max }\OtherTok{\textless{}{-}} \FloatTok{0.7} \CommentTok{\# also try 1.75}
+\NormalTok{n }\OtherTok{\textless{}{-}} \DecValTok{100} \CommentTok{\# also try 200}
+\NormalTok{r1\_vec }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(r\_min, r\_max, }\AttributeTok{length.out =}\NormalTok{ n)}
+\NormalTok{r2\_vec }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(r\_min, r\_max, }\AttributeTok{length.out =}\NormalTok{ n)}
+\NormalTok{comp\_out\_igr }\OtherTok{\textless{}{-}} \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{r1 =}\NormalTok{ r1\_vec, }\AttributeTok{r2 =}\NormalTok{ r2\_vec)}
+\NormalTok{comp\_out\_igr }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{cbind}\NormalTok{(comp\_out\_igr,}
+                                    \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{,}
+                                           \AttributeTok{nrow =} \FunctionTok{dim}\NormalTok{(comp\_out\_igr)[}\DecValTok{1}\NormalTok{], }
+                                           \AttributeTok{ncol =} \DecValTok{2}\NormalTok{)))}
+\FunctionTok{names}\NormalTok{(comp\_out\_igr) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"r1"}\NormalTok{, }\StringTok{"r2"}\NormalTok{, }\StringTok{"IGR1"}\NormalTok{, }\StringTok{"IGR2"}\NormalTok{)}
+
+
+\DocumentationTok{\#\#\#\# Calculate the IGR across the parameter space}
+\NormalTok{start\_time }\OtherTok{\textless{}{-}} \FunctionTok{Sys.time}\NormalTok{()}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{dim}\NormalTok{(comp\_out\_igr)[}\DecValTok{1}\NormalTok{])\{}
+  
+\NormalTok{  temp\_parms }\OtherTok{\textless{}{-}}\NormalTok{ parms}
+\NormalTok{  temp\_parms[}\StringTok{"r1"}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ comp\_out\_igr[i, ]}\SpecialCharTok{$}\NormalTok{r1}
+\NormalTok{  temp\_parms[}\StringTok{"r2"}\NormalTok{] }\OtherTok{\textless{}{-}}\NormalTok{ comp\_out\_igr[i, ]}\SpecialCharTok{$}\NormalTok{r2}
+  
+\NormalTok{  comp\_out\_igr[i, }\DecValTok{3}\SpecialCharTok{:}\DecValTok{4}\NormalTok{] }\OtherTok{\textless{}{-}} 
+    \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(temp\_parms), \{}
+\NormalTok{      igr\_1 }\OtherTok{\textless{}{-}}\NormalTok{ r1 }\SpecialCharTok{{-}}\NormalTok{ a1 }\SpecialCharTok{*}\NormalTok{ ((r2}\SpecialCharTok{/}\NormalTok{a2) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ (d}\SpecialCharTok{/}\NormalTok{(e2}\SpecialCharTok{*}\NormalTok{a2}\SpecialCharTok{*}\NormalTok{K2))))}
+\NormalTok{      igr\_2 }\OtherTok{\textless{}{-}}\NormalTok{ r2 }\SpecialCharTok{{-}}\NormalTok{ a2 }\SpecialCharTok{*}\NormalTok{ ((r1}\SpecialCharTok{/}\NormalTok{a1) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ (d}\SpecialCharTok{/}\NormalTok{(e1}\SpecialCharTok{*}\NormalTok{a1}\SpecialCharTok{*}\NormalTok{K1))))}
+      \FunctionTok{c}\NormalTok{(igr\_1, igr\_2) }
+\NormalTok{    \})}
+
+\NormalTok{\}}
+\NormalTok{end\_time }\OtherTok{\textless{}{-}} \FunctionTok{Sys.time}\NormalTok{()}
+\NormalTok{end\_time }\SpecialCharTok{{-}}\NormalTok{ start\_time}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Time difference of 1.736758 secs
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\#\# Determine outcome status}
+\NormalTok{comp\_out\_igr}\SpecialCharTok{$}\NormalTok{Outcome }\OtherTok{\textless{}{-}} 
+  \FunctionTok{ifelse}\NormalTok{(comp\_out\_igr[, }\DecValTok{3}\NormalTok{] }\SpecialCharTok{\textless{}} \DecValTok{0}\NormalTok{, }\StringTok{"N2 win"}\NormalTok{, }
+          \FunctionTok{ifelse}\NormalTok{(comp\_out\_igr[, }\DecValTok{4}\NormalTok{] }\SpecialCharTok{\textless{}} \DecValTok{0}\NormalTok{, }\StringTok{"N1 win"}\NormalTok{, }\StringTok{"Coexist"}\NormalTok{))}
+
+
+\DocumentationTok{\#\#\#\# Visualize the competition outcomes in the grids}
+\FunctionTok{ggplot}\NormalTok{(comp\_out\_igr, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ r1}\SpecialCharTok{/}\NormalTok{parms[}\DecValTok{3}\NormalTok{], }\AttributeTok{y =}\NormalTok{ r2}\SpecialCharTok{/}\NormalTok{parms[}\DecValTok{4}\NormalTok{], }\AttributeTok{z =}\NormalTok{ Outcome, }\AttributeTok{fill =}\NormalTok{ Outcome)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{intercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{slope =}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ parms[}\DecValTok{7}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ (parms[}\DecValTok{5}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ parms[}\DecValTok{3}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ parms[}\DecValTok{8}\NormalTok{])), }\AttributeTok{linewidth =} \FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{intercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{slope =}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ parms[}\DecValTok{7}\NormalTok{] }\SpecialCharTok{/}\NormalTok{ (parms[}\DecValTok{6}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ parms[}\DecValTok{4}\NormalTok{] }\SpecialCharTok{*}\NormalTok{ parms[}\DecValTok{9}\NormalTok{]))}\SpecialCharTok{\^{}{-}}\DecValTok{1}\NormalTok{, }\AttributeTok{linewidth =} \FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \FunctionTok{expression}\NormalTok{(r[}\DecValTok{1}\NormalTok{]}\SpecialCharTok{/}\NormalTok{a[}\DecValTok{1}\NormalTok{]), }\AttributeTok{y =} \FunctionTok{expression}\NormalTok{(r[}\DecValTok{2}\NormalTok{]}\SpecialCharTok{/}\NormalTok{a[}\DecValTok{2}\NormalTok{])) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_brewer}\NormalTok{(}\AttributeTok{palette =} \StringTok{"Set1"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{14}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{panel.grid =} \FunctionTok{element\_blank}\NormalTok{()) }\SpecialCharTok{+}
+  \FunctionTok{coord\_fixed}\NormalTok{(}\AttributeTok{ratio =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-62-1.pdf}
+
   \bibliography{book.bib,packages.bib}
 
 \end{document}

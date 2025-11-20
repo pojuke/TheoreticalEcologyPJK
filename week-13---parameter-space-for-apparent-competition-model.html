@@ -5,22 +5,22 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Week 13 - Parameter space for apparent competition model | Introduction to Theoretical Ecology</title>
-  <meta name="description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
-  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+  <meta name="description" content="This is the course website for Introduction to Theoretical Ecology 2025 Fall at National Taiwan University." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Week 13 - Parameter space for apparent competition model | Introduction to Theoretical Ecology" />
   <meta property="og:type" content="book" />
   <meta property="og:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
-  <meta property="og:description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
+  <meta property="og:description" content="This is the course website for Introduction to Theoretical Ecology 2025 Fall at National Taiwan University." />
   <meta name="github-repo" content="pojuke/TheoreticalEcologyPJK" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Week 13 - Parameter space for apparent competition model | Introduction to Theoretical Ecology" />
   
-  <meta name="twitter:description" content="This is the course website for Introduction to Theoretical Ecology 2024 Fall at National Taiwan University." />
+  <meta name="twitter:description" content="This is the course website for Introduction to Theoretical Ecology 2025 Fall at National Taiwan University." />
   <meta name="twitter:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
 
-<meta name="author" content="Instructor: Po-Ju Ke ~~~~~ Teaching Assistant: Hsiang-Chih Lo" />
+<meta name="author" content="Instructor: Po-Ju Ke ~~~~~ Teaching Assistant: Guan-Yu Chen" />
 
 
 
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html"/>
-<link rel="next" href="week-14---resource-competition.html"/>
+<link rel="prev" href="week-12---rosenzweig-macarthur-predator-prey-model.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -57,7 +57,7 @@
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -67,7 +67,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -144,8 +144,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Course information</a></li>
 <li class="chapter" data-level="" data-path="syllabus.html"><a href="syllabus.html"><i class="fa fa-check"></i>Syllabus</a></li>
 <li class="chapter" data-level="" data-path="week-2---exponential-population-growth.html"><a href="week-2---exponential-population-growth.html"><i class="fa fa-check"></i>Week 2 - Exponential population growth</a></li>
-<li class="chapter" data-level="" data-path="week-3---national-holiday-no-class.html"><a href="week-3---national-holiday-no-class.html"><i class="fa fa-check"></i>Week 3 - National holiday (No class)</a></li>
-<li class="chapter" data-level="" data-path="week-4---logistic-population-growth-and-stability-analysis.html"><a href="week-4---logistic-population-growth-and-stability-analysis.html"><i class="fa fa-check"></i>Week 4 - Logistic population growth and stability analysis</a></li>
+<li class="chapter" data-level="" data-path="week-3---logistic-population-growth-and-stability-analysis.html"><a href="week-3---logistic-population-growth-and-stability-analysis.html"><i class="fa fa-check"></i>Week 3 - Logistic population growth and stability analysis</a></li>
+<li class="chapter" data-level="" data-path="week-4---discrete-exponential-and-logistic-models.html"><a href="week-4---discrete-exponential-and-logistic-models.html"><i class="fa fa-check"></i>Week 4 - Discrete exponential and logistic models</a></li>
 <li class="chapter" data-level="" data-path="week-5---metapopulations-and-patch-occupancy-models.html"><a href="week-5---metapopulations-and-patch-occupancy-models.html"><i class="fa fa-check"></i>Week 5 - Metapopulations and patch occupancy models</a></li>
 <li class="chapter" data-level="" data-path="week-6---harvesting-and-bifurcation.html"><a href="week-6---harvesting-and-bifurcation.html"><i class="fa fa-check"></i>Week 6 - Harvesting and bifurcation</a></li>
 <li class="chapter" data-level="" data-path="week-7---age-structure-population-model.html"><a href="week-7---age-structure-population-model.html"><i class="fa fa-check"></i>Week 7 - Age-structure population model</a></li>
@@ -153,9 +153,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="week-9---midterm.html"><a href="week-9---midterm.html"><i class="fa fa-check"></i>Week 9 - Midterm</a></li>
 <li class="chapter" data-level="" data-path="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"><i class="fa fa-check"></i>Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues</a></li>
 <li class="chapter" data-level="" data-path="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"><i class="fa fa-check"></i>Week 11 - Lotka-Volterra model of predator-prey interactions and time-scale separation</a></li>
-<li class="chapter" data-level="" data-path="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html"><a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html"><i class="fa fa-check"></i>Week 12 - Rosenzweig-MacArthur predator-prey model and May’s complexity-stability relationship</a></li>
+<li class="chapter" data-level="" data-path="week-12---rosenzweig-macarthur-predator-prey-model.html"><a href="week-12---rosenzweig-macarthur-predator-prey-model.html"><i class="fa fa-check"></i>Week 12 - Rosenzweig-MacArthur predator-prey model</a></li>
 <li class="chapter" data-level="" data-path="week-13---parameter-space-for-apparent-competition-model.html"><a href="week-13---parameter-space-for-apparent-competition-model.html"><i class="fa fa-check"></i>Week 13 - Parameter space for apparent competition model</a></li>
-<li class="chapter" data-level="" data-path="week-14---resource-competition.html"><a href="week-14---resource-competition.html"><i class="fa fa-check"></i>Week 14 - Resource competition</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -240,7 +239,7 @@ Two prey <span class="math inline">\(N_1\)</span> and <span class="math inline">
 <span id="cb104-52"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-52" tabindex="-1"></a>}</span>
 <span id="cb104-53"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-53" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
 <span id="cb104-54"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb104-54" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code></pre></div>
-<pre><code>## Time difference of 5.609919 mins</code></pre>
+<pre><code>## Time difference of 4.402722 mins</code></pre>
 <div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-1" tabindex="-1"></a><span class="do">#### Determine outcome status</span></span>
 <span id="cb106-2"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-2" tabindex="-1"></a>extinct_thres <span class="ot">&lt;-</span> <span class="fl">1e-7</span></span>
 <span id="cb106-3"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-3" tabindex="-1"></a>comp_out<span class="sc">$</span>Outcome <span class="ot">&lt;-</span> </span>
@@ -260,7 +259,7 @@ Two prey <span class="math inline">\(N_1\)</span> and <span class="math inline">
 <span id="cb106-17"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-17" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
 <span id="cb106-18"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-18" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
 <span id="cb106-19"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb106-19" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">ratio =</span> <span class="dv">1</span>) </span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
 <p><strong>Part 2: Use analytical calculations</strong></p>
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-1" tabindex="-1"></a><span class="do">#### Create saving space for simulation output</span></span>
 <span id="cb107-2"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-2" tabindex="-1"></a>r_min <span class="ot">&lt;-</span> <span class="fl">0.1</span> <span class="co"># also try 0.01</span></span>
@@ -294,7 +293,7 @@ Two prey <span class="math inline">\(N_1\)</span> and <span class="math inline">
 <span id="cb107-30"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-30" tabindex="-1"></a>}</span>
 <span id="cb107-31"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-31" tabindex="-1"></a>end_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
 <span id="cb107-32"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb107-32" tabindex="-1"></a>end_time <span class="sc">-</span> start_time</span></code></pre></div>
-<pre><code>## Time difference of 4.269266 secs</code></pre>
+<pre><code>## Time difference of 1.80191 secs</code></pre>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-1" tabindex="-1"></a><span class="do">#### Determine outcome status</span></span>
 <span id="cb109-2"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-2" tabindex="-1"></a>comp_out_igr<span class="sc">$</span>Outcome <span class="ot">&lt;-</span> </span>
 <span id="cb109-3"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-3" tabindex="-1"></a>  <span class="fu">ifelse</span>(comp_out_igr[, <span class="dv">3</span>] <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;N2 win&quot;</span>, </span>
@@ -313,7 +312,7 @@ Two prey <span class="math inline">\(N_1\)</span> and <span class="math inline">
 <span id="cb109-16"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-16" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
 <span id="cb109-17"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-17" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">panel.grid =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
 <span id="cb109-18"><a href="week-13---parameter-space-for-apparent-competition-model.html#cb109-18" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">ratio =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-61-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
 
 </div>
             </section>
@@ -321,8 +320,8 @@ Two prey <span class="math inline">\(N_1\)</span> and <span class="math inline">
           </div>
         </div>
       </div>
-<a href="week-12---rosenzweig-macarthur-predator-prey-model-and-mays-complexity-stability-relationship.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="week-14---resource-competition.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="week-12---rosenzweig-macarthur-predator-prey-model.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -336,42 +335,42 @@ Two prey <span class="math inline">\(N_1\)</span> and <span class="math inline">
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/13_Week_13_2.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/ChingLinHuang/2022_Fall_TheoEcol/13_Week_13_Parameter.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
