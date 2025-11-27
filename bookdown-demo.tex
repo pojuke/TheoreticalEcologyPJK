@@ -2478,7 +2478,7 @@ Two prey \(N_1\) and \(N_2\) grow logistically with intrinsic growth rate \(r_1\
 \end{Shaded}
 
 \begin{verbatim}
-## Time difference of 4.419463 mins
+## Time difference of 4.451853 mins
 \end{verbatim}
 
 \begin{Shaded}
@@ -2547,7 +2547,7 @@ Two prey \(N_1\) and \(N_2\) grow logistically with intrinsic growth rate \(r_1\
 \end{Shaded}
 
 \begin{verbatim}
-## Time difference of 1.736758 secs
+## Time difference of 1.827064 secs
 \end{verbatim}
 
 \begin{Shaded}
@@ -2574,6 +2574,273 @@ Two prey \(N_1\) and \(N_2\) grow logistically with intrinsic growth rate \(r_1\
 \end{Shaded}
 
 \includegraphics{bookdown-demo_files/figure-latex/unnamed-chunk-62-1.pdf}
+
+\hypertarget{week-14---resource-competition}{%
+\chapter*{Week 14 - Resource competition}\label{week-14---resource-competition}}
+\addcontentsline{toc}{chapter}{Week 14 - Resource competition}
+
+\textbf{Part 1 - R* rule}
+
+In this part of the lab section, we are going to analyze the consumer-resource dynamics with two consumers and one resource:
+\begin{align*}
+\frac {dN_{1}}{dt} &= e_{1}a_{1}RN_{1}-dN_{1}\\
+\frac {dN_{2}}{dt} &= e_{2}a_{2}RN_{2}-dN_{2}\\
+\frac {dR}{dt} &= d(S_{0}-R)-a_{1}RN_{1}-a_{2}RN_{2}\\
+\end{align*}
+
+Please simulate the model using the parameter set (\(N_{1(0)}\) = 2, \(N_{2(0)}\) = 2, \(R\) = 0.1, \(a_1\) = 0.4, \(a_2\) = 0.6, \(e_1\) = 1, \(e_2\) = 1, \(d\) = 0.01, \(S_0\) = 0.1) and visualize the population trajectories of the two consumers as well as the resource.
+
+Below is a plot of resource level vs.~consumers' per capita growth rate. What would you predict about the system dynamics?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(deSolve)}
+
+\DocumentationTok{\#\#\# Parameters}
+\NormalTok{a1 }\OtherTok{\textless{}{-}} \FloatTok{0.4} 
+\NormalTok{a2 }\OtherTok{\textless{}{-}} \FloatTok{0.6}
+\NormalTok{e1 }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{e2 }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{d }\OtherTok{\textless{}{-}} \FloatTok{0.01} 
+\NormalTok{S0 }\OtherTok{\textless{}{-}} \FloatTok{0.1}
+
+\DocumentationTok{\#\#\# Resource level vs. consumers\textquotesingle{} per capita population growth}
+\FunctionTok{data.frame}\NormalTok{(}\AttributeTok{R =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.1}\NormalTok{, }\FloatTok{0.001}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{N1 =}\NormalTok{ e1}\SpecialCharTok{*}\NormalTok{a1}\SpecialCharTok{*}\NormalTok{R}\SpecialCharTok{{-}}\NormalTok{d,}
+         \AttributeTok{N2 =}\NormalTok{ e2}\SpecialCharTok{*}\NormalTok{a2}\SpecialCharTok{*}\NormalTok{R}\SpecialCharTok{{-}}\NormalTok{d) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"Species"}\NormalTok{, }\AttributeTok{value =} \StringTok{"Growth"}\NormalTok{, N1}\SpecialCharTok{:}\NormalTok{N2) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ R, }\AttributeTok{y =}\NormalTok{ Growth, }\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Resource level"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Per capita growth rate"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{14}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{bookdown-demo_files/figure-latex/unnamed-chunk-63-1} \end{center}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Model specification}
+\NormalTok{CR\_model\_2C\_1R }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(times, state, parms)\{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{    dN1\_dt }\OtherTok{=}\NormalTok{ e1}\SpecialCharTok{*}\NormalTok{a1}\SpecialCharTok{*}\NormalTok{R}\SpecialCharTok{*}\NormalTok{N1 }\SpecialCharTok{{-}}\NormalTok{ d}\SpecialCharTok{*}\NormalTok{N1}
+\NormalTok{    dN2\_dt }\OtherTok{=}\NormalTok{ e2}\SpecialCharTok{*}\NormalTok{a2}\SpecialCharTok{*}\NormalTok{R}\SpecialCharTok{*}\NormalTok{N2 }\SpecialCharTok{{-}}\NormalTok{ d}\SpecialCharTok{*}\NormalTok{N2}
+\NormalTok{    dR\_dt }\OtherTok{=}\NormalTok{  d}\SpecialCharTok{*}\NormalTok{(S0}\SpecialCharTok{{-}}\NormalTok{R) }\SpecialCharTok{{-}}\NormalTok{ a1}\SpecialCharTok{*}\NormalTok{R}\SpecialCharTok{*}\NormalTok{N1 }\SpecialCharTok{{-}}\NormalTok{ a2}\SpecialCharTok{*}\NormalTok{R}\SpecialCharTok{*}\NormalTok{N2}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(dN1\_dt, dN2\_dt, dR\_dt)))}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#\# Model parameters}
+\NormalTok{times }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\DecValTok{1000}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.1}\NormalTok{)  }
+\NormalTok{state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N1 =} \DecValTok{2}\NormalTok{, }\AttributeTok{N2 =} \DecValTok{2}\NormalTok{, }\AttributeTok{R =} \FloatTok{0.1}\NormalTok{)  }
+\NormalTok{parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{a1 =} \FloatTok{0.4}\NormalTok{, }\AttributeTok{a2 =} \FloatTok{0.6}\NormalTok{, }\AttributeTok{e1 =} \DecValTok{1}\NormalTok{, }\AttributeTok{e2 =} \DecValTok{1}\NormalTok{, }\AttributeTok{d =} \FloatTok{0.01}\NormalTok{, }\AttributeTok{S0 =} \FloatTok{0.1}\NormalTok{)}
+
+\DocumentationTok{\#\#\# Model application}
+\NormalTok{pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ CR\_model\_2C\_1R, }\AttributeTok{times =}\NormalTok{ times, }\AttributeTok{y =}\NormalTok{ state, }\AttributeTok{parms =}\NormalTok{ parms)}
+
+\DocumentationTok{\#\#\# Visualize the population dynamics}
+\NormalTok{pop\_size }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"Species"}\NormalTok{, }\AttributeTok{value =} \StringTok{"N"}\NormalTok{, N1}\SpecialCharTok{:}\NormalTok{R)  }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{trophic =} \FunctionTok{case\_when}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"N1"}\NormalTok{, }\StringTok{"N2"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Consumer"}\NormalTok{,}
+                             \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}} \StringTok{"Resource"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ time, }\AttributeTok{y =}\NormalTok{ N, }\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ trophic, }
+             \AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }
+             \AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{,}
+             \AttributeTok{strip.position =} \StringTok{"left"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{14}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{strip.background =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{strip.placement =} \StringTok{"outside"}\NormalTok{,}
+        \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{,}
+        \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\AttributeTok{r =} \DecValTok{5}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Time"}\NormalTok{, }\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"red"}\NormalTok{, }\StringTok{"green"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.9\linewidth]{bookdown-demo_files/figure-latex/unnamed-chunk-64-1} \end{center}
+
+We can see that \(N_1\) goes extinct, as predicted by the R* rule; the remaining consumer \(N_2\) and the resource \(R\) exhibit stable coexistence.
+
+\textbf{Part 2 - Tilman's resource ratio hypothesis}
+
+Now we will extend the model in Part 1. into two consumers and two resources:
+\begin{align*}
+\frac {dN_{1}}{dt} &= e_{1}a_{1a}R_{a}N_{1}+e_{1}a_{1b}R_{b}N_{1}-dN_{1}\\
+\frac {dN_{2}}{dt} &= e_{2}a_{2a}R_{a}N_{2}+e_{2}a_{2b}R_{b}N_{2}-dN_{2}\\
+\frac {dR_{a}}{dt} &= d(S_{a}-R_{a})-a_{1a}R_{a}N_{1}-a_{2a}R_{a}N_{2}\\
+\frac {dR_{b}}{dt} &= d(S_{b}-R_{b})-a_{1b}R_{b}N_{1}-a_{2b}R_{b}N_{2}\\
+\end{align*}
+
+Here, the two consumers \(N_1\) and \(N_2\) compete for two substitutable resources \(R_1\) and \(R_2\). Under certain conditions, the two consumers are able to coexist:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Model specification}
+\NormalTok{CR\_model\_2C\_2R }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(time, state, parms)\{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{    dN1\_dt }\OtherTok{=}\NormalTok{ e1}\SpecialCharTok{*}\NormalTok{a1a}\SpecialCharTok{*}\NormalTok{Ra}\SpecialCharTok{*}\NormalTok{N1 }\SpecialCharTok{+}\NormalTok{ e1}\SpecialCharTok{*}\NormalTok{a1b}\SpecialCharTok{*}\NormalTok{Rb}\SpecialCharTok{*}\NormalTok{N1 }\SpecialCharTok{{-}}\NormalTok{ d}\SpecialCharTok{*}\NormalTok{N1}
+\NormalTok{    dN2\_dt }\OtherTok{=}\NormalTok{ e2}\SpecialCharTok{*}\NormalTok{a2a}\SpecialCharTok{*}\NormalTok{Ra}\SpecialCharTok{*}\NormalTok{N2 }\SpecialCharTok{+}\NormalTok{ e2}\SpecialCharTok{*}\NormalTok{a2b}\SpecialCharTok{*}\NormalTok{Rb}\SpecialCharTok{*}\NormalTok{N2 }\SpecialCharTok{{-}}\NormalTok{ d}\SpecialCharTok{*}\NormalTok{N2}
+\NormalTok{    dRa\_dt }\OtherTok{=}\NormalTok{ d}\SpecialCharTok{*}\NormalTok{(Sa}\SpecialCharTok{{-}}\NormalTok{Ra) }\SpecialCharTok{{-}}\NormalTok{ (a1a}\SpecialCharTok{*}\NormalTok{N1}\SpecialCharTok{*}\NormalTok{Ra) }\SpecialCharTok{{-}}\NormalTok{ (a2a}\SpecialCharTok{*}\NormalTok{N2}\SpecialCharTok{*}\NormalTok{Ra) }
+\NormalTok{    dRb\_dt }\OtherTok{=}\NormalTok{ d}\SpecialCharTok{*}\NormalTok{(Sb}\SpecialCharTok{{-}}\NormalTok{Rb) }\SpecialCharTok{{-}}\NormalTok{ (a1b}\SpecialCharTok{*}\NormalTok{N1}\SpecialCharTok{*}\NormalTok{Rb) }\SpecialCharTok{{-}}\NormalTok{ (a2b}\SpecialCharTok{*}\NormalTok{N2}\SpecialCharTok{*}\NormalTok{Rb)}
+    \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(dN1\_dt, dN2\_dt, dRa\_dt, dRb\_dt)))}
+\NormalTok{  \})}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#\# Model parameters}
+\NormalTok{times }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\DecValTok{2000}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.01}\NormalTok{)}
+\NormalTok{state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N1 =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{N2 =} \FloatTok{0.05}\NormalTok{, }\AttributeTok{Ra =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{Rb =} \FloatTok{0.3}\NormalTok{)}
+\NormalTok{parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{a1a =} \FloatTok{0.4}\NormalTok{, }\AttributeTok{a1b =} \FloatTok{0.8}\NormalTok{, }\AttributeTok{a2a =} \FloatTok{0.6}\NormalTok{, }\AttributeTok{a2b =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{e1 =} \DecValTok{1}\NormalTok{, }\AttributeTok{e2 =} \DecValTok{1}\NormalTok{, }\AttributeTok{d =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{Sa =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{Sb =} \FloatTok{0.3}\NormalTok{)  }
+
+\DocumentationTok{\#\#\# Model application}
+\NormalTok{pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ CR\_model\_2C\_2R, }\AttributeTok{times =}\NormalTok{ times, }\AttributeTok{y =}\NormalTok{ state, }\AttributeTok{parms =}\NormalTok{ parms)}
+
+
+\DocumentationTok{\#\#\# Visualize the population dynamics}
+\NormalTok{pop\_size }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"Species"}\NormalTok{, }\AttributeTok{value =} \StringTok{"N"}\NormalTok{, N1}\SpecialCharTok{:}\NormalTok{Rb) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{trophic =} \FunctionTok{case\_when}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"N1"}\NormalTok{, }\StringTok{"N2"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Consumer"}\NormalTok{,}
+                             \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}} \StringTok{"Resource"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ time, }\AttributeTok{y =}\NormalTok{ N, }\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ trophic, }
+             \AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }
+             \AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{,}
+             \AttributeTok{strip.position =} \StringTok{"left"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{14}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{strip.background =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{strip.placement =} \StringTok{"outside"}\NormalTok{,}
+        \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{,}
+        \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\AttributeTok{r =} \DecValTok{8}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Time"}\NormalTok{, }\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{2050}\NormalTok{), }\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\ConstantTok{NA}\NormalTok{), }\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"red"}\NormalTok{, }\StringTok{"green"}\NormalTok{, }\StringTok{"purple"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.9\linewidth]{bookdown-demo_files/figure-latex/unnamed-chunk-65-1} \end{center}
+
+The phase diagram also illustrates stable coexistence of the two consumers:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Parameters}
+\NormalTok{a1a }\OtherTok{\textless{}{-}} \FloatTok{0.4}
+\NormalTok{a1b }\OtherTok{\textless{}{-}} \FloatTok{0.8}
+\NormalTok{a2a }\OtherTok{\textless{}{-}} \FloatTok{0.6}
+\NormalTok{a2b }\OtherTok{\textless{}{-}} \FloatTok{0.5}
+\NormalTok{e1 }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{e2 }\OtherTok{\textless{}{-}} \DecValTok{1}
+\NormalTok{d }\OtherTok{\textless{}{-}} \FloatTok{0.1}
+
+\DocumentationTok{\#\#\# Slopes and intercepts of the ZNGI\textquotesingle{}s}
+\NormalTok{ZNGI\_slope\_N1 }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\NormalTok{a1a}\SpecialCharTok{/}\NormalTok{a1b}
+\NormalTok{ZNGI\_intercept\_N1 }\OtherTok{\textless{}{-}}\NormalTok{ d}\SpecialCharTok{/}\NormalTok{(e1}\SpecialCharTok{*}\NormalTok{a1b)  }
+\NormalTok{ZNGI\_slope\_N2 }\OtherTok{\textless{}{-}} \SpecialCharTok{{-}}\NormalTok{a2a}\SpecialCharTok{/}\NormalTok{a2b}
+\NormalTok{ZNGI\_intercept\_N2 }\OtherTok{\textless{}{-}}\NormalTok{ d}\SpecialCharTok{/}\NormalTok{(e2}\SpecialCharTok{*}\NormalTok{a2b)}
+
+\DocumentationTok{\#\#\# Consumption vectors}
+\NormalTok{eqilibrium\_Ra }\OtherTok{\textless{}{-}}\NormalTok{ (d}\SpecialCharTok{/}\NormalTok{e1)}\SpecialCharTok{*}\NormalTok{((a1b}\SpecialCharTok{{-}}\NormalTok{a2b)}\SpecialCharTok{/}\NormalTok{(a2a}\SpecialCharTok{*}\NormalTok{a1b}\SpecialCharTok{{-}}\NormalTok{a2b}\SpecialCharTok{*}\NormalTok{a1a))}
+\NormalTok{eqilibrium\_Rb }\OtherTok{\textless{}{-}}\NormalTok{ (d}\SpecialCharTok{/}\NormalTok{e2)}\SpecialCharTok{*}\NormalTok{((a1a}\SpecialCharTok{{-}}\NormalTok{a2a)}\SpecialCharTok{/}\NormalTok{(a2b}\SpecialCharTok{*}\NormalTok{a1a}\SpecialCharTok{{-}}\NormalTok{a2a}\SpecialCharTok{*}\NormalTok{a1b))}
+
+\NormalTok{convec\_df }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{x =} \FunctionTok{c}\NormalTok{(eqilibrium\_Ra }\SpecialCharTok{+} \DecValTok{6}\SpecialCharTok{*}\NormalTok{a1a}\SpecialCharTok{*}\NormalTok{eqilibrium\_Ra, }
+\NormalTok{                              eqilibrium\_Ra }\SpecialCharTok{+} \DecValTok{6}\SpecialCharTok{*}\NormalTok{a2a}\SpecialCharTok{*}\NormalTok{eqilibrium\_Ra),}
+                        \AttributeTok{y =} \FunctionTok{c}\NormalTok{(eqilibrium\_Rb }\SpecialCharTok{+} \DecValTok{6}\SpecialCharTok{*}\NormalTok{a1b}\SpecialCharTok{*}\NormalTok{eqilibrium\_Rb, }
+\NormalTok{                              eqilibrium\_Rb }\SpecialCharTok{+} \DecValTok{6}\SpecialCharTok{*}\NormalTok{a2b}\SpecialCharTok{*}\NormalTok{eqilibrium\_Rb),}
+                        \AttributeTok{xend =} \FunctionTok{c}\NormalTok{(eqilibrium\_Ra }\SpecialCharTok{{-}}\NormalTok{ a1a}\SpecialCharTok{*}\NormalTok{eqilibrium\_Ra, }
+\NormalTok{                              eqilibrium\_Ra }\SpecialCharTok{{-}}\NormalTok{ a2a}\SpecialCharTok{*}\NormalTok{eqilibrium\_Ra),}
+                        \AttributeTok{yend =} \FunctionTok{c}\NormalTok{(eqilibrium\_Rb }\SpecialCharTok{{-}}\NormalTok{ a1b}\SpecialCharTok{*}\NormalTok{eqilibrium\_Rb, }
+\NormalTok{                              eqilibrium\_Rb }\SpecialCharTok{{-}}\NormalTok{ a2b}\SpecialCharTok{*}\NormalTok{eqilibrium\_Rb),}
+                        \AttributeTok{species =} \FunctionTok{c}\NormalTok{(}\StringTok{"N1"}\NormalTok{, }\StringTok{"N2"}\NormalTok{))}
+
+\DocumentationTok{\#\#\# Phase diagram}
+\FunctionTok{ggplot}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{slope =}\NormalTok{ ZNGI\_slope\_N1, }\AttributeTok{intercept =}\NormalTok{ ZNGI\_intercept\_N1, }\AttributeTok{color =} \StringTok{"\#377EB8"}\NormalTok{, }\AttributeTok{size =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_abline}\NormalTok{(}\AttributeTok{slope =}\NormalTok{ ZNGI\_slope\_N2, }\AttributeTok{intercept =}\NormalTok{ ZNGI\_intercept\_N2, }\AttributeTok{color =} \StringTok{"\#E41A1C"}\NormalTok{, }\AttributeTok{size =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_segment}\NormalTok{(}\AttributeTok{data =}\NormalTok{ convec\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y, }\AttributeTok{xend =}\NormalTok{ xend, }\AttributeTok{yend =}\NormalTok{ yend, }\AttributeTok{color =}\NormalTok{ species), }\AttributeTok{linetype =} \StringTok{"blank"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_segment}\NormalTok{(}\AttributeTok{data =}\NormalTok{ convec\_df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x, }\AttributeTok{y =}\NormalTok{ y, }\AttributeTok{xend =}\NormalTok{ xend, }\AttributeTok{yend =}\NormalTok{ yend, }\AttributeTok{color =}\NormalTok{ species), }\AttributeTok{size =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{arrow =} \FunctionTok{arrow}\NormalTok{(}\AttributeTok{type =} \StringTok{"closed"}\NormalTok{, }\AttributeTok{length =} \FunctionTok{unit}\NormalTok{(}\FloatTok{0.1}\NormalTok{, }\StringTok{"inches"}\NormalTok{)), }\AttributeTok{show.legend =}\NormalTok{ F) }\SpecialCharTok{+}
+  \FunctionTok{geom\_path}\NormalTok{(}\AttributeTok{data =} \FunctionTok{as.data.frame}\NormalTok{(pop\_size), }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Ra, }\AttributeTok{y =}\NormalTok{ Rb), }\AttributeTok{size =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{data =} \FunctionTok{as.data.frame}\NormalTok{(pop\_size), }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{last}\NormalTok{(Ra), }\AttributeTok{y =} \FunctionTok{last}\NormalTok{(Rb)), }\AttributeTok{size =} \FloatTok{2.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{14}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \FunctionTok{expression}\NormalTok{(}\FunctionTok{italic}\NormalTok{(R[a])), }\AttributeTok{y =} \FunctionTok{expression}\NormalTok{(}\FunctionTok{italic}\NormalTok{(R[b]))) }\SpecialCharTok{+}
+  \FunctionTok{scale\_x\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{), }\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}\AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.5}\NormalTok{), }\AttributeTok{expand =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_brewer}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{palette =} \StringTok{"Set1"}\NormalTok{, }\AttributeTok{direction =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{,}
+                     \AttributeTok{guide =} \FunctionTok{guide\_legend}\NormalTok{(}\AttributeTok{override.aes =} \FunctionTok{list}\NormalTok{(}
+                       \AttributeTok{linetype =} \StringTok{"solid"}\NormalTok{, }\AttributeTok{size =} \FloatTok{1.2}\NormalTok{))) }\SpecialCharTok{+}
+  \FunctionTok{coord\_fixed}\NormalTok{(}\AttributeTok{ratio =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.7\linewidth]{bookdown-demo_files/figure-latex/unnamed-chunk-66-1} \end{center}
+
+In this particular case, if the initial resource levels \(R_{a(0)}\) and \(R_{b(0)}\) fall within the upper area bounded by the two consumption vectors, then the two species will coexist.
+
+\textbf{Part 3 - Relative nonlinearity}
+
+We have seen in Part 1. that two species cannot coexist on one resource if the consumers consume it in a linear fashion. What if the consumers consume the resource in a non-linear fashion? Could that generate stable coexistence?
+
+In this part of the lab section, we will introduce non-linear (type II) functional response into the consumer-resource model in Part 1. for one of the consumers. We also change the resource equation to logistic growth and allow the two consumers to have different conversion efficiencies and mortality rates:
+\begin{align*}
+\frac {dN_{1}}{dt} &= e_{1}a_{1}RN_{1}-d_{1}N_{1}\\
+\frac {dN_{2}}{dt} &= e_{2}\frac{a_{2}R}{k_{2}+R}N_{2}-d_{2}N_{2}\\
+\frac {dR}{dt} &= rR(1-\frac{R}{K})-a_{1}RN_{1}-\frac{a_{2}R}{k_{2}+R}N_{2}\\
+\end{align*}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DocumentationTok{\#\#\# Model specification}
+\NormalTok{CR\_model\_nonlinear }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(times, state, parms)\{}
+  \FunctionTok{with}\NormalTok{(}\FunctionTok{as.list}\NormalTok{(}\FunctionTok{c}\NormalTok{(state, parms)), \{}
+\NormalTok{         dN1\_dt }\OtherTok{=}\NormalTok{ e1}\SpecialCharTok{*}\NormalTok{a1}\SpecialCharTok{*}\NormalTok{R}\SpecialCharTok{*}\NormalTok{N1 }\SpecialCharTok{{-}}\NormalTok{ d1}\SpecialCharTok{*}\NormalTok{N1}
+\NormalTok{         dN2\_dt }\OtherTok{=}\NormalTok{ e2}\SpecialCharTok{*}\NormalTok{(a2}\SpecialCharTok{*}\NormalTok{R}\SpecialCharTok{/}\NormalTok{(k2}\SpecialCharTok{+}\NormalTok{R))}\SpecialCharTok{*}\NormalTok{N2 }\SpecialCharTok{{-}}\NormalTok{ d2}\SpecialCharTok{*}\NormalTok{N2}
+\NormalTok{         dR\_dt }\OtherTok{=}\NormalTok{  r}\SpecialCharTok{*}\NormalTok{R}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{(R}\SpecialCharTok{/}\NormalTok{K)) }\SpecialCharTok{{-}}\NormalTok{ a1}\SpecialCharTok{*}\NormalTok{R}\SpecialCharTok{*}\NormalTok{N1 }\SpecialCharTok{{-}}\NormalTok{ ((a2}\SpecialCharTok{*}\NormalTok{R)}\SpecialCharTok{/}\NormalTok{(k2}\SpecialCharTok{+}\NormalTok{R))}\SpecialCharTok{*}\NormalTok{N2}
+         \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\FunctionTok{c}\NormalTok{(dN1\_dt, dN2\_dt, dR\_dt)))}
+\NormalTok{       \})}
+\NormalTok{\}}
+
+\DocumentationTok{\#\#\# Model parameters}
+\NormalTok{times }\OtherTok{\textless{}{-}} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{5000}\NormalTok{, }\AttributeTok{by =} \FloatTok{0.1}\NormalTok{)  }
+\NormalTok{state }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{N1 =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{N2 =} \DecValTok{19}\NormalTok{, }\AttributeTok{R =} \DecValTok{106}\NormalTok{) }
+\NormalTok{parms }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\AttributeTok{a1 =} \FloatTok{0.003}\NormalTok{, }\AttributeTok{a2 =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{k2 =} \DecValTok{50}\NormalTok{, }\AttributeTok{e1 =} \FloatTok{0.33}\NormalTok{, }\AttributeTok{e2 =} \FloatTok{0.3}\NormalTok{, }\AttributeTok{d1 =} \FloatTok{0.11}\NormalTok{, }\AttributeTok{d2 =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{r =} \FloatTok{0.1}\NormalTok{, }\AttributeTok{K =} \DecValTok{300}\NormalTok{)}
+
+\DocumentationTok{\#\#\# Model application}
+\NormalTok{pop\_size }\OtherTok{\textless{}{-}} \FunctionTok{ode}\NormalTok{(}\AttributeTok{func =}\NormalTok{ CR\_model\_nonlinear, }\AttributeTok{times =}\NormalTok{ times, }\AttributeTok{y =}\NormalTok{ state, }\AttributeTok{parms =}\NormalTok{ parms)}
+
+\DocumentationTok{\#\#\# Visualize the population dynamics}
+\NormalTok{pop\_size }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as.data.frame}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{gather}\NormalTok{(}\AttributeTok{key =} \StringTok{"Species"}\NormalTok{, }\AttributeTok{value =} \StringTok{"N"}\NormalTok{, N1}\SpecialCharTok{:}\NormalTok{R) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{trophic =} \FunctionTok{case\_when}\NormalTok{(Species }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"N1"}\NormalTok{, }\StringTok{"N2"}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \StringTok{"Consumer"}\NormalTok{,}
+                             \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}} \StringTok{"Resource"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ time, }\AttributeTok{y =}\NormalTok{ N, }\AttributeTok{color =}\NormalTok{ Species)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ trophic, }
+             \AttributeTok{ncol =} \DecValTok{2}\NormalTok{, }
+             \AttributeTok{scales =} \StringTok{"free\_y"}\NormalTok{,}
+             \AttributeTok{strip.position =} \StringTok{"left"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_classic}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{14}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{strip.background =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{strip.placement =} \StringTok{"outside"}\NormalTok{,}
+        \AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{,}
+        \AttributeTok{legend.title =} \FunctionTok{element\_blank}\NormalTok{(),}
+        \AttributeTok{plot.margin =} \FunctionTok{margin}\NormalTok{(}\AttributeTok{r =} \DecValTok{5}\NormalTok{)) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Time"}\NormalTok{, }\AttributeTok{y =} \ConstantTok{NULL}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{name =} \ConstantTok{NULL}\NormalTok{, }\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"blue"}\NormalTok{, }\StringTok{"red"}\NormalTok{, }\StringTok{"green"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{center}\includegraphics[width=0.9\linewidth]{bookdown-demo_files/figure-latex/unnamed-chunk-67-1} \end{center}
+
+As shown in the figure, the two consumers coexist in a fluctuating manner. In fact, the fluctuating properties generated by the combination of logistically growing resources and different nonlinear functions are critical for the coexistence of \(n\) species on \(k<n\) resources in certain parameter spaces.
 
   \bibliography{book.bib,packages.bib}
 
