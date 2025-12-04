@@ -2384,3 +2384,13 @@ As shown in the figure, the two consumers coexist in a fluctuating manner. In fa
 
 <!--chapter:end:14_Week_14_Resource.Rmd-->
 
+
+# Week 15 - Research applications: modern coexistence theory and plant-soil feedback {-} 
+
+<!--chapter:end:15_Week_15_Applications.Rmd-->
+
+
+# Week 16 - Final exam {-} 
+
+<!--chapter:end:16_Week_16_Final.Rmd-->
+
