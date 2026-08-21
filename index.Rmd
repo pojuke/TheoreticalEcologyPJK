@@ -1,7 +1,7 @@
 --- 
 title: "Introduction to Theoretical Ecology"
 author: "Instructor: Po-Ju Ke $~~~~~$ Teaching Assistant: Guan-Yu Chen"
-date: "2025 Fall at National Taiwan Univeristy ![](./bifurcation.gif)"
+date: "2026 Fall at National Taiwan Univeristy ![](./bifurcation.gif)"
 output:
   html_document:
     df_print: paged
