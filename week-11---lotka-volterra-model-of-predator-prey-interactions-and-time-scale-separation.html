@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Week 11 - Lotka-Volterra model of predator-prey interactions and time-scale separation | Introduction to Theoretical Ecology</title>
   <meta name="description" content="This is the course website for Introduction to Theoretical Ecology 2025 Fall at National Taiwan University." />
-  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.48 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Week 11 - Lotka-Volterra model of predator-prey interactions and time-scale separation | Introduction to Theoretical Ecology" />
   <meta property="og:type" content="book" />
@@ -20,7 +20,7 @@
   <meta name="twitter:description" content="This is the course website for Introduction to Theoretical Ecology 2025 Fall at National Taiwan University." />
   <meta name="twitter:image" content="https://pojuke.github.io/TheoreticalEcologyPJK/bifurcation.gif" />
 
-<meta name="author" content="Instructor: Po-Ju Ke ~~~~~ Teaching Assistant: Guan-Yu Chen" />
+<meta name="author" content="Instructor: Po-Ju Ke ~~~~~ Teaching Assistant: Jia-Zhen Liu" />
 
 
 
@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"/>
-<link rel="next" href="week-12---rosenzweig-macarthur-predator-prey-model.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -56,6 +56,7 @@
 
 
 <style type="text/css">
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -153,11 +154,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="week-9---midterm.html"><a href="week-9---midterm.html"><i class="fa fa-check"></i>Week 9 - Midterm</a></li>
 <li class="chapter" data-level="" data-path="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"><a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html"><i class="fa fa-check"></i>Week 10 - Lotka-Volterra competition model - Visualization of dynamics with complex eigenvalues</a></li>
 <li class="chapter" data-level="" data-path="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html"><i class="fa fa-check"></i>Week 11 - Lotka-Volterra model of predator-prey interactions and time-scale separation</a></li>
-<li class="chapter" data-level="" data-path="week-12---rosenzweig-macarthur-predator-prey-model.html"><a href="week-12---rosenzweig-macarthur-predator-prey-model.html"><i class="fa fa-check"></i>Week 12 - Rosenzweig-MacArthur predator-prey model</a></li>
-<li class="chapter" data-level="" data-path="week-13---parameter-space-for-apparent-competition-model.html"><a href="week-13---parameter-space-for-apparent-competition-model.html"><i class="fa fa-check"></i>Week 13 - Parameter space for apparent competition model</a></li>
-<li class="chapter" data-level="" data-path="week-14---resource-competition.html"><a href="week-14---resource-competition.html"><i class="fa fa-check"></i>Week 14 - Resource competition</a></li>
-<li class="chapter" data-level="" data-path="week-15---research-applications-modern-coexistence-theory-and-plant-soil-feedback.html"><a href="week-15---research-applications-modern-coexistence-theory-and-plant-soil-feedback.html"><i class="fa fa-check"></i>Week 15 - Research applications: modern coexistence theory and plant-soil feedback</a></li>
-<li class="chapter" data-level="" data-path="week-16---final-exam.html"><a href="week-16---final-exam.html"><i class="fa fa-check"></i>Week 16 - Final exam</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 
@@ -214,11 +210,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb80-23"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb80-23" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> parms[<span class="dv">4</span>]<span class="sc">/</span>(parms[<span class="dv">3</span>] <span class="sc">*</span> parms[<span class="dv">2</span>]), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># equilibrium of N</span></span>
 <span id="cb80-24"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb80-24" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> parms[<span class="dv">1</span>] <span class="sc">/</span> parms[<span class="dv">2</span>], <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># equilibrium of P</span></span>
 <span id="cb80-25"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb80-25" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;P&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-46-1.png" alt="" width="672" /></p>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb81-1" tabindex="-1"></a><span class="do">### Visualization -- state-space diagram</span></span>
 <span id="cb81-2"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb81-2" tabindex="-1"></a><span class="fu">plot</span>(N <span class="sc">~</span> P, <span class="at">data =</span> pop_size, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>)</span>
 <span id="cb81-3"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb81-3" tabindex="-1"></a><span class="fu">points</span>(parms[<span class="dv">4</span>]<span class="sc">/</span>(parms[<span class="dv">3</span>] <span class="sc">*</span> parms[<span class="dv">2</span>]), parms[<span class="dv">1</span>] <span class="sc">/</span> parms[<span class="dv">2</span>]) <span class="co"># equilibrium</span></span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-46-2.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-46-2.png" alt="" width="672" /></p>
 <p>What is the relationship between the <strong>long-term average</strong> of the cycle and the originally-expected equilibrium? To calculate long-term average, we need to find out the period of the cycle and then calculate the average population size within a period. The period of the cycle may be derived from the distance between peaks in the dynamics shown above, or by some algorithms, e.g. <code>pracma::findpeaks</code>.</p>
 <div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-1" tabindex="-1"></a><span class="fu">require</span>(<span class="st">&#39;pracma&#39;</span>)</span>
 <span id="cb82-2"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb82-2" tabindex="-1"></a>Peaks <span class="ot">&lt;-</span> pracma<span class="sc">::</span><span class="fu">findpeaks</span>(pop_size[, <span class="dv">2</span>])[, <span class="dv">2</span>]</span>
@@ -280,7 +276,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb87-19"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-19" tabindex="-1"></a><span class="fu">points</span>(P <span class="sc">~</span> time, <span class="at">data =</span> pop_size.timescale, <span class="at">type =</span> <span class="st">&#39;p&#39;</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;grey&quot;</span>)<span class="co"># dynamics of P with timescale separation</span></span>
 <span id="cb87-20"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-20" tabindex="-1"></a></span>
 <span id="cb87-21"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb87-21" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">&quot;N&quot;</span>, <span class="st">&quot;P&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-49-1.png" alt="" width="672" /></p>
 <p>Since <span class="math inline">\(N\)</span> is a fast variable, it will immediately achieve the its ZNGI on the state-space diagram.</p>
 <div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb88-1" tabindex="-1"></a><span class="co"># state-space diagram</span></span>
 <span id="cb88-2"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb88-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(pop_size[, <span class="st">&quot;N&quot;</span>])), <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(pop_size[, <span class="st">&quot;P&quot;</span>])), <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;N&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;P&quot;</span>)</span>
@@ -289,7 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb88-5"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb88-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># ZNGI of P</span></span>
 <span id="cb88-6"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb88-6" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> parms[<span class="dv">5</span>]<span class="sc">/</span>(parms[<span class="dv">4</span>]<span class="sc">*</span>parms[<span class="dv">3</span>]), <span class="at">col =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># ZNGI of P</span></span>
 <span id="cb88-7"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb88-7" tabindex="-1"></a><span class="fu">points</span>(P <span class="sc">~</span> N, <span class="at">data =</span> pop_size, <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-50-1.png" alt="" width="672" /></p>
 <p>Play with the growth rate <span class="math inline">\(r\)</span> from small to large values and see how the trajectory of prey and predator moves along the state-space.</p>
 <iframe src="https://genchanghsu0115.shinyapps.io/Time_scale_sep_shinyapp/?showcase=0" width="800px" height="700px" data-external="1">
 </iframe>
@@ -330,7 +326,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb89-32"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-32" tabindex="-1"></a><span class="fu">points</span>(N.end <span class="sc">~</span> K, Data, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;blue&quot;</span>,<span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
 <span id="cb89-33"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-33" tabindex="-1"></a><span class="fu">points</span>(P.end <span class="sc">~</span> K, Data, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">3</span>)</span>
 <span id="cb89-34"><a href="week-11---lotka-volterra-model-of-predator-prey-interactions-and-time-scale-separation.html#cb89-34" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>, <span class="fu">c</span>(<span class="st">&quot;Prey&quot;</span>, <span class="st">&quot;Predator&quot;</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">bty =</span> <span class="st">&quot;n&quot;</span>)</span></code></pre></div>
-<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-52-1.png" alt="" width="672" /></p>
 
 </div>
             </section>
@@ -338,8 +334,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="week-12---rosenzweig-macarthur-predator-prey-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="week-10---lotka-volterra-competition-model---visualization-of-dynamics-with-complex-eigenvalues.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
